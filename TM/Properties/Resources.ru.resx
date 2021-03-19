@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Loading_PlanData" xml:space="preserve">
+     <value>Загрузка плана</value>
+  </data>
+  <data name="file_not_found" xml:space="preserve">
+    <value>файл не существует</value>
+  </data>
+  <data name="file" xml:space="preserve">
+     <value>файл</value>
+     <comment>файл</comment>
+  </data>
+  <data name="Failed_to_load" xml:space="preserve">
+     <value>Ошибка загрузки</value>
+     <comment>Ошибка загрузки</comment>
+  </data>
+  <data name="loaded" xml:space="preserve">
+     <value>загружен</value>
+     <comment>загружен</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+     <value>Ошибка</value>
+     <comment>Ошибка</comment>
+  </data>
+  <data name="wrong_format_data" xml:space="preserve">
+     <value>неправильный формат данных</value>
+     <comment>неправильный формат данных</comment>
+  </data>
+  <data name="Sending_plan_to_server" xml:space="preserve">
+     <value>Пересылка плана на сервер</value>
+     <comment>Пересылка плана на сервер</comment>
+  </data>
+  <data name="Plan_sent_to_server" xml:space="preserve">
+     <value>План послан на сервер</value>
+     <comment>План послан на сервер</comment>
+  </data>
+  <data name="Failed_to_connect_to" xml:space="preserve">
+     <value>Ошибка соединения</value>
+     <comment>Ошибка соединения</comment>
+  </data>
+  <data name="Connected_to" xml:space="preserve">
+     <value>Соединение установлено</value>
+     <comment>Соединение установлено</comment>
+  </data>
+  <data name="Disconnected_from" xml:space="preserve">
+     <value>Произошло отсоединение от </value>
+     <comment>Произошло отсоединение от </comment>
+  </data>
+  <data name="Failed_to_send" xml:space="preserve">
+     <value>Ошибка передачи данных</value>
+     <comment>Ошибка передачи данных</comment>
+  </data>
+  <data name="plan" xml:space="preserve">
+     <value>план</value>
+     <comment>план</comment>
+  </data>
+  <data name="Server_not_ready" xml:space="preserve">
+     <value>Сервер не готов</value>
+     <comment>Сервер не готов</comment>
+  </data>
+  <data name="Sending_command_to_server" xml:space="preserve">
+     <value>Посылка команды на сервер</value>
+     <comment>Посылка команды на сервер</comment>
+  </data>
+  <data name="Sending_info_to_server" xml:space="preserve">
+     <value>Посылка сообщения на сервер</value>
+     <comment>Посылка сообщения на сервер</comment>
+  </data>
+  <data name="Failed_to_read" xml:space="preserve">
+     <value>Ошибка чтения</value>
+     <comment>Ошибка чтения</comment>
+  </data>
+  <data name="plan_data" xml:space="preserve">
+     <value>данные плана</value>
+     <comment>данные плана</comment>
+  </data>
+  <data name="Server_is_not_connected" xml:space="preserve">
+     <value>Нет соединения с сервером</value>
+     <comment>Нет соединения с сервером</comment>
+  </data>
+  <data name="Press" xml:space="preserve">
+     <value>Нажмите</value>
+     <comment>Нажмите</comment>
+  </data>
+  <data name="to_interrupt" xml:space="preserve">
+     <value>для прерывания операции</value>
+     <comment>для прерывания операции</comment>
+  </data>
+  <data name="Failed_to_send_plan" xml:space="preserve">
+     <value>Ошибка передачи плана на сервер</value>
+     <comment>Ошибка передачи плана на сервер</comment>
+  </data>
+  <data name="Plan_processed" xml:space="preserve">
+     <value>План обработан на </value>
+     <comment>План обработан на </comment>
+  </data>
+  <data name="Executing_plan" xml:space="preserve">
+     <value>Обработка плана</value>
+     <comment>Обработка плана</comment>
+  </data>
+  <data name="Progress_" xml:space="preserve">
+     <value>Обработано:</value>
+     <comment>Обработано:</comment>
+  </data>
+  <data name="Plan_processing_finished_" xml:space="preserve">
+     <value>Обработка плана завершена!</value>
+     <comment>Обработка плана завершена!</comment>
+  </data>
+  <data name="port_number" xml:space="preserve">
+     <value>Номер порта</value>
+     <comment>Номер порта</comment>
+  </data>
+  <data name="Для_распечатки_плана_облучения_нажмите_любую_клавишу" xml:space="preserve">
+     <value>Для распечатки плана облучения нажмите любую клавишу</value>
+     <comment>Для распечатки плана облучения нажмите любую клавишу</comment>
+  </data>
+</root>
