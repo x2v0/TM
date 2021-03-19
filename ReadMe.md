@@ -2,7 +2,7 @@
 
 Документация (описание классов, структур, методов и функций) содержится в:
 - **TM\Help\TMClient.chm**
-- [**TM/HTML/index.html**](https://htmlpreview.github.io/?https://github.com/x2v0/TM/tree/master/TM/HTML/index.html) 
+- [**.TM\HTML\index.html**](https://x2v0.github.io/TM/HTML)
 
 Директория **Test** содержит примеры использования библиотеки **TMClient.dll**
 Для симуляции процесса облучения, на сервере должна быть запущена программа 
