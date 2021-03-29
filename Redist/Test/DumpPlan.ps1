@@ -1,4 +1,4 @@
-# $Id: $
+﻿# $Id: $
 
 #/*************************************************************************
 # *                                                                       *
@@ -7,35 +7,16 @@
 # *                                                                       *
 #*************************************************************************/
 
-$source =  @"
-using System;
-using System.Collections.Generic;
-using TM;
-
-namespace D
-{
-   public class Plan
-   {
-      public Dictionary<int, PlanSpot> Load()
-      {
-         var plan = TMClient.LoadPlanData("test_plan.txt");
-         Console.WriteLine("\nPress any key to continue ...");
-         Console.ReadKey();
-         return plan;
-      }
-   }
-}
-"@
-
 # Set dir by "Right-Mouse Click" -> "Context menu" -> "Open with" -> "Windows PowerShell"
-$cd = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+$cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
+$code = Get-Content "$cd./DumpPlan.cs"
 
-Add-Type -ReferencedAssemblies $asm -TypeDefinition $source -Language CSharp
+Add-Type -ReferencedAssemblies $asm -TypeDefinition "$code"
 
 #### Load plan data ####
-$plan = new-object D.Plan
-$spots = $plan.Load().Values
+$plan = new-object My.Plan
+$spots = $plan.Load("test_plan.txt").Values
 
 #### Print out plan data to table ####
 write-output $spots | Format-Table

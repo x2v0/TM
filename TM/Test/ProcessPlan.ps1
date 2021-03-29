@@ -138,10 +138,9 @@ class Program
       }
    } 
 }
-
 "@
 
-$cd = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+$cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
  
 Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp -OutputAssembly "ProcessPlan.exe" -OutputType ConsoleApplication

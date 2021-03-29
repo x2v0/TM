@@ -8,7 +8,7 @@
 #*************************************************************************/
 
 Write-Host  "Loading TMClient.dll ..."
-$cd = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+$cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
 
 $commands = Get-command -module TMClient
@@ -37,5 +37,4 @@ $enums | % { $_.FullName; [Enum]::GetValues($_.FullName)} | ogv
 Read-Host "`n`n`n`nPress any key to display available Structs"
 Write-Host "-------------------------------------------------------------------------------"
 
- $structs = $typ | select -property FullName, BaseType | ? {$_.BaseType -like "*ValueType"}
- $structs | % { $_.FullName; $_.GetValues } | ogv
+$structs = $typ | select -property FullName, BaseType | ? {$_.BaseType -like "*ValueType"}

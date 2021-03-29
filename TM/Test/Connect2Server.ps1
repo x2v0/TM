@@ -84,10 +84,8 @@ namespace Connect$id
 }
 "@
 
-$currentScriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-[System.IO.Directory]::SetCurrentDirectory($currentScriptDirectory)
-$dllpath = Join-Path $currentScriptDirectory 'TMClient.dll'
-$asm = [System.Reflection.Assembly]::LoadFrom($dllpath)
+$cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+Import-Module "$cd./Init.ps1"
  
 Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp
 
