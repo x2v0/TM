@@ -515,7 +515,6 @@ namespace TM
          try {
             if (Globals.Client == null) {
                Globals.Client = new TMClient();
-               Globals.Client.Plan = new List<PlanSpot>();
             }
 
             var r = new Regex(@"\s+");
