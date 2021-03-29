@@ -151,7 +151,7 @@ namespace TM
 
          path = System.IO.Path.Combine(path, Path);
 
-         var spots = TMClient.LoadPlanData(path).Values;
+         var spots = TMClient.LoadPlanData(path);
 
          foreach (var spot in spots) {
             WriteObject(spot);
@@ -296,17 +296,17 @@ namespace TM
          Globals.Client.ServerStateChanged -= OnStateChanged;
 
          foreach (var spot in Globals.Client.PlanResults) {
-            var plan = Globals.Client.Plan[spot.Key];
+            var plan = Globals.Client.Plan[spot.id];
             var full = new PlanSpotFull();
-            full.id = spot.Key;
+            full.id = spot.id;
             full.xangle = plan.xangle;
             full.zangle = plan.zangle;
             full.pcount = plan.pcount;
             full.energy = plan.energy;
-            full.result_xangle = spot.Value.result_xangle;
-            full.result_zangle = spot.Value.result_zangle;
-            full.result_pcount = spot.Value.result_pcount;
-            full.done = spot.Value.done;
+            full.result_xangle = spot.result_xangle;
+            full.result_zangle = spot.result_zangle;
+            full.result_pcount = spot.result_pcount;
+            full.done = spot.done;
             //full.changed = spot.Value.changed;
             WriteObject(full);
          }
@@ -764,17 +764,17 @@ namespace TM
          TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          foreach (var spot in Globals.Client.PlanResults) {
-            var plan = Globals.Client.Plan[spot.Key];
+            var plan = Globals.Client.Plan[spot.id];
             var full = new PlanSpotFull();
-            full.id = spot.Key;
+            full.id = spot.id;
             full.xangle = plan.xangle;
             full.zangle = plan.zangle;
             full.pcount = plan.pcount;
             full.energy = plan.energy;
-            full.result_xangle = spot.Value.result_xangle;
-            full.result_zangle = spot.Value.result_zangle;
-            full.result_pcount = spot.Value.result_pcount;
-            full.done = spot.Value.done;
+            full.result_xangle = spot.result_xangle;
+            full.result_zangle = spot.result_zangle;
+            full.result_pcount = spot.result_pcount;
+            full.done = spot.done;
             //full.changed = spot.Value.changed;
             WriteObject(full);
          }

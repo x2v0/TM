@@ -65,3 +65,4 @@ D:\xtovo\tmp\TM\TM\obj\Release\TMClient.csproj.GenerateResource.Cache
 D:\xtovo\tmp\TM\TM\obj\Release\ru\TMClient.resources.dll
 D:\xtovo\tmp\TM\TM\obj\Release\TMClient.dll
 D:\xtovo\tmp\TM\TM\obj\Release\TMClient.pdb
+D:\xtovo\wrk\TM\Redist\Test\Init.ps1

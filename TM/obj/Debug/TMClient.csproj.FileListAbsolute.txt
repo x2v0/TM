@@ -42,3 +42,4 @@ D:\xtovo\wrk\TM\Redist\TMClient.dll
 D:\xtovo\wrk\TM\Redist\TMClient.pdb
 D:\xtovo\wrk\TM\Redist\ru\TMClient.resources.dll
 D:\xtovo\wrk\TM\TM\obj\Debug\ru\TMClient.resources.dll
+D:\xtovo\wrk\TM\Redist\Test\Init.ps1

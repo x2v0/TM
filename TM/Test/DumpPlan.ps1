@@ -16,7 +16,7 @@ Add-Type -ReferencedAssemblies $asm -TypeDefinition "$code"
 
 #### Load plan data ####
 $plan = new-object My.Plan
-$spots = $plan.Load("test_plan.txt").Values
+$spots = $plan.Load("test_plan.txt")
 
 #### Print out plan data to table ####
 write-output $spots | Format-Table

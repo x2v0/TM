@@ -96,8 +96,8 @@ namespace TM
       /// </summary>
       public TMClient()
       {
-         Plan = new Dictionary<int, PlanSpot>();
-         PlanResults = new Dictionary<int, PlanSpotResult>();
+         Plan = new List<PlanSpot>();
+         PlanResults = new List<PlanSpotResult>();
          DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
 
          Globals.Client = this;
@@ -153,7 +153,7 @@ namespace TM
       ///    Delegate PlanResultsHandler
       /// </summary>
       /// <param name="results">The results.</param>
-      public delegate void PlanResultsHandler(Dictionary<int, PlanSpotResult> results);
+      public delegate void PlanResultsHandler(List<PlanSpotResult> results);
 
       /// <summary>
       ///    Delegate ServerStateChangedHandler
@@ -364,7 +364,7 @@ namespace TM
       ///    Loaded plan data
       /// </summary>
       /// <value>The plan.</value>
-      public Dictionary<int, PlanSpot> Plan
+      public List<PlanSpot> Plan
       {
          get;
          private set;
@@ -374,7 +374,7 @@ namespace TM
       ///    Processed plan results
       /// </summary>
       /// <value>The plan results.</value>
-      public Dictionary<int, PlanSpotResult> PlanResults
+      public List<PlanSpotResult> PlanResults
       {
          get;
          private set;
@@ -478,10 +478,10 @@ namespace TM
       ///    Dumps the plan results.
       /// </summary>
       /// <param name="results">The results.</param>
-      public static void DumpPlanResults(Dictionary<int, PlanSpotResult> results)
+      public static void DumpPlanResults(List<PlanSpotResult> results)
       {
          try {
-            foreach (var spot in results.Values) {
+            foreach (var spot in results) {
                Console.WriteLine(spot);
             }
          } catch {
@@ -498,7 +498,7 @@ namespace TM
       /// <exception cref="TM.TMClient.ReadPlanException">
       /// </exception>
       /// <exception cref="FileNotFoundException"></exception>
-      public static Dictionary<int, PlanSpot> LoadPlanData(string file)
+      public static List<PlanSpot> LoadPlanData(string file)
       {
          if (string.IsNullOrEmpty(file) ||
              !File.Exists(file)) {
@@ -515,9 +515,8 @@ namespace TM
          try {
             if (Globals.Client == null) {
                Globals.Client = new TMClient();
+               Globals.Client.Plan = new List<PlanSpot>();
             }
-
-            Globals.Client.Plan = new Dictionary<int, PlanSpot>();
 
             var r = new Regex(@"\s+");
 
@@ -552,7 +551,7 @@ namespace TM
 
                         cnt++;
                         length += PlanSpot.Length;
-                        Globals.Client.Plan.Add(spot.id, spot);
+                        Globals.Client.Plan.Add(spot);
                      } catch (Exception ex) {
                         if (DebugPreference == 2) { // ActionPreference.Continue
                            Console.WriteLine(Resources.Failed_to_load + " PlanData (" + Resources.wrong_format_data + "), " + Resources.file + " - " + file + "\nentries = " + cnt + " " +
@@ -763,7 +762,7 @@ namespace TM
       /// <param name="ip">The server IP.</param>
       /// <param name="port">The port.</param>
       /// <returns>Dictionary&lt;System.Int32, PlanSpotFull&gt;.</returns>
-      public Dictionary<int, PlanSpotFull> ExecutePlan(string file, string ip = null, int port = 0)
+      public List<PlanSpotFull> ExecutePlan(string file, string ip = null, int port = 0)
       {
          Reset();
          ServerStateChanged += OnServerStateChanged;
@@ -821,22 +820,22 @@ namespace TM
             Thread.Sleep(300);
          }
 
-         var ret = new Dictionary<int, PlanSpotFull>();
+         var ret = new List<PlanSpotFull>();
 
          foreach (var spot in PlanResults) {
-            var plan = Plan[spot.Key];
+            var plan = Plan[spot.id];
             var full = new PlanSpotFull();
-            full.id = spot.Key;
+            full.id = spot.id;
             full.xangle = plan.xangle;
             full.zangle = plan.zangle;
             full.pcount = plan.pcount;
             full.energy = plan.energy;
-            full.result_xangle = spot.Value.result_xangle;
-            full.result_zangle = spot.Value.result_zangle;
-            full.result_pcount = spot.Value.result_pcount;
-            full.done = spot.Value.done;
+            full.result_xangle = spot.result_xangle;
+            full.result_zangle = spot.result_zangle;
+            full.result_pcount = spot.result_pcount;
+            full.done = spot.done;
             //full.changed = spot.Value.changed;
-            ret.Add(full.id, full);
+            ret.Add(full);
          }
 
          return ret;
@@ -847,10 +846,10 @@ namespace TM
       /// </summary>
       /// <param name="file">The file.</param>
       /// <returns>Dictionary&lt;System.Int32, PlanSpot&gt;.</returns>
-      public Dictionary<int, PlanSpot> LoadPlan(string file)
+      public List<PlanSpot> LoadPlan(string file)
       {
          if (Plan == null) {
-            Plan = new Dictionary<int, PlanSpot>();
+            Plan = new List<PlanSpot>();
          }
 
          Plan = LoadPlanData(file);
@@ -1083,7 +1082,7 @@ namespace TM
       /// </summary>
       /// <param name="plan">The plan.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool SendPlan(Dictionary<int, PlanSpot> plan = null)
+      public bool SendPlan(List<PlanSpot> plan = null)
       {
          if (plan == null) {
             plan = Plan;
@@ -1332,7 +1331,7 @@ namespace TM
                var spot = (PlanSpotResult) data.NextPlanSpotResult();
 
                if (spot.done == 1) {
-                  PlanResults.Add(spot.id, spot);
+                  PlanResults.Add(spot);
                }
 
                len -= dt;
