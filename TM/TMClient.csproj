@@ -111,6 +111,9 @@
     <None Include="Test\ExecutePlan.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Test\Init.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Test\PrintCommands.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
