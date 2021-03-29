@@ -7,19 +7,32 @@
 # *                                                                       *
 #*************************************************************************/
 
+# Set dir by "Right-Mouse Click" -> "Context menu" -> "Open with" -> "Windows PowerShell"
+$cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+Import-Module "$cd./Init.ps1"
 
-#### Set path to currentdirectory and load TMClient.dll ####
-$currentScriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-[System.IO.Directory]::SetCurrentDirectory($currentScriptDirectory)
-$dllpath  = Join-Path $currentScriptDirectory "TMClient.dll"
-$asm = [System.Reflection.Assembly]::LoadFrom($dllpath)
+Add-Type -ReferencedAssemblies $asm -TypeDefinition @"
+   using System;
+   using System.Collections.Generic;
+   using TM;
 
-$dump = Join-Path $currentScriptDirectory "DumpPlan.cs"
-$source = Get-Content -Path $dump
-Add-Type -ReferencedAssemblies $asm -TypeDefinition "$source" -Language CSharp
+   namespace D
+   {
+      public class Plan
+      {
+         public Dictionary<int, PlanSpot> Load()
+         {
+            var plan = TMClient.LoadPlanData("test_plan.txt");
+            Console.WriteLine("\nPress any key to continue ...");
+            Console.ReadKey();
+            return plan;
+         }
+      }
+   }
+"@
 
 #### Load plan data ####
-$plan = new-object Dump.Plan
+$plan = new-object D.Plan
 $spots = $plan.Load().Values
 
 #### Print out plan data to table ####

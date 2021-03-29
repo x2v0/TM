@@ -1,4 +1,4 @@
-// Sdev.c	v 2.0.2
+﻿// Sdev.c	v 2.0.2
 // 21.05.2015	redirrect to slave command used now in SetMBPScur(), GetRedirrectToSlaveSts() function added
 
 #include <ansi_c.h>

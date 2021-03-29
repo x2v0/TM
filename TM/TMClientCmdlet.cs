@@ -1,4 +1,4 @@
-// $Id: $
+п»ї// $Id: $
 
 /*************************************************************************
  *                                                                       *
@@ -1001,19 +1001,19 @@ namespace TM
    /// <code>
    ///   public enum EPlanCommand
    ///   {
-   ///      [Description("запрос на статус сервера")]
+   ///      [Description("Р·Р°РїСЂРѕСЃ РЅР° СЃС‚Р°С‚СѓСЃ СЃРµСЂРІРµСЂР°")]
    ///      GETSTATE = 1,
    /// 
-   ///      [Description("запрос на очистку плана ")]
+   ///      [Description("Р·Р°РїСЂРѕСЃ РЅР° РѕС‡РёСЃС‚РєСѓ РїР»Р°РЅР° ")]
    ///      CLEARPLAN = 2,
    /// 
-   ///      [Description("запрос на старт плана ")]
+   ///      [Description("Р·Р°РїСЂРѕСЃ РЅР° СЃС‚Р°СЂС‚ РїР»Р°РЅР° ")]
    ///      STARTPLAN = 3,
    /// 
-   ///      [Description("запрос на паузу")]
+   ///      [Description("Р·Р°РїСЂРѕСЃ РЅР° РїР°СѓР·Сѓ")]
    ///      PAUSEPLAN = 4,
    /// 
-   ///      [Description("запрос на останов")]
+   ///      [Description("Р·Р°РїСЂРѕСЃ РЅР° РѕСЃС‚Р°РЅРѕРІ")]
    ///      STOPPLAN = 5
    ///}
    ///</code>
@@ -1033,19 +1033,19 @@ namespace TM
       ///Gets or sets the command send to server.<para /><code>
       ///public enum EPlanCommand
       ///{
-      ///   [Description("запрос на статус сервера")]
+      ///   [Description("Р·Р°РїСЂРѕСЃ РЅР° СЃС‚Р°С‚СѓСЃ СЃРµСЂРІРµСЂР°")]
       ///   GETSTATE = 1,
       /// 
-      ///   [Description("запрос на очистку плана ")]
+      ///   [Description("Р·Р°РїСЂРѕСЃ РЅР° РѕС‡РёСЃС‚РєСѓ РїР»Р°РЅР° ")]
       ///   CLEARPLAN = 2,
       /// 
-      ///   [Description("запрос на старт плана ")]
+      ///   [Description("Р·Р°РїСЂРѕСЃ РЅР° СЃС‚Р°СЂС‚ РїР»Р°РЅР° ")]
       ///   STARTPLAN = 3,
       /// 
-      ///   [Description("запрос на паузу")]
+      ///   [Description("Р·Р°РїСЂРѕСЃ РЅР° РїР°СѓР·Сѓ")]
       ///   PAUSEPLAN = 4,
       /// 
-      ///   [Description("запрос на останов")]
+      ///   [Description("Р·Р°РїСЂРѕСЃ РЅР° РѕСЃС‚Р°РЅРѕРІ")]
       ///   STOPPLAN = 5
       ///}
       ///</code>

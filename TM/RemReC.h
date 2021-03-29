@@ -1,4 +1,4 @@
-#ifndef REMREC_H
+п»ї#ifndef REMREC_H
 #define REMREC_H
 
 // *** SrvCam ***
@@ -26,8 +26,8 @@ typedef struct {
 	int gain;		// Master Gain : 1-640 ?
 	int encoding;	// Regim: 0 - 8bpp, 1 - 12 bpp
 	int binning;	// 0 - 1x1 , 1 - 2x2 
-	int h_start;	// начало зоны ROI Horizontal
-	int v_start;	// начало зоны ROI Vertical
+	int h_start;	// РЅР°С‡Р°Р»Рѕ Р·РѕРЅС‹ ROI Horizontal
+	int v_start;	// РЅР°С‡Р°Р»Рѕ Р·РѕРЅС‹ ROI Vertical
 	int h_size;		// ROI Horizontal size
 	int v_size;		// ROI Vertical size
 	int trigger;	// Programm or External start

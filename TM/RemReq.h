@@ -1,4 +1,4 @@
-#ifndef REMREQ_H
+﻿#ifndef REMREQ_H
 #define REMREQ_H
 
 #ifndef WTIMER_STRUCT
@@ -512,20 +512,21 @@ typedef struct {	// Read Waveforms for Offset&Size List
 #define O_CINT  (O_OIAV+0x200)	// Output Intensity	
 
 enum ptc_project_error_list {
-PE_OK = 0,	// Status - success
-PE_COMOPE,	// Com - Open COM Port Error
-PE_COMISG,	// Com - Invalid Segment
-PE_COMCMD,	// Com - Command not supported
-PE_COMRER,	// Com - Port Read Error
-PE_COMTMO,	// Com - TimeOut - there was no record terminator in time
-PE_COMOVR,	// Com - Too many bytes in answer
-PE_COMCHR,	// Com - Bad Chars in Answer
-PE_COMODD,	// Com - Odd byte counter in Answer
-PE_COMLDR,	// Com - no Lider in Answer
-PE_COMTER,	// Com - no Terminator in Answer
-PE_COMCSM,	// Com - Bad CheckSumm
-PE_COMECD,	// Com - Device return Error Code
-PE_LAST};
+   PE_OK = 0,	// Status - success
+   PE_COMOPE,	// Com - Open COM Port Error
+   PE_COMISG,	// Com - Invalid Segment
+   PE_COMCMD,	// Com - Command not supported
+   PE_COMRER,	// Com - Port Read Error
+   PE_COMTMO,	// Com - TimeOut - there was no record terminator in time
+   PE_COMOVR,	// Com - Too many bytes in answer
+   PE_COMCHR,	// Com - Bad Chars in Answer
+   PE_COMODD,	// Com - Odd byte counter in Answer
+   PE_COMLDR,	// Com - no Lider in Answer
+   PE_COMTER,	// Com - no Terminator in Answer
+   PE_COMCSM,	// Com - Bad CheckSumm
+   PE_COMECD,	// Com - Device return Error Code
+   PE_LAST
+   };
 
 #ifndef SIZ
 #define SIZ(A)	(sizeof(A)/sizeof(A[0]))	

@@ -1,24 +1,17 @@
-
 using System;
-using System.IO;
-using System.Text;
 using System.Collections.Generic;
 using TM;
-using TM.Properties;
 
-namespace Dump
+namespace D
 {
-	public class Plan
-	{
-		public Dictionary<int, PlanSpot> Load()
-      {  
+   public class Plan
+   {
+      public Dictionary<int, PlanSpot> Load()
+      {
          var plan = TMClient.LoadPlanData("test_plan.txt");
-
-         Console.WriteLine("\n"+Resources.Для_распечатки_плана_облучения_нажмите_любую_клавишу+" ...");
-         Console.WriteLine("__________________________________________________________________________");
+         Console.WriteLine("\nPress any key to continue ...");
          Console.ReadKey();
-         
          return plan;
-		}
-	}
+      }
+   }
 }

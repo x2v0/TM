@@ -141,15 +141,13 @@ class Program
 
 "@
 
-$currentScriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-[System.IO.Directory]::SetCurrentDirectory($currentScriptDirectory)
-$dllpath = Join-Path $currentScriptDirectory 'TMClient.dll'
-$asm = [System.Reflection.Assembly]::LoadFrom($dllpath)
+$cd = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+Import-Module "$cd./Init.ps1"
  
-Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp -OutputAssembly "$currentScriptDirectory\ProcessPlan.exe" -OutputType ConsoleApplication
+Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp -OutputAssembly "ProcessPlan.exe" -OutputType ConsoleApplication
 
 # execute the code
-$plan = Join-Path $currentScriptDirectory test_plan.txt
-$program = Join-Path $currentScriptDirectory ProcessPlan.exe
+$plan = "test_plan.txt"
+$program = "ProcessPlan.exe"
 Start-Process $program $plan
 
