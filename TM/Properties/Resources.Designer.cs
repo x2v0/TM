@@ -313,7 +313,7 @@ namespace TM.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Для распечатки плана облучения нажмите любую клавишу.
+        ///   Looks up a localized string similar to Press any key to dump the plan data.
         /// </summary>
         internal static string Для_распечатки_плана_облучения_нажмите_любую_клавишу {
             get {

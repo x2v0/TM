@@ -3,7 +3,7 @@
 ::
 
 call defines.bat
-%msbuild%  .\TM.sln /t:Build /p:Configuration=release
+%msbuild%  .\TM.vs10.sln /t:Build /p:Configuration=release
 
 pause
 

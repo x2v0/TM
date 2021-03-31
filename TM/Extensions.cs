@@ -248,10 +248,8 @@ namespace TM
             header.reserved[1] = buf.NextByte();
             header.datalength = buf.NextUInt32();
             header.packet_number = buf.NextInt32();
-            return header;
          } catch {
             header.packet_number = -1; //
-            return header;
          }
 
          return header;
@@ -273,7 +271,6 @@ namespace TM
             plan.result_zangle = buf.NextFloat();
             plan.result_pcount = buf.NextFloat();
             plan.done = buf.NextInt32();
-            return plan;
          } catch {
             //plan.id = -1; //
             return null;
@@ -297,7 +294,6 @@ namespace TM
             plan.result_xangle = buf.NextFloat();
             plan.result_zangle = buf.NextFloat();
             plan.result_pcount = buf.NextFloat();
-            return plan;
          } catch {
             //plan.id = -1; //
             return null;
@@ -321,8 +317,6 @@ namespace TM
             plan.zangle = buf.NextFloat();
             plan.energy = buf.NextFloat();
             plan.pcount = buf.NextFloat();
-
-            return plan;
          } catch {
             //plan.id = -1; //
             return null;
@@ -353,8 +347,6 @@ namespace TM
             plan.result_pcount = buf.NextInt32();
             plan.changed = buf.NextInt32();
             plan.need_to_sent = buf.NextInt32();
-
-            return plan;
          } catch {
             //plan.id = -1; //
             return null;
@@ -377,8 +369,6 @@ namespace TM
             plan.result_xangle = buf.NextFloat();
             plan.result_zangle = buf.NextFloat();
             plan.result_pcount = buf.NextFloat();
-
-            return plan;
          } catch {
             //plan.id = -1; //
             return null;
