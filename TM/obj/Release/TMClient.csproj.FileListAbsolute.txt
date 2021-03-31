@@ -20,7 +20,6 @@ C:\Users\xtovo\wrk\TM\TM\obj\Release\TMClient.csproj.GenerateResource.Cache
 C:\Users\xtovo\wrk\TM\TM\obj\Release\ru\TMClient.resources.dll
 C:\Users\xtovo\wrk\TM\TM\obj\Release\TMClient.dll
 C:\Users\xtovo\wrk\TM\TM\obj\Release\TMClient.pdb
-D:\xtovo\wrk\TM\TM\obj\Release\TMClient.csprojResolveAssemblyReference.cache
 D:\xtovo\wrk\TM\TM\obj\Release\TM.Properties.Resources.resources
 D:\xtovo\wrk\TM\TM\obj\Release\TM.Properties.Resources.ru.resources
 D:\xtovo\wrk\TM\TM\obj\Release\TMClient.csproj.GenerateResource.Cache
@@ -66,3 +65,4 @@ D:\xtovo\tmp\TM\TM\obj\Release\ru\TMClient.resources.dll
 D:\xtovo\tmp\TM\TM\obj\Release\TMClient.dll
 D:\xtovo\tmp\TM\TM\obj\Release\TMClient.pdb
 D:\xtovo\wrk\TM\Redist\Test\Init.ps1
+D:\xtovo\wrk\TM\TM\obj\Release\TMClient.csprojResolveAssemblyReference.cache
