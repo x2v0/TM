@@ -11,7 +11,7 @@ Write-Host  "Loading TMClient.dll ..."
 $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
 
-$commands = Get-command -module TMClient
+$commands = Get-command -module T
 $commands | Select-Object Name | Out-Null
 
 Read-Host "Press any key to print available commands"
