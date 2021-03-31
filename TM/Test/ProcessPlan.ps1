@@ -143,7 +143,9 @@ class Program
 $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
  
-Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp -OutputAssembly "ProcessPlan.exe" -OutputType ConsoleApplication
+Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections" 
+         -TypeDefinition $code -Language CSharp -OutputAssembly "ProcessPlan.exe"
+         -OutputType ConsoleApplication
 
 # execute the code
 $plan = "test_plan.txt"

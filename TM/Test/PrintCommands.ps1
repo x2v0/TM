@@ -1,17 +1,8 @@
-# $Id: $
 
-#/*************************************************************************
-# *                                                                       *
-# * Copyright (C) 2021,   Valeriy Onuchin                                 *
-# * All rights reserved.                                                  *
-# *                                                                       *
-#*************************************************************************/
-
-Write-Host  "Loading TMClient.dll ..."
 $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
 
-$commands = Get-command -module T
+$commands = Get-command -module TM
 $commands | Select-Object Name | Out-Null
 
 Read-Host "Press any key to print available commands"

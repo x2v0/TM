@@ -45,7 +45,8 @@ $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
  
 # load embedded code
-Add-Type -ReferencedAssemblies $asm -TypeDefinition $code -Language CSharp
+Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections" 
+         -TypeDefinition $code -Language CSharp
 
 # execute the code
 Invoke-Expression "[Execute.Plan]::Main()"

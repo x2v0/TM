@@ -12,7 +12,7 @@ $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
 $code = Get-Content "$cd./DumpPlan.cs"
 
-Add-Type -ReferencedAssemblies $asm -TypeDefinition "$code"
+Add-Type -ReferencedAssemblies $asm, "System.Collections"  -TypeDefinition "$code"
 
 #### Load plan data ####
 $plan = new-object My.Plan
