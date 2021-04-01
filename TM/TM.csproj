@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-   <TargetFrameworks>net40;net48;netcoreapp2.1;netstandard2.0;net5.0</TargetFrameworks>
+   <TargetFrameworks>net40;net48;netcoreapp3.1;netstandard2.0;net5.0</TargetFrameworks>
    <RootNamespace>TM</RootNamespace>
    <AssemblyName>TM</AssemblyName>
   </PropertyGroup>
@@ -37,6 +37,12 @@
      <Optimize>false</Optimize>
      <OutputPath>..\Redist\</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Test\**" />
+    <EmbeddedResource Remove="Test\**" />
+    <None Remove="Test\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.Management.Automation">

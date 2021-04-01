@@ -45,7 +45,7 @@ $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
  
 # load embedded code
-Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections", "netstandard"
+Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections", "netstandard" `
          -TypeDefinition $code -Language CSharp
 
 # execute the code

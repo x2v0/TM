@@ -118,117 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Loading_PlanData" xml:space="preserve">
-     <value>Загрузка плана</value>
+    <value>Загрузка плана</value>
   </data>
   <data name="file_not_found" xml:space="preserve">
     <value>файл не существует</value>
   </data>
   <data name="file" xml:space="preserve">
-     <value>файл</value>
-     <comment>файл</comment>
+    <value>файл</value>
+    <comment>файл</comment>
   </data>
   <data name="Failed_to_load" xml:space="preserve">
-     <value>Ошибка загрузки</value>
-     <comment>Ошибка загрузки</comment>
+    <value>Ошибка загрузки</value>
+    <comment>Ошибка загрузки</comment>
   </data>
   <data name="loaded" xml:space="preserve">
-     <value>загружен</value>
-     <comment>загружен</comment>
+    <value>загружен</value>
+    <comment>загружен</comment>
   </data>
   <data name="Error" xml:space="preserve">
-     <value>Ошибка</value>
-     <comment>Ошибка</comment>
+    <value>Ошибка</value>
+    <comment>Ошибка</comment>
   </data>
   <data name="wrong_format_data" xml:space="preserve">
-     <value>неправильный формат данных</value>
-     <comment>неправильный формат данных</comment>
+    <value>неправильный формат данных</value>
+    <comment>неправильный формат данных</comment>
   </data>
   <data name="Sending_plan_to_server" xml:space="preserve">
-     <value>Пересылка плана на сервер</value>
-     <comment>Пересылка плана на сервер</comment>
+    <value>Пересылка плана на сервер</value>
+    <comment>Пересылка плана на сервер</comment>
   </data>
   <data name="Plan_sent_to_server" xml:space="preserve">
-     <value>План послан на сервер</value>
-     <comment>План послан на сервер</comment>
+    <value>План послан на сервер</value>
+    <comment>План послан на сервер</comment>
   </data>
   <data name="Failed_to_connect_to" xml:space="preserve">
-     <value>Ошибка соединения</value>
-     <comment>Ошибка соединения</comment>
+    <value>Ошибка соединения</value>
+    <comment>Ошибка соединения</comment>
   </data>
   <data name="Connected_to" xml:space="preserve">
-     <value>Соединение установлено</value>
-     <comment>Соединение установлено</comment>
+    <value>Соединение установлено</value>
+    <comment>Соединение установлено</comment>
   </data>
   <data name="Disconnected_from" xml:space="preserve">
-     <value>Произошло отсоединение от </value>
-     <comment>Произошло отсоединение от </comment>
+    <value>Произошло отсоединение от </value>
+    <comment>Произошло отсоединение от </comment>
   </data>
   <data name="Failed_to_send" xml:space="preserve">
-     <value>Ошибка передачи данных</value>
-     <comment>Ошибка передачи данных</comment>
+    <value>Ошибка передачи данных</value>
+    <comment>Ошибка передачи данных</comment>
   </data>
   <data name="plan" xml:space="preserve">
-     <value>план</value>
-     <comment>план</comment>
+    <value>план</value>
+    <comment>план</comment>
   </data>
   <data name="Server_not_ready" xml:space="preserve">
-     <value>Сервер не готов</value>
-     <comment>Сервер не готов</comment>
+    <value>Сервер не готов</value>
+    <comment>Сервер не готов</comment>
   </data>
   <data name="Sending_command_to_server" xml:space="preserve">
-     <value>Посылка команды на сервер</value>
-     <comment>Посылка команды на сервер</comment>
+    <value>Посылка команды на сервер</value>
+    <comment>Посылка команды на сервер</comment>
   </data>
   <data name="Sending_info_to_server" xml:space="preserve">
-     <value>Посылка сообщения на сервер</value>
-     <comment>Посылка сообщения на сервер</comment>
+    <value>Посылка сообщения на сервер</value>
+    <comment>Посылка сообщения на сервер</comment>
   </data>
   <data name="Failed_to_read" xml:space="preserve">
-     <value>Ошибка чтения</value>
-     <comment>Ошибка чтения</comment>
+    <value>Ошибка чтения</value>
+    <comment>Ошибка чтения</comment>
   </data>
   <data name="plan_data" xml:space="preserve">
-     <value>данные плана</value>
-     <comment>данные плана</comment>
+    <value>данные плана</value>
+    <comment>данные плана</comment>
   </data>
   <data name="Server_is_not_connected" xml:space="preserve">
-     <value>Нет соединения с сервером</value>
-     <comment>Нет соединения с сервером</comment>
+    <value>Нет соединения с сервером</value>
+    <comment>Нет соединения с сервером</comment>
   </data>
   <data name="Press" xml:space="preserve">
-     <value>Нажмите</value>
-     <comment>Нажмите</comment>
+    <value>Нажмите</value>
+    <comment>Нажмите</comment>
   </data>
   <data name="to_interrupt" xml:space="preserve">
-     <value>для прерывания операции</value>
-     <comment>для прерывания операции</comment>
+    <value>для прерывания операции</value>
+    <comment>для прерывания операции</comment>
   </data>
   <data name="Failed_to_send_plan" xml:space="preserve">
-     <value>Ошибка передачи плана на сервер</value>
-     <comment>Ошибка передачи плана на сервер</comment>
+    <value>Ошибка передачи плана на сервер</value>
+    <comment>Ошибка передачи плана на сервер</comment>
   </data>
   <data name="Plan_processed" xml:space="preserve">
-     <value>План обработан на </value>
-     <comment>План обработан на </comment>
+    <value>План обработан на </value>
+    <comment>План обработан на </comment>
   </data>
   <data name="Executing_plan" xml:space="preserve">
-     <value>Обработка плана</value>
-     <comment>Обработка плана</comment>
+    <value>Обработка плана</value>
+    <comment>Обработка плана</comment>
   </data>
   <data name="Progress_" xml:space="preserve">
-     <value>Обработано:</value>
-     <comment>Обработано:</comment>
+    <value>Обработано:</value>
+    <comment>Обработано:</comment>
   </data>
   <data name="Plan_processing_finished_" xml:space="preserve">
-     <value>Обработка плана завершена!</value>
-     <comment>Обработка плана завершена!</comment>
+    <value>Обработка плана завершена!</value>
+    <comment>Обработка плана завершена!</comment>
   </data>
   <data name="port_number" xml:space="preserve">
-     <value>Номер порта</value>
-     <comment>Номер порта</comment>
+    <value>Номер порта</value>
+    <comment>Номер порта</comment>
   </data>
-  <data name="Для_распечатки_плана_облучения_нажмите_любую_клавишу" xml:space="preserve">
-     <value>Для распечатки плана облучения нажмите любую клавишу</value>
-     <comment>Для распечатки плана облучения нажмите любую клавишу</comment>
+  <data name="To_print_plan" xml:space="preserve">
+    <value>Для распечатки плана облучения нажмите любую клавишу</value>
+    <comment>Для распечатки плана облучения нажмите любую клавишу</comment>
   </data>
 </root>

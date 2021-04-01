@@ -37,6 +37,8 @@ class Program
       var ok = false;
       
       try {
+         Console.OutputEncoding = System.Text.Encoding.UTF8;
+
          // connect to server - "localhost:9996"
          ok = Client.Connect("localhost", 9996);
       } catch(Exception ex){
@@ -143,12 +145,12 @@ class Program
 $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
  
-Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections" 
-         -TypeDefinition $code -Language CSharp -OutputAssembly "ProcessPlan.exe"
+$program = "../ProcessPlan.exe"
+Add-Type -ReferencedAssemblies $asm, "System.Console", "System.Collections", "System.Threading" `
+         -TypeDefinition $code -Language CSharp -OutputAssembly $program `
          -OutputType ConsoleApplication
 
 # execute the code
 $plan = "test_plan.txt"
-$program = "ProcessPlan.exe"
 Start-Process $program $plan
 
