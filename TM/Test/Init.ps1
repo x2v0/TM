@@ -1,14 +1,14 @@
 #### Set path to the current directory and load TM.dll ####
 
 # Set dir by "Right-Mouse Click" -> "Context menu" -> "Open with" -> "Windows PowerShell"
-$currentScriptDirectory = $MyInvocation.MyCommand.Path
+$currentScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+	
 if ([string]::IsNullOrEmpty($currentScriptDirectory)) {
 	$currentScriptDirectory = Get-Location
-} else {
-	$currentScriptDirectory = Split-Path $currentScriptDirectory -Path  -Parent
 }
 
-$dllpath = Join-Path $currentScriptDirectory "../TM.dll"
+write-host "QQQ $currentScriptDirectory eee"
+$dllpath = Join-Path $currentScriptDirectory "..\TM.dll"
 
 [System.IO.Directory]::SetCurrentDirectory($currentScriptDirectory)
 Set-Location $currentScriptDirectory
