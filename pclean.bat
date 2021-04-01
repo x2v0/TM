@@ -19,6 +19,7 @@ for /D /R %%i in (x64*) do (rd /s /q "%%i")
 attrib /s -r -h -s *.suo
 attrib /s -r -h -s Thumbs.db
 
+
 del /s /q Redist\*.dll
 del /s /q _Re*
 del /s /q *.aps
@@ -40,5 +41,4 @@ del *.ilk /s /q
 del *.idb /s /q
 del *.aps /s /q
 ::del *.o /s /q
-
 pause
