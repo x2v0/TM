@@ -5,7 +5,7 @@ Import-Module "$cd./Init.ps1"
 $commands = Get-command -module TM
 $commands | Select-Object Name | Out-Null
 
-Read-Host "Press any key to print available commands"
+Read-Host "Press ENTER to print available commands"
 '______________________________________________________________________________________________';
 
 $commands | foreach ($_) {
@@ -14,11 +14,11 @@ $commands | foreach ($_) {
 }
 
 
-Read-Host "`n`n`n`nPress any key to print available classes"
+Read-Host "`n`n`n`nPress ENTER to print available classes"
 '______________________________________________________________________________________________';
 $typ | select -property FullName, BaseType | ft
 
-Read-Host "`n`n`n`nPress any key to display available Enums"
+Read-Host "`n`n`n`nPress ENTER to display available Enums"
 
 $enums = $typ | select -property FullName, BaseType | ? {$_.BaseType -like "*Enum"}
 $enums | 
@@ -28,7 +28,7 @@ $enums |
       [Enum]::GetValues($_.FullName)
    }
 
-Read-Host "`n`n`n`nPress any key to display available Structures"
+Read-Host "`n`n`n`nPress ENTER to display available Structures"
 
 $structs = $typ | select -property FullName, BaseType | ? {$_.BaseType -like "*ValueType"}
 $structs | 
