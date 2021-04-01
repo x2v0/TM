@@ -87,7 +87,7 @@ namespace Connect$id
 $cd = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 Import-Module "$cd./Init.ps1"
 
-Add-Type -ReferencedAssemblies $asm, "System.Console" -TypeDefinition $code -Language CSharp
+Add-Type -ReferencedAssemblies $asm, "System.Console", "netstandard"-TypeDefinition $code -Language CSharp
 
 # execute the code
 Invoke-Expression "[Connect$id.Program]::Main()"

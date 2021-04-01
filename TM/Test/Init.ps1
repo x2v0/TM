@@ -7,7 +7,6 @@ if ([string]::IsNullOrEmpty($currentScriptDirectory)) {
 	$currentScriptDirectory = Get-Location
 }
 
-write-host "QQQ $currentScriptDirectory eee"
 $dllpath = Join-Path $currentScriptDirectory "..\TM.dll"
 
 [System.IO.Directory]::SetCurrentDirectory($currentScriptDirectory)
