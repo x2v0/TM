@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using TM;
 using TM.Properties;
+using TMPlan;
 using TMSrv;
 
 
@@ -37,11 +38,6 @@ public delegate void ClientDataHandler(BufferChunk data = null, int bytesRead = 
 /// </summary>
 public delegate void ClientHandler();
 
-/// <summary>
-///    Delegate PlanResultsHandler
-/// </summary>
-/// <param name="results">The results.</param>
-public delegate void PlanResultsHandler(List<PlanSpotResult> results);
 
 /// <summary>
 ///    Delegate ServerStateChangedHandler
@@ -58,11 +54,6 @@ namespace TM
    public static class Globals
    {
       #region Static fields
-
-      /// <summary>
-      ///    GLOBAL Client
-      /// </summary>
-      public static TMClient Client;
 
       /// <summary>
       ///    The default IP
@@ -104,11 +95,11 @@ namespace TM
    }
 
    /// <summary>
-   ///    Class TMClient.
+   ///    Class TM.Client.
    ///    <br />Implements the <see cref="System.IDisposable" />
    /// </summary>
    /// <seealso cref="System.IDisposable" />
-   public class TMClient : IDisposable
+   public class Client : IDisposable
    {
       #region Static fields
 
@@ -122,15 +113,12 @@ namespace TM
       #region Constructors and destructors
 
       /// <summary>
-      ///    Initializes a new instance of the <see cref="TMClient" /> class.
+      ///    Initializes a new instance of the <see cref="TM.Client" /> class.
       /// </summary>
-      public TMClient()
+      public Client()
       {
-         Plan = new List<PlanSpot>();
-         PlanResults = new List<PlanSpotResult>();
+        
          DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
-
-         Globals.Client = this;
          Globals.Language = "ru";
       }
 
@@ -182,20 +170,6 @@ namespace TM
       /// </summary>
       public event ClientHandler InfoReceived;
 
-      /// <summary>
-      ///    Occurs when [plan processing is finished].
-      /// </summary>
-      public event ClientHandler PlanFinished;
-
-      /// <summary>
-      ///    Occurs when [plan loaded].
-      /// </summary>
-      public event ClientHandler PlanLoaded;
-
-      /// <summary>
-      ///    Occurs when part of [plan results processed and received].
-      /// </summary>
-      public event PlanResultsHandler PlanResultsProcessed;
 
       /// <summary>
       ///    Occurs when [server connected].
@@ -251,7 +225,7 @@ namespace TM
       ///    Gets the packet header.
       /// </summary>
       /// <value>The header.</value>
-      public TMPacketHeader Header
+      public PacketHeader Header
       {
          get;
          private set;
@@ -275,7 +249,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    Gets a value indicating whether this <see cref="TMClient" /> is connected.
+      ///    Gets a value indicating whether this <see cref="TM.Client" /> is connected.
       /// </summary>
       /// <value><c>true</c> if connected; otherwise, <c>false</c>.</value>
       public bool IsConnected
@@ -331,51 +305,19 @@ namespace TM
       ///    Gets the local IP address.
       /// </summary>
       /// <value>The local IP address.</value>
-      public string LocalIpAddress
-      {
-         get
-         {
-            return LocalEndPoint != null ? LocalEndPoint.Address.ToString() : string.Empty;
-         }
-      }
+      public string LocalIpAddress => LocalEndPoint != null ? LocalEndPoint.Address.ToString() : string.Empty;
 
       /// <summary>
       ///    Gets the local port.
       /// </summary>
       /// <value>The local port.</value>
-      public int LocalPort
-      {
-         get
-         {
-            return LocalEndPoint != null ? LocalEndPoint.Port : 0;
-         }
-      }
+      public int LocalPort => LocalEndPoint?.Port ?? 0;
 
       /// <summary>
       ///    Gets the MCS_State_Server structure.
       /// </summary>
       /// <value>The server.</value>
       public MCS_State_topass MCS_State_Server
-      {
-         get;
-         private set;
-      }
-
-      /// <summary>
-      ///    Loaded plan data
-      /// </summary>
-      /// <value>The plan.</value>
-      public List<PlanSpot> Plan
-      {
-         get;
-         private set;
-      }
-
-      /// <summary>
-      ///    Processed plan results
-      /// </summary>
-      /// <value>The plan results.</value>
-      public List<PlanSpotResult> PlanResults
       {
          get;
          private set;
@@ -405,39 +347,13 @@ namespace TM
       ///    Gets the remote end point.
       /// </summary>
       /// <value>The remote end point.</value>
-      public IPEndPoint RemoteEndPoint
-      {
-         get
-         {
-            return ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
-         }
-      }
+      public IPEndPoint RemoteEndPoint => ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
 
       /// <summary>
       ///    Gets the state of the server.
       /// </summary>
       /// <value>The state of the server.</value>
       public ECommandState ServerState
-      {
-         get;
-         private set;
-      }
-
-      /// <summary>
-      ///    Gets the number of spots processed.
-      /// </summary>
-      /// <value>The spots passed.</value>
-      public uint SpotsPassed
-      {
-         get;
-         private set;
-      }
-
-      /// <summary>
-      ///    Gets the number of spots total in plan.
-      /// </summary>
-      /// <value>The spots total.</value>
-      public uint SpotsTotal
       {
          get;
          private set;
@@ -460,224 +376,7 @@ namespace TM
 
       #region Public methods
 
-      /// <summary>
-      ///    Dumps the plan data.
-      /// </summary>
-      /// <param name="plan">The plan data.</param>
-      public static void DumpPlan(List<PlanSpot> plan)
-      {
-         try {
-            foreach (var spot in plan) {
-               Console.WriteLine(spot);
-            }
-         } catch {
-            // ignored
-         }
-      }
-
-      /// <summary>
-      ///    Dumps the plan results.
-      /// </summary>
-      /// <param name="results">The results.</param>
-      public static void DumpPlanResults(List<PlanSpotResult> results)
-      {
-         try {
-            foreach (var spot in results) {
-               Console.WriteLine(spot);
-            }
-         } catch {
-            // ignored
-         }
-      }
-
-      /// <summary>
-      ///    Reads the file and loads the plan data.
-      /// </summary>
-      /// <param name="file">The file with plan data.</param>
-      /// <returns>BufferChunk. The raw array of bytes</returns>
-      /// <exception cref="System.IO.FileNotFoundException"></exception>
-      /// <exception cref="ReadPlanException">
-      /// </exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      public static List<PlanSpot> LoadPlanData(string file)
-      {
-         if (string.IsNullOrEmpty(file) ||
-             !File.Exists(file)) {
-            if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-               Console.WriteLine(Resources.Loading_PlanData + " : " + Resources.file_not_found + " - " + file);
-            }
-
-            throw new FileNotFoundException();
-         }
-
-         var cnt = 0;
-         uint length = 0;
-
-         try {
-            if (Globals.Client == null) {
-               Globals.Client = new TMClient();
-            }
-
-            var r = new Regex(@"\s+");
-
-            if (DebugPreference == 2) { // ActionPreference.Continue
-               Console.WriteLine(Resources.Loading_PlanData + ", " + Resources.file + " - " + file);
-            }
-
-            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read)) {
-               using (var sr = new StreamReader(fs, Encoding.UTF8)) {
-                  string line;
-
-                  while ((line = sr.ReadLine()) != null) {
-                     if (string.IsNullOrEmpty(line) ||
-                         line.StartsWith("//")) {
-                        continue;
-                     }
-
-                     if ((line == "\n") ||
-                         (line == "\r\n")) {
-                        continue;
-                     }
-
-                     var parts = r.Split(line);
-                     var spot = new PlanSpot();
-
-                     try {
-                        spot.id = cnt;
-                        spot.xangle = float.Parse(parts[0], CultureInfo.InvariantCulture);
-                        spot.zangle = float.Parse(parts[1], CultureInfo.InvariantCulture);
-                        spot.energy = float.Parse(parts[2], CultureInfo.InvariantCulture);
-                        spot.pcount = float.Parse(parts[3], CultureInfo.InvariantCulture);
-
-                        cnt++;
-                        length += PlanSpot.Length;
-                        Globals.Client.Plan.Add(spot);
-                     } catch (Exception ex) {
-                        if (DebugPreference == 2) { // ActionPreference.Continue
-                           Console.WriteLine(Resources.Failed_to_load + " PlanData (" + Resources.wrong_format_data + "), " + Resources.file + " - " + file + "\nentries = " + cnt + " " +
-                                             Resources.Error + ": " + ex.Message);
-                        }
-
-                        throw new ReadPlanException(file);
-                     }
-                  }
-               }
-
-               if (DebugPreference == 2) { // ActionPreference.Continue
-                  Console.WriteLine("PlanData" + " " + Resources.loaded + ": entries = " + cnt + ", size = " + (length / 1000.0) + " Kb");
-               }
-            }
-
-            return Globals.Client.Plan;
-         } catch (Exception ex) {
-            if (DebugPreference == 2) { // ActionPreference.Continue  = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + ", " + Resources.file + " - " + file + "\nentries = " + cnt + " " + Resources.Error + ": " + ex.Message);
-            }
-
-            throw new ReadPlanException(file);
-            return null;
-         }
-
-         return null;
-      }
-
-      /// <summary>
-      ///    Sends the plan to server.
-      /// </summary>
-      /// <param name="client">The client.</param>
-      /// <param name="spots">The spots.</param>
-      /// <param name="nblocks">The nblocks.</param>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.SendPlanException">
-      /// </exception>
-      public static bool SendPlan(TMClient client, List<PlanSpot> spots, uint nblocks = 10)
-      {
-         var ok = false;
-         client.SendCommand(EPlanCommand.CLEARPLAN);
-
-         BufferChunk.SetNetworking();
-         var plan = new BufferChunk();
-
-         foreach (var spot in spots) {
-            plan.Add(spot);
-         }
-
-         var len = PlanSpot.Length * nblocks;
-         if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + (plan.Length / 1000.0) + " Kb");
-         }
-
-         try {
-            while (plan.Length > len) {
-               var bf = plan.NextBufferChunk((int) len);
-               client.SendData(bf);
-            }
-
-            try {
-               if (plan.Length >= PlanSpot.Length) {
-                  var bf = plan.NextBufferChunk(plan.Length);
-                  client.SendData(bf);
-               }
-            } catch {
-               throw new SendPlanException();
-               return false;
-            }
-         } catch {
-            if (plan.Length >= PlanSpot.Length) { // send the last portion of data
-               try {
-                  var bf = plan.NextBufferChunk(plan.Length);
-                  client.SendData(bf);
-               } catch {
-                  throw new SendPlanException();
-                  return false;
-               }
-            }
-         }
-
-         if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Plan_sent_to_server + ".");
-         }
-
-         client.SendCommand(EPlanCommand.GETSTATE);
-         return true;
-      }
-
-      /// <summary>
-      ///    Sends the plan data to server.
-      /// </summary>
-      /// <param name="client">The client.</param>
-      /// <param name="spots">The plan as list of spots.</param>
-      /// <param name="nblocks">The nblocks.</param>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.SendPlanException"></exception>
-      public static bool SendPlan(TMClient client, Dictionary<int, PlanSpot> spots, uint nblocks = 10)
-      {
-         var list = new List<PlanSpot>();
-         foreach (var spot in spots.Values) {
-            list.Add(spot);
-         }
-
-         return SendPlan(client, list, nblocks);
-      }
-
-      /// <summary>
-      ///    SendCommand(EPlanCommand.GETSTATE); to the server.
-      /// </summary>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool AskServerState()
-      {
-         return SendCommand(EPlanCommand.GETSTATE);
-      }
-
-      /// <summary>
-      ///    Clears the plan.
-      /// </summary>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool ClearPlan()
-      {
-         return SendCommand(EPlanCommand.CLEARPLAN);
-      }
-
+ 
       /// <summary>
       ///    Connects the specified ip.
       /// </summary>
@@ -714,22 +413,18 @@ namespace TM
             Console.WriteLine(Resources.Connected_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
          }
 
-         if (ServerConnected != null) {
-            ServerConnected();
-         }
+         ServerConnected?.Invoke();
 
          return true;
       }
 
       /// <summary>
-      ///    Disconnects this TMClient.
+      ///    Disconnects this TM.Client.
       /// </summary>
       /// <returns><c>true</c> if disconnect is OK, <c>false</c> otherwise.</returns>
       public bool Disconnect()
       {
-         if (ServerDisconnected != null) {
-            ServerDisconnected();
-         }
+         ServerDisconnected?.Invoke();
 
          if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
             Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
@@ -741,141 +436,11 @@ namespace TM
       }
 
       /// <summary>
-      ///    Dumps the plan results.
-      /// </summary>
-      public void DumpPlanResults()
-      {
-         DumpPlanResults(PlanResults);
-      }
-
-      /// <summary>
-      ///    <code>
-      /// LoadPlan(file) - loads the specified file with plan data.
-      /// SendPlan()     - sends plan to the server specified by ip nad port
-      /// StartPlan()    - starts plan processing on the server
-      /// while (ProcessingIsOn) - waits for results of processing
-      /// when results of plan processing received from server, fills PlanResults list
-      /// if (ServerState == ECommandState.FINISHED) - execute PlanFinished() event
-      /// </code>
-      /// </summary>
-      /// <param name="file">The file with plan data.</param>
-      /// <param name="ip">The server IP.</param>
-      /// <param name="port">The port.</param>
-      /// <returns>Dictionary&lt;System.Int32, PlanSpotFull&gt;.</returns>
-      public List<PlanSpotFull> ExecutePlan(string file, string ip = null, int port = 0)
-      {
-         Reset();
-         ServerStateChanged += OnServerStateChanged;
-         ProcessingIsOn = false;
-
-         var ok = Connect(ip, port);
-
-         if (!ok) {
-            return null;
-         }
-
-         ClearPlan();
-
-         ok = LoadPlan(file) != null;
-
-         if (!ok) {
-            return null;
-         }
-
-         ok = SendPlan();
-
-         if (!ok) {
-            if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_send + " " + Resources.plan);
-            }
-
-            return null;
-         }
-
-         ok = StartPlan();
-
-         ProcessingIsOn = true;
-
-         while (ProcessingIsOn) {
-            ok = AskServerState();
-
-            if (!ok ||
-                (ServerState == ECommandState.NOTREADY)) {
-               if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-                  Console.WriteLine(Resources.Server_not_ready);
-               }
-
-               //return null;
-            }
-
-            if ((ServerState == ECommandState.FINISHED) &&
-                (PlanResults.Count > 1)) {
-               ProcessingIsOn = false;
-
-               if (PlanFinished != null) {
-                  PlanFinished();
-               }
-            }
-
-            Thread.Sleep(300);
-         }
-
-         var ret = new List<PlanSpotFull>();
-
-         foreach (var spot in PlanResults) {
-            var plan = Plan[spot.id];
-            var full = new PlanSpotFull();
-            full.id = spot.id;
-            full.xangle = plan.xangle;
-            full.zangle = plan.zangle;
-            full.pcount = plan.pcount;
-            full.energy = plan.energy;
-            full.result_xangle = spot.result_xangle;
-            full.result_zangle = spot.result_zangle;
-            full.result_pcount = spot.result_pcount;
-            full.done = spot.done;
-            //full.changed = spot.Value.changed;
-            ret.Add(full);
-         }
-
-         return ret;
-      }
-
-      /// <summary>
-      ///    Loads the specified file with plan data.
-      /// </summary>
-      /// <param name="file">The file.</param>
-      /// <returns>Dictionary&lt;System.Int32, PlanSpot&gt;.</returns>
-      public List<PlanSpot> LoadPlan(string file)
-      {
-         if (Plan == null) {
-            Plan = new List<PlanSpot>();
-         }
-
-         Plan = LoadPlanData(file);
-
-         if (PlanLoaded != null) {
-            PlanLoaded();
-         }
-
-         return Plan;
-      }
-
-      /// <summary>
-      ///    Pauses the plan processing on server.
-      /// </summary>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool PausePlan()
-      {
-         return SendCommand(EPlanCommand.PAUSEPLAN);
-      }
-
-      /// <summary>
       ///    Resets this instance.
       /// </summary>
-      public void Reset()
+      public virtual void Reset()
       {
-         ServerStateChanged -= OnServerStateChanged;
+     
          ProcessingIsOn = false;
 
          fListenThread = null;
@@ -886,73 +451,9 @@ namespace TM
             fNetworkStream = null;
          }
 
-         if (Sender != null) {
-            Sender.Close();
-         }
+         Sender?.Close();
 
          Sender = null;
-         PlanResults.Clear();
-      }
-
-      /// <summary>
-      ///    Sends the EPlanCommand to server.
-      ///    <code>
-      /// public enum EPlanCommand
-      /// {
-      ///    [Description("запрос на статус сервера")]
-      ///    GETSTATE = 1,
-      ///    
-      ///    [Description("запрос на очистку плана ")]
-      ///    CLEARPLAN = 2,
-      ///  
-      ///    [Description("запрос на старт плана ")]
-      ///    STARTPLAN = 3,
-      ///  
-      ///    [Description("запрос на паузу")]
-      ///    PAUSEPLAN = 4,
-      ///  
-      ///    [Description("запрос на останов")]
-      ///    STOPPLAN = 5
-      /// }
-      /// </code>
-      /// </summary>
-      /// <param name="cmd">The EPlanCommand.</param>
-      /// <param name="server_type">Type of the server.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.SendCommandException"></exception>
-      public bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)
-      {
-         bool ret;
-
-         if (Sender == null) {
-            return false;
-         }
-
-         if (cmd == EPlanCommand.CLEARPLAN) {
-            PlanResults.Clear();
-         }
-
-         try {
-            var packet = new TMPacket(server_type, EPacketType.Command, (byte) cmd);
-            if (cmd != EPlanCommand.GETSTATE) {
-               if (DebugPreference == 2) { // ActionPreference.Continue
-                  Console.WriteLine(Resources.Sending_command_to_server + ": " + cmd.Description());
-               }
-            }
-
-            ret = SendPacket(packet);
-         } catch (Exception ex) {
-            var msg = "SendCommand : " + cmd + " - " + ex.Message;
-
-            if (DebugPreference == 2) { // ActionPreference.Continue
-               Console.WriteLine(msg);
-            }
-
-            throw new SendCommandException(msg);
-            return false;
-         }
-
-         return ret;
       }
 
       /// <summary>
@@ -962,7 +463,7 @@ namespace TM
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <exception cref="TM.SendDataException"></exception>
-      public bool SendData(byte[] data, EServerType server_type = EServerType.MCS)
+      public virtual bool Send(byte[] data, EServerType server_type = EServerType.MCS)
       {
          bool ret;
 
@@ -974,8 +475,8 @@ namespace TM
 #if LOCAL_DEBUG
             Console.WriteLine("Sending data to server ... ");
 #endif
-            var packet = new TMPacket(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, 0, data);
-            ret = SendPacket(packet);
+            var packet = new Packet(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, 0, data);
+            ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
 
@@ -998,9 +499,9 @@ namespace TM
       /// <param name="data">The data.</param>
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool SendData(BufferChunk data, EServerType server_type = EServerType.MCS)
+      public virtual bool Send(BufferChunk data, EServerType server_type = EServerType.MCS)
       {
-         return SendData((uint) data.Length, (byte[]) data, server_type);
+         return Send((uint) data.Length, (byte[]) data, server_type);
       }
 
       /// <summary>
@@ -1011,7 +512,7 @@ namespace TM
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       /// <exception cref="TM.SendDataException"></exception>
-      public bool SendData(uint len, byte[] data, EServerType server_type = EServerType.MCS)
+      public virtual bool Send(uint len, byte[] data, EServerType server_type = EServerType.MCS)
       {
          bool ret;
 
@@ -1023,8 +524,8 @@ namespace TM
 #if LOCAL_DEBUG
             Console.WriteLine("Sending data to server: length = " + len);
 #endif
-            var packet = new TMPacket(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, len, data);
-            ret = SendPacket(packet);
+            var packet = new Packet(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, len, data);
+            ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
 
@@ -1049,7 +550,7 @@ namespace TM
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <exception cref="TM.SendInfoException"></exception>
-      public bool SendInfo(string info, EServerType server_type = EServerType.MCS)
+      public virtual bool SendInfo(string info, EServerType server_type = EServerType.MCS)
       {
          bool ret;
 
@@ -1062,8 +563,8 @@ namespace TM
                Console.WriteLine(Resources.Sending_info_to_server + ": " + info);
             }
 
-            var packet = new TMPacket(server_type, EPacketType.Info, info);
-            ret = SendPacket(packet);
+            var packet = new Packet(server_type, EPacketType.Info, info);
+            ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendInfo : " + ex.Message;
 
@@ -1077,71 +578,7 @@ namespace TM
          return ret;
       }
 
-      /// <summary>
-      ///    Sends the loaded plan to server.
-      /// </summary>
-      /// <param name="plan">The plan.</param>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool SendPlan(List<PlanSpot> plan = null)
-      {
-         if (plan == null) {
-            plan = Plan;
-         }
-
-         return SendPlan(this, plan);
-      }
-
-      /// <summary>
-      ///    Sends the plan as collection of spots to server.
-      /// </summary>
-      /// <param name="list">The list.</param>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool SendPlan(ICollection<PlanSpot> list)
-      {
-         var plan = new Dictionary<int, PlanSpot>();
-
-         foreach (var spot in list) {
-            plan.Add(spot.id, spot);
-         }
-
-         return SendPlan(this, plan);
-      }
-
-      /// <summary>
-      ///    Sends the plan as array of PSObjects to remote server
-      /// </summary>
-      /// <param name="arr">The array of PSObjects.</param>
-      /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-      public bool SendPlan(object[] arr)
-      {
-         var plan = new Dictionary<int, PlanSpot>();
-
-         foreach (var obj in arr) {
-            var ps = (PSObject) obj;
-            var spot = (PlanSpot) ps.BaseObject;
-            plan.Add(spot.id, spot);
-         }
-
-         return SendPlan(this, plan);
-      }
-
-      /// <summary>
-      ///    Starts the plan processing on remote server.
-      /// </summary>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool StartPlan()
-      {
-         return SendCommand(EPlanCommand.STARTPLAN);
-      }
-
-      /// <summary>
-      ///    Stops the plan processing on remote server.
-      /// </summary>
-      /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool StopPlan()
-      {
-         return SendCommand(EPlanCommand.STOPPLAN);
-      }
+   
 
       #endregion
 
@@ -1210,7 +647,7 @@ namespace TM
                continue;
             }
 
-            if (numberOfBytesRead >= TMPacketHeader.Length) {
+            if (numberOfBytesRead >= PacketHeader.Length) {
                Header = ReadData.NextPacketHeader();
             }
 
@@ -1294,63 +731,13 @@ namespace TM
          Disconnect();
       }
 
+   
       /// <summary>
-      ///    Event called when [server state changed].
+      ///    Sends the Packet to server.
       /// </summary>
-      /// <param name="state">The server state.</param>
-      private void OnServerStateChanged(ECommandState state)
-      {
-         if (state == ECommandState.INPROCESS) { // plan processing is ON
-            if (DebugPreference == 2) { // ActionPreference.Continue == DEBUG is ON
-               Console.WriteLine("Spot processed/total = " + SpotsPassed + "/" + SpotsTotal);
-            }
-         }
-
-         if (state != ECommandState.FINISHED) {
-            return;
-         }
-
-         if (PlanFinished != null) {
-            PlanFinished();
-         }
-      }
-
-      /// <summary>
-      ///    Converts BufferChunk to PlanSpotResults
-      /// </summary>
-      /// <param name="data">The data.</param>
-      /// <param name="bytesRead">The bytes read.</param>
-      /// <returns>List&lt;PlanSpotResult&gt;.</returns>
-      private void ProcessPlanResults(BufferChunk data, int bytesRead)
-      {
-         var len = bytesRead;
-         var dt = (int) PlanSpotResult.Length;
-
-         try {
-            while (len >= 0) {
-               var spot = (PlanSpotResult) data.NextPlanSpotResult();
-
-               if (spot.done == 1) {
-                  PlanResults.Add(spot);
-               }
-
-               len -= dt;
-            }
-         } catch {
-            // ignored
-         }
-
-         if (PlanResultsProcessed != null) {
-            PlanResultsProcessed(PlanResults);
-         }
-      }
-
-      /// <summary>
-      ///    Sends the TMPacket to server.
-      /// </summary>
-      /// <param name="p">The TMPacket.</param>
+      /// <param name="p">The Packet.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      private bool SendPacket(TMPacket p)
+      public bool Send(Packet p)
       {
          if (Sender == null) {
             return false;
@@ -1372,26 +759,6 @@ namespace TM
    }
 
    #region Exception classes
-
-   /// <summary>
-   ///    Exception during reading plan from a file
-   ///    <br />Implements the <see cref="System.Exception" />
-   /// </summary>
-   /// <seealso cref="System.Exception" />
-   public class ReadPlanException : Exception
-   {
-      #region Constructors and destructors
-
-      /// <summary>
-      ///    Initializes a new instance of the <see cref="ReadPlanException" /> class.
-      /// </summary>
-      /// <param name="file">The file.</param>
-      public ReadPlanException(string file) : base(Resources.Failed_to_read + " " + Resources.plan_data + ": " + file)
-      {
-      }
-
-      #endregion
-   }
 
    /// <summary>
    ///    Exception during sending command to server

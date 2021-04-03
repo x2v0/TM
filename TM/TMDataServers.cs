@@ -492,11 +492,11 @@ int StopUpdateTimer()
       // вызывается из ClientTCPCB
       void ClientTCP_ParseIncommingPacketTM(TMDataServer *ds, int handle)
       {
-      TMPacket *p;
+      Packet *p;
       unsigned char *pdata=NULL;
       int long_packet_flag = 0;
        unsigned char buf[TM_START_BUFFER_SIZE] = {0};
-      ssize_t dataSize = sizeof (TMPacket);
+      ssize_t dataSize = sizeof (Packet);
 
       if ((dataSize = ClientTCPRead (handle, buf, dataSize, 1000)) < 0)
       {                                                                              
@@ -510,13 +510,13 @@ int StopUpdateTimer()
 
       // для протокола TM - проверяем 
       // формируем пришедшие данные в структуру
-      int tmpksz = (int)sizeof(TMPacket); 
+      int tmpksz = (int)sizeof(Packet); 
       if( dataSize < tmpksz )
          return;
 
-      p = (TMPacket *) buf;
+      p = (Packet *) buf;
       // анализируем заголовок пакета
-      int srvType = TMPacket_CheckMarker( p );
+      int srvType = Packet_CheckMarker( p );
       if( srvType == SERVER_TYPE_UNKNOWN ) // вообще не тот протокол 
       {
          if( configParams.trace_flag)
@@ -525,13 +525,13 @@ int StopUpdateTimer()
          return;
       }
 
-      if( srvType != ds.type && p.type != TMPACKET_TYPE_INFORMATION ) // сервер другого типа - обрабатываем только текстовые сообщения
+      if( srvType != ds.type && p.type != Packet_TYPE_INFORMATION ) // сервер другого типа - обрабатываем только текстовые сообщения
          return;
 
       if( p.datalength > 0 ) // дочитываем хвост пакета
       {
-         if( p.datalength < TM_START_BUFFER_SIZE-sizeof(TMPacket))
-            pdata = buf+sizeof(TMPacket);
+         if( p.datalength < TM_START_BUFFER_SIZE-sizeof(Packet))
+            pdata = buf+sizeof(Packet);
          else
          {
             pdata = tmAlloc(p.datalength);
@@ -568,7 +568,7 @@ int StopUpdateTimer()
       // вызывается из ClientTCPCB
       void ClientTCP_ParseIncommingPacketNTM(TMDataServer *ds, int handle)
       {
-      TMPacket *p=NULL;
+      Packet *p=NULL;
       unsigned char *pdata=NULL;
        unsigned char buf[10240] = {0};
 
@@ -587,7 +587,7 @@ int StopUpdateTimer()
 
       if( ds.ConnectType == SERVER_ConnectType_TCPCUSTOM )  // подключение TCP CUSTOM, пакет разбирается вольно
       {                                              // заголовок генерим формально
-         p = (TMPacket *) tmAllocEmpty(sizeof(TMPacket));
+         p = (Packet *) tmAllocEmpty(sizeof(Packet));
          p.datalength = (unsigned int) dataSize;
          pdata = buf;
       }
@@ -1177,7 +1177,7 @@ int StopUpdateTimer()
       if( ds != NULL )
       {
          // тип сервера
-         sprintf( buf, "type: %d (%s)", ds.type,  TMPacket_GetSignatyre(ds.type) );
+         sprintf( buf, "type: %d (%s)", ds.type,  Packet_GetSignatyre(ds.type) );
          InsertTreeItem (panel, control, VAL_CHILD, h, VAL_LAST, buf, NULL, NULL, n++);
 
          sprintf( buf, "connection: %s", (TMDataServer_CONNECTED == TMDataServers_IsConnected(ds))?"Connected":"Not connected" );
@@ -1256,7 +1256,7 @@ int StopUpdateTimer()
             if( res == TMDataServer_CONNECTED && ds.ConnectType == SERVER_ConnectType_TMPROTOCOL )
             {
                sprintf(buf, "I'm %s client on %s", ds.name, configParams.appName ); 
-               TMDataServers_SendTMInfo( ds, TMPACKET_INFO_MESSAGE, sizeof(buf), (unsigned char*)buf );
+               TMDataServers_SendTMInfo( ds, Packet_INFO_MESSAGE, sizeof(buf), (unsigned char*)buf );
             }
             ProcessSystemEventsIfTime( 1.0 );
             //if( !res ) continue;
@@ -1885,7 +1885,7 @@ int StopUpdateTimer()
       // упаковка типа int как набора байт конфигурации в пакет пересылки
       int SendCurrentConfig_PackDevCfgAsTag( unsigned char *data, int n, int val )
       {
-      data[n++] = TMPACKET_DATA_CFGTAG_DEVCONFIG;  // 
+      data[n++] = Packet_DATA_CFGTAG_DEVCONFIG;  // 
       n = SendCurrentConfig_PackInt( data, n, val );
 
       return n;
@@ -1895,7 +1895,7 @@ int StopUpdateTimer()
       int SendCurrentConfig_PackDevAsTag( unsigned char *data, int n, DEV_DESCR *dev )
       {
       int sz_pos;
-      data[n++] = TMPACKET_DATA_CFGTAG_DEVICE;  // 
+      data[n++] = Packet_DATA_CFGTAG_DEVICE;  // 
       sz_pos = n++; // длина блока следом
       data[n++] = (unsigned char) dev.dev_type;
       data[n++] = (unsigned char) dev.configured;
@@ -1910,7 +1910,7 @@ int StopUpdateTimer()
       int SendCurrentConfig_PackConnectAsTag( unsigned char *data, int n, TMDataServer *ds )
       {
       int sz_pos;
-      data[n++] = TMPACKET_DATA_CFGTAG_CONNECT; // 
+      data[n++] = Packet_DATA_CFGTAG_CONNECT; // 
       sz_pos = n++; // длина блока следом
       data[n++] = (unsigned char) ds.ConnectType;
       n = SendCurrentConfig_PackStr( data, n, ds.ip );
@@ -1925,7 +1925,7 @@ int StopUpdateTimer()
       // упаковка информации о версии ПО как тэг в пакет пересылки
       int SendCurrentConfig_PackSoftwareVerAsTag( unsigned char *data, int n )
       {
-      data[n++] = TMPACKET_DATA_CFGTAG_VER;  // 
+      data[n++] = Packet_DATA_CFGTAG_VER;  // 
       n = SendCurrentConfig_PackStr( data, n, PACKET_VERTION_STR );
 
       return n;
@@ -1934,17 +1934,17 @@ int StopUpdateTimer()
       // упаковка текстовой информации. Распаковка в ParseCfgPacket_GetStr 
       int SendCurrentConfig_PackTxtInfoAsTag( unsigned char *data, int n, char *info )
       {
-      data[n++] = TMPACKET_DATA_CFGTAG_TXTINFO; // 
+      data[n++] = Packet_DATA_CFGTAG_TXTINFO; // 
       n = SendCurrentConfig_PackStr( data, n, info );
 
       return n;
       }
 
-      // упаковка информации о линке ретранслятора (тэг TMPACKET_DATA_CFGTAG_RTLINK полностью). Распаковка в ParseCfgPacket_GetRTLinkData 
+      // упаковка информации о линке ретранслятора (тэг Packet_DATA_CFGTAG_RTLINK полностью). Распаковка в ParseCfgPacket_GetRTLinkData 
       int SendCurrentConfig_PackRTLinkAsTag( unsigned char *data, int n, TCPSrvServer *tcp )
       {
       int sz_pos;
-      data[n++] = TMPACKET_DATA_CFGTAG_RTLINK;  // 
+      data[n++] = Packet_DATA_CFGTAG_RTLINK;  // 
       sz_pos = n++; // длина блока следом
       n = SendCurrentConfig_PackStr( data, n, tcp.name );
       n = SendCurrentConfig_PackInt( data, n, tcp.port );
@@ -1982,7 +1982,7 @@ int StopUpdateTimer()
       return n;
       }
 
-      // разбор тега из пакета конфигурации - вытаскиваем данные о подключении (тэг TMPACKET_DATA_CFGTAG_CONNECT полностью). Упаковка в SendCurrentConfig_PackLinkAsTag
+      // разбор тега из пакета конфигурации - вытаскиваем данные о подключении (тэг Packet_DATA_CFGTAG_CONNECT полностью). Упаковка в SendCurrentConfig_PackLinkAsTag
       int ParseCfgPacket_GetLinkData( unsigned char *data, int n, TMDataServer *ds )
       {
       //n++; 
@@ -2001,7 +2001,7 @@ int StopUpdateTimer()
       return n;
       }
 
-      // разбор тега из пакета конфигурации - вытаскиваем описание устройства (тэг TMPACKET_DATA_CFGTAG_DEVICE полностью)
+      // разбор тега из пакета конфигурации - вытаскиваем описание устройства (тэг Packet_DATA_CFGTAG_DEVICE полностью)
       int ParseCfgPacket_GetDevDescr( unsigned char *data, int n, DEV_DESCR *dds )
       {
       int res;
@@ -2019,7 +2019,7 @@ int StopUpdateTimer()
       return res;
       }
 
-      // разбор тега из пакета конфигурации - вытаскиваем данные о линке ретранслятора (тэг TMPACKET_DATA_CFGTAG_RTLINK полностью). Упаковка в SendCurrentConfig_PackRTLinkAsTag 
+      // разбор тега из пакета конфигурации - вытаскиваем данные о линке ретранслятора (тэг Packet_DATA_CFGTAG_RTLINK полностью). Упаковка в SendCurrentConfig_PackRTLinkAsTag 
       int ParseCfgPacket_GetRTLinkData( unsigned char *data, int n, TCPSrvServer *tcp )
       {
       unsigned char cnt = *(data+n++);
@@ -2052,11 +2052,11 @@ int StopUpdateTimer()
       unsigned char tag = *(pdata+n++);  // тип тега
       switch( tag )
       {
-         case TMPACKET_DATA_CFGTAG_VER:        // версия пакета, строка PACKET_VERTION_STR
+         case Packet_DATA_CFGTAG_VER:        // версия пакета, строка PACKET_VERTION_STR
             n = ParseCfgPacket_GetStr( pdata, n, buf, 256 );
             sprintf( out, "Software Ver.: %s", buf );
          break;
-         case TMPACKET_DATA_CFGTAG_CONNECT:    // коннект
+         case Packet_DATA_CFGTAG_CONNECT:    // коннект
             n = ParseCfgPacket_GetLinkData( pdata, n, &tmp_ds );
             switch( tmp_ds.type )
             {
@@ -2078,19 +2078,19 @@ int StopUpdateTimer()
                break;
             }
          break;
-         case TMPACKET_DATA_CFGTAG_DEVICE:    // подкключенное железо: dev_type-configured-DN 
+         case Packet_DATA_CFGTAG_DEVICE:    // подкключенное железо: dev_type-configured-DN 
             n = ParseCfgPacket_GetDevDescr( pdata, n, &dds );
             sprintf( out, "Device %s (%s) DN: %02d %s", GetDeviceTypeName(dds.dev_type, buf), dds.name, dds.DN, dds.configured?"":"(not configured)" );
          break;
-         case TMPACKET_DATA_CFGTAG_DEVCONFIG:    // подкключенное железо: dev_type-configured-DN 
+         case Packet_DATA_CFGTAG_DEVCONFIG:    // подкключенное железо: dev_type-configured-DN 
             n = ParseCfgPacket_GetInt( pdata, n, &ival );
             sprintf( out, "Device cfg (0x%02x)", ival );
          break;
-         case TMPACKET_DATA_CFGTAG_RTLINK:    // линк ретранслятора ( для NetRT . TmNetScan )
+         case Packet_DATA_CFGTAG_RTLINK:    // линк ретранслятора ( для NetRT . TmNetScan )
             n = ParseCfgPacket_GetRTLinkData( pdata, n, &tcp );
             sprintf( out, "Link %s %d . %s: %d %s", tcp.name, tcp.port, tcp.NetRT.remote_ip, tcp.NetRT.remote_port, tcp.NetRT.configured?"":"(not configured)" );
          break;
-         case TMPACKET_DATA_CFGTAG_TXTINFO:   // текстовая информация в свободном виде
+         case Packet_DATA_CFGTAG_TXTINFO:   // текстовая информация в свободном виде
             n = ParseCfgPacket_GetStr( pdata, n, out, out_sz );
          break;
       }
@@ -2151,7 +2151,7 @@ int StopUpdateTimer()
       int type;
 
       // пытаемся интерпретированть как маркер   
-      type = TMPacket_CheckMarkerStr(buf);
+      type = Packet_CheckMarkerStr(buf);
 
       if( type == 0 )      // не удалось - просто как номер типа сервера
          type = atoi( buf );

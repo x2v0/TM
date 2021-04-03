@@ -13,6 +13,7 @@ using System.Management.Automation;
 using System.Threading;
 using TM;
 using TM.Properties;
+using TMPlan;
 using Timer = System.Timers.Timer;
 using TMSrv;
 
@@ -79,26 +80,25 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
-
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         var client = PlanClient.This ?? new PlanClient();
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = Globals.Client.IpAddress;
+            IpAddress = client.IpAddress;
          }
 
          if (Port <= 0) {
-            Port = Globals.Client.Port;
+            Port = client.Port;
          }
 
-         if (!Globals.Client.IsConnected) {
-            OK = Globals.Client.Connect(IpAddress, Port);
+         if (client.IsConnected) {
+            return;
+         }
 
-            if (!OK) {
-               WriteDebug(Resources.Server_is_not_connected);
-            }
+         OK = client.Connect(IpAddress, Port);
+
+         if (!OK) {
+            WriteDebug(Resources.Server_is_not_connected);
          }
       }
 
@@ -107,7 +107,7 @@ namespace TMCmdLet
 
    /// <summary>
    ///   Read plan data from file specified by -Path
-   ///   Returns plan data as list of <see cref="TM.PlanSpot" /> objects.
+   ///   Returns plan data as list of <see cref="TM.Spot" /> objects.
    ///   For example:
    ///      $plan = Get-Plan -Path test_plan.txt
    /// 
@@ -117,7 +117,7 @@ namespace TMCmdLet
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommon.Get, "Plan")]
-   [OutputType(typeof(PlanSpot))]
+   [OutputType(typeof(Spot))]
    public class GetPlanCmdlet : PSCmdlet
    {
       #region Public properties
@@ -147,13 +147,13 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          var path = SessionState.Path.CurrentLocation.Path;
-
          path = System.IO.Path.Combine(path, Path);
 
-         var spots = TMClient.LoadPlanData(path);
+         var client = PlanClient.This ?? new PlanClient();
+         var spots = client.Load(path);
 
          foreach (var spot in spots) {
             WriteObject(spot);
@@ -177,7 +177,7 @@ namespace TMCmdLet
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsLifecycle.Invoke, "Plan")]
-   [OutputType(typeof(PlanSpotFull))]
+   [OutputType(typeof(SpotFull))]
    public class InvokePlanCmdlet : PSCmdlet
    {
       #region Public properties
@@ -234,11 +234,9 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
+         var client = PlanClient.This ?? new PlanClient();
 
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          var path = SessionState.Path.CurrentLocation.Path;
 
@@ -246,60 +244,60 @@ namespace TMCmdLet
 
          Console.WriteLine(Resources.Press+" Ctrl-C "+Resources.to_interrupt);
 
-         Globals.Client.Reset();
-         Globals.Client.ProcessingIsOn = false;
+         client.Reset();
+         client.ProcessingIsOn = false;
 
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = Globals.Client.IpAddress;
+            IpAddress = client.IpAddress;
          }
 
          if (Port <= 0) {
-            Port = Globals.Client.Port;
+            Port = client.Port;
          }
 
-         var ok = Globals.Client.Connect(IpAddress, Port);
+         var ok = client.Connect(IpAddress, Port);
 
          if (!ok) {
             return;
          }
 
-         ok = Globals.Client.LoadPlan(Path) != null;
+         ok = client.Load(Path) != null;
 
          if (!ok) {
             return;
          }
 
-         ok = Globals.Client.SendPlan();
+         ok = client.Send();
 
          if (!ok) {
             WriteDebug(Resources.Failed_to_send_plan);
             return;
          }
 
-         ok = Globals.Client.StartPlan();
+         ok = client.Start();
 
-         Globals.Client.ServerStateChanged += OnStateChanged;
-         Globals.Client.ProcessingIsOn = true;
+         client.ServerStateChanged += OnStateChanged;
+         client.ProcessingIsOn = true;
 
-         while (Globals.Client.ProcessingIsOn) {
+         while (client.ProcessingIsOn) {
             if (!ok ||
-                (Globals.Client.ServerState == ECommandState.NOTREADY)) {
+                (client.ServerState == ECommandState.NOTREADY)) {
                WriteDebug(Resources.Server_not_ready);
             }
 
-            if ((Globals.Client.ServerState == ECommandState.FINISHED) &&
-                (Globals.Client.PlanResults.Count > 1)) {
-               Globals.Client.ProcessingIsOn = false;
+            if ((client.ServerState == ECommandState.FINISHED) &&
+                (client.PlanResults.Count > 1)) {
+               client.ProcessingIsOn = false;
             }
 
             Thread.Sleep(1000);
          }
 
-         Globals.Client.ServerStateChanged -= OnStateChanged;
+         client.ServerStateChanged -= OnStateChanged;
 
-         foreach (var spot in Globals.Client.PlanResults) {
-            var plan = Globals.Client.Plan[spot.id];
-            var full = new PlanSpotFull();
+         foreach (var spot in client.PlanResults) {
+            var plan = client.Plan[spot.id];
+            var full = new SpotFull();
             full.id = spot.id;
             full.xangle = plan.xangle;
             full.zangle = plan.zangle;
@@ -321,15 +319,16 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var sav = TMClient.DebugPreference;
-         TMClient.DebugPreference = (int) ActionPreference.Continue;
+         var client = PlanClient.This ?? new PlanClient();
+         var sav = TM.Client.DebugPreference;
+         TM.Client.DebugPreference = (int) ActionPreference.Continue;
 
-         if (Globals.Client != null) {
-            Globals.Client.StopPlan();
-            Globals.Client.ProcessingIsOn = false;
+         if (client != null) {
+            client.Stop();
+            client.ProcessingIsOn = false;
          }
 
-         TMClient.DebugPreference = sav;
+         TM.Client.DebugPreference = sav;
       }
 
       #endregion
@@ -342,8 +341,10 @@ namespace TMCmdLet
       /// <param name="state">The server state.</param>
       private void OnStateChanged(ECommandState state)
       {
+         var client = PlanClient.This ?? new PlanClient();
+
          if (state == ECommandState.INPROCESS) { // plan processing is ON
-            var passed = (int) ((Globals.Client.SpotsPassed * 100.0) / Globals.Client.SpotsTotal);
+            var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
             Console.Write("\r"+Resources.Plan_processed+" = " + passed + "%  ");
          }
       }
@@ -353,7 +354,7 @@ namespace TMCmdLet
 
    /// <summary>
    ///   Sends plan data to remote server.
-   ///   Returns <see cref="TM.TMClient" /> object (the same object as in Connect-Server)
+   ///   Returns <see cref="Client" /> object (the same object as in Connect-Server)
    /// 
    ///<example><code>
    /// 
@@ -373,15 +374,15 @@ namespace TMCmdLet
    /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Plan")]
-   [OutputType(typeof(TMClient))]
+   [OutputType(typeof(TM.Client))]
    public class SendPlanCmdlet : PSCmdlet
    {
       #region  Fields
 
       /// <summary>
-      /// The plan - list of <see cref="TM.PlanSpot" />s
+      /// The plan - list of <see cref="TM.Spot" />s
       /// </summary>
-      private readonly List<PlanSpot> Plan = new List<PlanSpot>();
+      private readonly List<Spot> Plan = new List<Spot>();
 
       #endregion
 
@@ -437,33 +438,29 @@ namespace TMCmdLet
       /// </summary>
       protected override void EndProcessing()
       {
+         var client = PlanClient.This ?? new PlanClient();
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = Globals.Client.IpAddress;
+            IpAddress = client.IpAddress;
          }
 
          if (Port <= 0) {
-            Port = Globals.Client.Port;
+            Port = client.Port;
          }
 
          bool OK;
 
-         if (!Globals.Client.IsConnected) {
-            OK = Globals.Client.Connect(IpAddress, Port);
+         if (!client.IsConnected) {
+            OK = client.Connect(IpAddress, Port);
 
             if (!OK) {
                WriteDebug(Resources.Server_is_not_connected);
             }
          }
 
-         if ((Plan != null) &&
-             (Plan.Count > 1)) {
-            OK = Globals.Client.SendPlan(Plan);
-         } else {
-            OK = Globals.Client.SendPlan();
-         }
+         OK = (Plan != null) && (Plan.Count > 1) ? client.Send(Plan) : client.Send();
 
          if (OK) {
-            WriteObject(Globals.Client);
+            WriteObject(client);
          }
       }
 
@@ -472,11 +469,9 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
+         var client = PlanClient.This ?? new PlanClient();
 
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (Input == null) {
             return;
@@ -489,20 +484,20 @@ namespace TMCmdLet
                IpAddress = string.Empty;
             }
 
-            Plan.Add((PlanSpot) ps.BaseObject);
+            Plan.Add((Spot) ps.BaseObject);
             return;
          }
 
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = Globals.Client.IpAddress;
+            IpAddress = client.IpAddress;
          }
 
          if (Port <= 0) {
-            Port = Globals.Client.Port;
+            Port = client.Port;
          }
 
-         if (!Globals.Client.IsConnected) {
-            var OK = Globals.Client.Connect(IpAddress, Port);
+         if (!client.IsConnected) {
+            var OK = client.Connect(IpAddress, Port);
 
             if (!OK) {
                WriteDebug(Resources.Server_is_not_connected);
@@ -512,10 +507,10 @@ namespace TMCmdLet
          var objects = Input as object[];
 
          if (objects != null) {
-            var OK = Globals.Client.SendPlan(objects);
+            var OK = client.Send(objects);
 
             if (OK) {
-               WriteObject(Globals.Client);
+               WriteObject(client);
             }
          }
       }
@@ -534,11 +529,11 @@ namespace TMCmdLet
 
    /// <summary>
    ///   Starts plan processing on remote server<para />
-   ///   Returns <see cref="TM.TMClient" /> object
+   ///   Returns <see cref="Client" /> object
    ///<example><code>
    /// 
    ///   # Load module
-   ///   Import-Module ./TMClient.dll
+   ///   Import-Module ./TM.Client.dll
    /// 
    ///   # Set default Hostname:Port
    ///   Set-DefaultServer localhost 9996
@@ -557,7 +552,7 @@ namespace TMCmdLet
    /// </summary>
    /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsLifecycle.Start, "Plan")]
-   [OutputType(typeof(TMClient))]
+   [OutputType(typeof(TM.Client))]
    public class StartPlanCmdlet : PlanCmdlet
    {
       #region  Fields
@@ -582,7 +577,7 @@ namespace TMCmdLet
       #region Public properties
 
       /// <summary>
-      /// Resume plan processing <see cref="TM.TMClient" />
+      /// Resume plan processing <see cref="Client" />
       /// </summary>
       /// <value>The resume.</value>
       [Parameter(Position = 0, 
@@ -603,9 +598,10 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
+         var client = PlanClient.This ?? new PlanClient();
          base.ProcessRecord();
 
-         OK = Globals.Client.StartPlan();
+         OK = client.Start();
 
          if (Resume || !OK) {
             return;
@@ -619,9 +615,9 @@ namespace TMCmdLet
          theTimer.AutoReset = true;
          theTimer.Enabled = true;
 
-         Globals.Client.ProcessingIsOn = true;
+         client.ProcessingIsOn = true;
          theTimer.Start();
-         WriteObject(Globals.Client);
+         WriteObject(client);
       }
 
       /// <summary>
@@ -631,15 +627,16 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var sav = TMClient.DebugPreference;
-         TMClient.DebugPreference = (int) ActionPreference.Continue;
+         var client = PlanClient.This ?? new PlanClient();
+         var sav = TM.Client.DebugPreference;
+         TM.Client.DebugPreference = (int) ActionPreference.Continue;
 
-         if (Globals.Client != null) {
-            Globals.Client.StopPlan();
+         if (client != null) {
+            client.Stop();
          }
 
          theTimer.Stop();
-         TMClient.DebugPreference = sav;
+         TM.Client.DebugPreference = sav;
       }
 
       #endregion
@@ -653,28 +650,29 @@ namespace TMCmdLet
       /// <param name="myEventArgs">The <see cref="EventArgs" /> - not used.</param>
       private void DoWork(object myObject, EventArgs myEventArgs)
       {
-         if (!Globals.Client.ProcessingIsOn) {
+         var client = PlanClient.This ?? new PlanClient();
+         if (!client.ProcessingIsOn) {
             theTimer.Stop();
             WriteDebug(Resources.Plan_processing_finished_);
             return;
          }
 
-         if (SpotsPassed != Globals.Client.SpotsPassed) {
-            var passed = (int) ((Globals.Client.SpotsPassed * 100.0) / Globals.Client.SpotsTotal);
-            SpotsPassed = Globals.Client.SpotsPassed;
+         if (SpotsPassed != client.SpotsPassed) {
+            var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
+            SpotsPassed = client.SpotsPassed;
             theProgress.PercentComplete = passed;
             WriteProgress(theProgress);
          }
 
-         if (!OK || (Globals.Client.ServerState == ECommandState.NOTREADY)) {
-            if (TMClient.DebugPreference == (int) ActionPreference.Continue) {
+         if (!OK || (client.ServerState == ECommandState.NOTREADY)) {
+            if (TM.Client.DebugPreference == (int) ActionPreference.Continue) {
                WriteDebug(Resources.Server_not_ready);
             }
          }
 
-         if ((Globals.Client.ServerState == ECommandState.FINISHED) &&
-             (Globals.Client.PlanResults.Count > 1)) {
-            Globals.Client.ProcessingIsOn = false;
+         if ((client.ServerState == ECommandState.FINISHED) &&
+             (client.PlanResults.Count > 1)) {
+            client.ProcessingIsOn = false;
             theTimer.Stop();
 
             WriteDebug(Resources.Plan_processing_finished_);
@@ -705,7 +703,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.StopPlan();
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.Stop();
          WriteObject(OK);
       }
 
@@ -733,7 +732,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.PausePlan();
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.Pause();
          WriteObject(OK);
       }
 
@@ -741,7 +741,7 @@ namespace TMCmdLet
    }
 
    /// <summary>
-   ///   Returns result of plan processing as a list of <see cref="TM.PlanSpotFull" /> objects
+   ///   Returns result of plan processing as a list of <see cref="TM.SpotFull" /> objects
    /// 
    /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
@@ -749,7 +749,7 @@ namespace TMCmdLet
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsCommon.Get, "Results")]
-   [OutputType(typeof(PlanSpotFull))]
+   [OutputType(typeof(SpotFull))]
    public class GetPlanResultsCmdlet : PSCmdlet
    {
       #region Protected methods
@@ -759,15 +759,13 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
+         var client = PlanClient.This ?? new PlanClient();
 
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
-         foreach (var spot in Globals.Client.PlanResults) {
-            var plan = Globals.Client.Plan[spot.id];
-            var full = new PlanSpotFull();
+         foreach (var spot in client.PlanResults) {
+            var plan = client.Plan[spot.id];
+            var full = new SpotFull();
             full.id = spot.id;
             full.xangle = plan.xangle;
             full.zangle = plan.zangle;
@@ -804,7 +802,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.ClearPlan();
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.Clear();
          WriteObject(OK);
       }
 
@@ -812,7 +811,7 @@ namespace TMCmdLet
    }
 
    /// <summary>
-   ///   Connects to remote server. Returns <see cref="TM.TMClient" />  object.
+   ///   Connects to remote server. Returns <see cref="Client" />  object.
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
@@ -820,7 +819,7 @@ namespace TMCmdLet
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Connect, "Server")]
-   [OutputType(typeof(TMClient))]
+   [OutputType(typeof(TM.Client))]
    public class ConnectServerCmdlet : PSCmdlet
    {
       #region Public properties
@@ -864,24 +863,22 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
+         var client = PlanClient.This ?? new PlanClient();
 
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = Globals.Client.IpAddress;
+            IpAddress = client.IpAddress;
          }
 
          if (Port == 0) {
-            Port = Globals.Client.Port;
+            Port = client.Port;
          }
 
-         var ret = Globals.Client.Connect(IpAddress, Port);
+         var ret = client.Connect(IpAddress, Port);
 
          if (ret) {
-            WriteObject(Globals.Client);
+            WriteObject(client);
          }
       }
 
@@ -890,14 +887,13 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var sav = TMClient.DebugPreference;
-         TMClient.DebugPreference = (int) ActionPreference.Continue;
+         var sav = TM.Client.DebugPreference;
+         TM.Client.DebugPreference = (int) ActionPreference.Continue;
 
-         if (Globals.Client != null) {
-            Globals.Client.Disconnect();
-         }
+         var client = PlanClient.This ?? new PlanClient();
+         client?.Disconnect();
 
-         TMClient.DebugPreference = sav;
+         TM.Client.DebugPreference = sav;
       }
 
       #endregion
@@ -958,14 +954,12 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         if (Globals.Client == null) {
-            Globals.Client = new TMClient();
-         }
+         var client = PlanClient.This ?? new PlanClient();
 
-         TMClient.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
 
-         Globals.Client.IpAddress = IpAddress;
-         Globals.Client.Port = Port;
+         client.IpAddress = IpAddress;
+         client.Port = Port;
       }
 
       #endregion
@@ -991,7 +985,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.Disconnect();
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.Disconnect();
          WriteObject(OK);
       }
 
@@ -1075,7 +1070,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.SendCommand(Command);
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.SendCommand(Command);
          WriteObject(OK);
       }
 
@@ -1124,7 +1120,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.SendInfo(Info);
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.SendInfo(Info);
          WriteObject(OK);
       }
 
@@ -1173,7 +1170,8 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         OK = Globals.Client.SendData(Data);
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.Send(Data);
          WriteObject(OK);
       }
 
@@ -1225,9 +1223,10 @@ namespace TMCmdLet
             WaitTime = 100;
          }
 
-         OK = Globals.Client.AskServerState();
+         var client = PlanClient.This ?? new PlanClient();
+         OK = client.AskServerState();
          Thread.Sleep(WaitTime);
-         WriteObject(Globals.Client.ServerState);
+         WriteObject(client.ServerState);
       }
 
       #endregion

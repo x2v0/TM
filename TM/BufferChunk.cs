@@ -16,7 +16,6 @@ using System.Text;
 namespace TM
 {
    /// <summary>
-   ///
    ///    Overview:
    /// <code>
    ///   ----------------------------------------------------------------------
@@ -537,7 +536,7 @@ namespace TM
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, long data)
       {
-         return destination += (ulong) data;
+         return destination += (ulong)data;
       }
 
       /// <summary>
@@ -548,7 +547,7 @@ namespace TM
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, ushort data)
       {
-         return destination + (short) data;
+         return destination + (short)data;
       }
 
       /// <summary>
@@ -559,7 +558,7 @@ namespace TM
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, uint data)
       {
-         return destination + (int) data;
+         return destination + (int)data;
       }
 
       /// <summary>
@@ -603,7 +602,7 @@ namespace TM
 
          ValidateSufficientSpace(bytes.Length, destination.AvailableBuffer);
 
-         return destination += (BufferChunk) bytes;
+         return destination += (BufferChunk)bytes;
       }
 
       /// <summary>
@@ -647,7 +646,7 @@ namespace TM
          ValidateNotZeroLength(source.length);
 
          lock (utf8) {
-            return utf8.GetString((byte[]) source);
+            return utf8.GetString((byte[])source);
          }
       }
 
@@ -837,7 +836,7 @@ namespace TM
       /// <returns>System.Int64.</returns>
       public long GetInt64(int index)
       {
-         return (long) GetUInt64(index);
+         return (long)GetUInt64(index);
       }
 
       /// <summary>
@@ -855,7 +854,7 @@ namespace TM
          var dataSize = 2;
          if ((index + dataSize) <= length) // All the data requested
          {
-            ret = (ushort) _GetInt16(index);
+            ret = (ushort)_GetInt16(index);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -868,7 +867,7 @@ namespace TM
                   shift = offset;
                }
 
-               ret += (ushort) (buffer[this.index + index + offset] << (shift * 8));
+               ret += (ushort)(buffer[this.index + index + offset] << (shift * 8));
                offset++;
             }
          }
@@ -891,7 +890,7 @@ namespace TM
          var dataSize = 4;
          if ((index + dataSize) < length) // All the data requested
          {
-            ret = (uint) _GetInt32(index);
+            ret = (uint)_GetInt32(index);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -904,7 +903,7 @@ namespace TM
                   shift = offset;
                }
 
-               ret += (uint) buffer[this.index + index + offset] << (shift * 8);
+               ret += (uint)buffer[this.index + index + offset] << (shift * 8);
                offset++;
             }
          }
@@ -936,11 +935,11 @@ namespace TM
 
             if (littleEndian) {
                for (int offset = 0, shift = dataSize - 1; offset < availableData; offset++, shift--) {
-                  ret += (ulong) buffer[indexOffset + offset] << (shift * 8);
+                  ret += (ulong)buffer[indexOffset + offset] << (shift * 8);
                }
             } else {
                for (int offset = 0, shift = 0; offset < availableData; offset++, shift++) {
-                  ret += (ulong) buffer[indexOffset + offset] << (shift * 8);
+                  ret += (ulong)buffer[indexOffset + offset] << (shift * 8);
                }
             }
          }
@@ -955,7 +954,7 @@ namespace TM
       /// <returns>System.UInt16.</returns>
       public ushort GetUInt16(int index)
       {
-         return (ushort) GetInt16(index);
+         return (ushort)GetInt16(index);
       }
 
       /// <summary>
@@ -965,7 +964,7 @@ namespace TM
       /// <returns>System.UInt32.</returns>
       public uint GetUInt32(int index)
       {
-         return (uint) GetInt32(index);
+         return (uint)GetInt32(index);
       }
 
       /// <summary>
@@ -1145,7 +1144,7 @@ namespace TM
       /// <returns>System.UInt16.</returns>
       public ushort NextUInt16()
       {
-         return (ushort) NextInt16();
+         return (ushort)NextInt16();
       }
 
       /// <summary>
@@ -1154,7 +1153,7 @@ namespace TM
       /// <returns>System.UInt32.</returns>
       public uint NextUInt32()
       {
-         return (uint) NextInt32();
+         return (uint)NextInt32();
       }
 
       /// <summary>
@@ -1163,7 +1162,7 @@ namespace TM
       /// <returns>System.UInt64.</returns>
       public ulong NextUInt64()
       {
-         return (ulong) NextInt64();
+         return (ulong)NextInt64();
       }
 
       /// <summary>
@@ -1280,7 +1279,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetInt64(int index, long data)
       {
-         SetUInt64(index, (ulong) data);
+         SetUInt64(index, (ulong)data);
       }
 
       /// <summary>
@@ -1302,7 +1301,7 @@ namespace TM
          var dataSize = 2;
          if ((index + dataSize) < length) // All the data requested
          {
-            _SetInt16(index, (short) data);
+            _SetInt16(index, (short)data);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -1315,7 +1314,7 @@ namespace TM
                   shift = offset;
                }
 
-               buffer[this.index + index + offset] = (byte) (data >> (shift * 8));
+               buffer[this.index + index + offset] = (byte)(data >> (shift * 8));
                offset++;
             }
          }
@@ -1339,7 +1338,7 @@ namespace TM
          var dataSize = 4;
          if ((index + dataSize) < length) // All the data requested
          {
-            _SetInt32(index, (int) data);
+            _SetInt32(index, (int)data);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -1352,7 +1351,7 @@ namespace TM
                   shift = offset;
                }
 
-               buffer[this.index + index + offset] = (byte) (data >> (shift * 8));
+               buffer[this.index + index + offset] = (byte)(data >> (shift * 8));
                offset++;
             }
          }
@@ -1385,11 +1384,11 @@ namespace TM
 
             if (littleEndian) {
                for (int offset = 0, shift = dataSize - 1; offset < availableData; offset++, shift--) {
-                  buffer[indexOffset + offset] = (byte) (data >> (shift * 8));
+                  buffer[indexOffset + offset] = (byte)(data >> (shift * 8));
                }
             } else {
                for (int offset = 0, shift = 0; offset < availableData; offset++, shift++) {
-                  buffer[indexOffset + offset] = (byte) (data >> (shift * 8));
+                  buffer[indexOffset + offset] = (byte)(data >> (shift * 8));
                }
             }
          }
@@ -1402,7 +1401,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetUInt16(int index, ushort data)
       {
-         SetInt16(index, (short) data);
+         SetInt16(index, (short)data);
       }
 
       /// <summary>
@@ -1412,7 +1411,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetUInt32(int index, uint data)
       {
-         SetInt32(index, (int) data);
+         SetInt32(index, (int)data);
       }
 
       /// <summary>
@@ -1468,7 +1467,7 @@ namespace TM
          var bytes = new byte[4];
 
          fixed (byte* b = bytes) {
-            *(int*) b = *(int*) &value;
+            *(int*)b = *(int*)&value;
          }
 
          return bytes;
@@ -1484,7 +1483,7 @@ namespace TM
          var bytes = new byte[8];
 
          fixed (byte* b = bytes) {
-            *(int*) b = *(int*) &value;
+            *(int*)b = *(int*)&value;
          }
 
          return bytes;
@@ -1555,7 +1554,7 @@ namespace TM
       private static void ValidatePointerData(int index, int length, int dataLength)
       {
          if ((index + length) > dataLength) {
-            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture, 
+            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture,
                                                                 "Index And Length Invalid Data", index, length, dataLength));
          }
       }
@@ -1598,7 +1597,7 @@ namespace TM
          double ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(double*) pb;
+            ret = *(double*)pb;
          }
 
          return ret;
@@ -1614,7 +1613,7 @@ namespace TM
          float ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(float*) pb;
+            ret = *(float*)pb;
          }
 
          return ret;
@@ -1631,12 +1630,12 @@ namespace TM
 
          // BigEndian network -> LittleEndian architecture
          if (littleEndian) {
-            ret = (short) (buffer[this.index + index + 0] << (1 * 8));
-            ret += (short) (buffer[this.index + index + 1] << (0 * 8));
+            ret = (short)(buffer[this.index + index + 0] << (1 * 8));
+            ret += (short)(buffer[this.index + index + 1] << (0 * 8));
          } else // BigEndian network -> BigEndian architecture
          {
-            ret = (short) (buffer[this.index + index + 0] << (0 * 8));
-            ret += (short) (buffer[this.index + index + 1] << (1 * 8));
+            ret = (short)(buffer[this.index + index + 0] << (0 * 8));
+            ret += (short)(buffer[this.index + index + 1] << (1 * 8));
          }
 
          return ret;
@@ -1678,7 +1677,7 @@ namespace TM
          ulong ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(ulong*) pb;
+            ret = *(ulong*)pb;
          }
 
          return ret;
@@ -1693,12 +1692,12 @@ namespace TM
       {
          // LittleEndian architecture -> BigEndian network
          if (littleEndian) {
-            buffer[this.index + index + 0] = (byte) (data >> (1 * 8));
-            buffer[this.index + index + 1] = (byte) (data >> (0 * 8));
+            buffer[this.index + index + 0] = (byte)(data >> (1 * 8));
+            buffer[this.index + index + 1] = (byte)(data >> (0 * 8));
          } else // BigEndian architecture -> BigEndian network
          {
-            buffer[this.index + index + 0] = (byte) (data >> (0 * 8));
-            buffer[this.index + index + 1] = (byte) (data >> (1 * 8));
+            buffer[this.index + index + 0] = (byte)(data >> (0 * 8));
+            buffer[this.index + index + 1] = (byte)(data >> (1 * 8));
          }
       }
 
@@ -1711,16 +1710,16 @@ namespace TM
       {
          // LittleEndian architecture -> BigEndian network
          if (littleEndian) {
-            buffer[this.index + index + 0] = (byte) (data >> (3 * 8));
-            buffer[this.index + index + 1] = (byte) (data >> (2 * 8));
-            buffer[this.index + index + 2] = (byte) (data >> (1 * 8));
-            buffer[this.index + index + 3] = (byte) (data >> (0 * 8));
+            buffer[this.index + index + 0] = (byte)(data >> (3 * 8));
+            buffer[this.index + index + 1] = (byte)(data >> (2 * 8));
+            buffer[this.index + index + 2] = (byte)(data >> (1 * 8));
+            buffer[this.index + index + 3] = (byte)(data >> (0 * 8));
          } else // BigEndian architecture -> BigEndian network
          {
-            buffer[this.index + index + 0] = (byte) (data >> (0 * 8));
-            buffer[this.index + index + 1] = (byte) (data >> (1 * 8));
-            buffer[this.index + index + 2] = (byte) (data >> (2 * 8));
-            buffer[this.index + index + 3] = (byte) (data >> (3 * 8));
+            buffer[this.index + index + 0] = (byte)(data >> (0 * 8));
+            buffer[this.index + index + 1] = (byte)(data >> (1 * 8));
+            buffer[this.index + index + 2] = (byte)(data >> (2 * 8));
+            buffer[this.index + index + 3] = (byte)(data >> (3 * 8));
          }
       }
 
@@ -1732,7 +1731,7 @@ namespace TM
       private unsafe void _SetUInt64(int index, ulong data)
       {
          fixed (byte* pb = &buffer[this.index + index]) {
-            *(ulong*) pb = data;
+            *(ulong*)pb = data;
          }
       }
 
@@ -1864,5 +1863,10 @@ namespace TM
       }
 
       #endregion
+   }
+
+   public static class BufferChunkExt 
+   {
+
    }
 }

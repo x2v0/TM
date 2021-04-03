@@ -31,7 +31,7 @@ namespace TM
       /// <param name="buf">The buf.</param>
       /// <param name="header">The header.</param>
       /// <returns>BufferChunk.</returns>
-      public static BufferChunk Add(this BufferChunk buf, TMPacketHeader header)
+      public static BufferChunk Add(this BufferChunk buf, PacketHeader header)
       {
          buf.Reset();
 
@@ -41,24 +41,6 @@ namespace TM
          buf += header.reserved;
          buf += header.datalength;
          buf += header.packet_number;
-
-         return buf;
-      }
-
-      /// <summary>
-      /// Adds the specified plan.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <param name="plan">The plan.</param>
-      /// <returns>BufferChunk.</returns>
-      public static BufferChunk Add(this BufferChunk buf, PlanSpot plan)
-      {
-         //buf.Reset
-         buf += plan.id;
-         buf += plan.xangle;
-         buf += plan.zangle;
-         buf += plan.energy;
-         buf += plan.pcount;
 
          return buf;
       }
@@ -121,9 +103,7 @@ namespace TM
          } catch (Exception ex) {
             Console.WriteLine(MethodBase.GetCurrentMethod() + " : " + ex.Message);
 
-            if (completed != null) {
-               completed(source, destination, ex);
-            }
+            completed?.Invoke(source, destination, ex);
          }
 
          source.Close();
@@ -164,7 +144,6 @@ namespace TM
             state.t_procent = buf.NextDouble();
             state.ir_tm = buf.NextInt32();
             state.spots_count = buf.NextInt32();
-            return state;
          } catch {
             state.sign = Encoding.ASCII.GetBytes("0000");
             return state;
@@ -187,7 +166,6 @@ namespace TM
             state.lasterror = buf.NextUInt32();
             state.spots_passed = buf.NextUInt32();
             state.spots_count = buf.NextUInt32();
-            return state;
          } catch {
             state.state = (int) EServerState.UNKNOWN;
             return state;
@@ -196,187 +174,6 @@ namespace TM
          return state;
       }
 
-      /// <summary>
-      /// Nexts the full spot.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>System.Nullable&lt;PlanSpotFull&gt;.</returns>
-      public static PlanSpotFull? NextFullSpot(this BufferChunk buf)
-      {
-         var plan = new PlanSpotFull();
-
-         try {
-            plan.changed = buf.NextInt32();
-            plan.done = buf.NextInt32();
-            plan.energy = buf.NextFloat();
-            plan.id = buf.NextInt32();
-            plan.need_to_sent = buf.NextInt32();
-            plan.pcount = buf.NextFloat();
-            plan.result_pcount = buf.NextFloat();
-            plan.result_xangle = buf.NextFloat();
-            plan.result_zangle = buf.NextFloat();
-            plan.xangle = buf.NextFloat();
-            plan.zangle = buf.NextFloat();
-
-            return plan;
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
-
-      /// <summary>
-      /// Nexts the TMPacketHeader
-      /// </summary>
-      /// <param name="buf">The buffer chunk.</param>
-      /// <returns>TMPacketHeader.</returns>
-      public static TMPacketHeader NextPacketHeader(this BufferChunk buf)
-      {
-         var header = new TMPacketHeader();
-         try {
-            header.sign = new byte[4];
-
-            for (var i = 0; i < 4; i++) {
-               header.sign[i] = buf.NextByte();
-            }
-
-            header.type = buf.NextByte();
-            header.value = buf.NextByte();
-            header.reserved = new byte[2];
-            header.reserved[0] = buf.NextByte();
-            header.reserved[1] = buf.NextByte();
-            header.datalength = buf.NextUInt32();
-            header.packet_number = buf.NextInt32();
-         } catch {
-            header.packet_number = -1; //
-         }
-
-         return header;
-      }
-
-
-      /// <summary>
-      /// Nexts the plan spot result.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>System.Nullable&lt;PlanSpotResult&gt;.</returns>
-      public static PlanSpotResult? NextPlanSpotResult(this BufferChunk buf)
-      {
-         var plan = new PlanSpotResult();
-
-         try {
-            plan.id = buf.NextInt32();
-            plan.result_xangle = buf.NextFloat();
-            plan.result_zangle = buf.NextFloat();
-            plan.result_pcount = buf.NextFloat();
-            plan.done = buf.NextInt32();
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
-
-      /// <summary>
-      /// Nexts the result spot.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>System.Nullable&lt;PlanSpotResult&gt;.</returns>
-      public static PlanSpotResult? NextResultSpot(this BufferChunk buf)
-      {
-         var plan = new PlanSpotResult();
-
-         try {
-            plan.done = buf.NextInt32();
-            plan.id = buf.NextInt32();
-            plan.result_xangle = buf.NextFloat();
-            plan.result_zangle = buf.NextFloat();
-            plan.result_pcount = buf.NextFloat();
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
-
-      /// <summary>
-      /// Nexts the PlanSpot.
-      /// </summary>
-      /// <param name="buf">The buffer chunk.</param>
-      /// <returns>PlanSpot.</returns>
-      public static PlanSpot? NextSpot(this BufferChunk buf)
-      {
-         var plan = new PlanSpot();
-
-         try {
-            plan.id = buf.NextInt32();
-            plan.xangle = buf.NextFloat();
-            plan.zangle = buf.NextFloat();
-            plan.energy = buf.NextFloat();
-            plan.pcount = buf.NextFloat();
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
-
-      /// <summary>
-      /// Nexts the PlanSpotFull.
-      /// </summary>
-      /// <param name="buf">The buffer chunk.</param>
-      /// <returns>PlanSpotFull.</returns>
-      public static PlanSpotFull? NextSpotFull(this BufferChunk buf)
-      {
-         var plan = new PlanSpotFull();
-
-         try {
-            plan.id = buf.NextInt32();
-            plan.xangle = buf.NextFloat();
-            plan.zangle = buf.NextFloat();
-            plan.energy = buf.NextFloat();
-            plan.pcount = buf.NextFloat();
-
-            plan.done = buf.NextInt32();
-            plan.result_xangle = buf.NextFloat();
-            plan.result_zangle = buf.NextFloat();
-            plan.result_pcount = buf.NextInt32();
-            plan.changed = buf.NextInt32();
-            plan.need_to_sent = buf.NextInt32();
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
-
-      /// <summary>
-      /// Nexts the spot result.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>System.Nullable&lt;PlanSpotResult&gt;.</returns>
-      public static PlanSpotResult? NextSpotResult(this BufferChunk buf)
-      {
-         var plan = new PlanSpotResult();
-
-         try {
-            plan.id = buf.NextInt32();
-            plan.result_xangle = buf.NextFloat();
-            plan.result_zangle = buf.NextFloat();
-            plan.result_pcount = buf.NextFloat();
-         } catch {
-            //plan.id = -1; //
-            return null;
-         }
-
-         return plan;
-      }
 
       /// <summary>
       /// Splits the string.

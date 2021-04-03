@@ -26,7 +26,7 @@ using TMSrv;
 
 public delegate void ConnectHandler(TMDataServer pds, int res);
 public delegate void PostParseHandler(int cmd, int cid);
-public delegate void IncomingPacketHandler(TMDataServer pds, TMPacket p, byte[] pdata);
+public delegate void IncomingPacketHandler(TMDataServer pds, Packet p, byte[] pdata);
 public delegate int  MakeCommandHandler(int cmd, byte[] send_data, int n, DevDescr p_dev, short reqrespdelay);
 public delegate void ServerHandler(TMDataServer pds);
 
@@ -924,7 +924,7 @@ int asknum; 			// текущий запрос (циклический счетч
       /// </summary>
       public event MakeCommandHandler MakeCommand;
 
-      public TMClient Client = new TMClient();
+      public TM.Client Client = new TM.Client();
 
       /// <summary>
       ///  уникальная начинка сервера в соответствии с типом

@@ -16,15 +16,15 @@ using System.Text;
 namespace TM
 {
    /// <summary>
-   ///    Struct TMPacketHeader
+   ///    Struct PacketHeader
    /// </summary>
    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-   public struct TMPacketHeader
+   public struct PacketHeader
    {
       /// <summary>
       ///    The length
       /// </summary>
-      public static uint Length = (uint) Marshal.SizeOf(typeof(TMPacketHeader));
+      public static uint Length = (uint) Marshal.SizeOf(typeof(PacketHeader));
 
       /// <summary>
       ///    signature: "XRay" | "Ther" | .
@@ -64,9 +64,9 @@ namespace TM
       public int packet_number;
 
       /// <summary>
-      ///    Initializes a new instance of the <see cref="TMPacketHeader" /> struct.
+      ///    Initializes a new instance of the <see cref="PacketHeader" /> struct.
       /// </summary>
-      public TMPacketHeader(EServerType server_type = EServerType.MCS)
+      public PacketHeader(EServerType server_type = EServerType.MCS)
       {
          sign = server_type.Signature();
          value = 0;
@@ -96,31 +96,31 @@ namespace TM
    /// Implements the exchange packet<see cref="System.IDisposable" />
    /// </summary>
    /// <seealso cref="System.IDisposable" />
-   public class TMPacket : IDisposable
+   public class Packet : IDisposable
    {
       #region Constructors and destructors
 
       /// <summary>
-      ///    Initializes static members of the <see cref="TMPacket" /> class.
+      ///    Initializes static members of the <see cref="Packet" /> class.
       /// </summary>
-      static TMPacket()
+      static Packet()
       {
          BufferChunk.SetNetworking();
       }
 
       /// <summary>
-      ///    Initializes a new instance of the <see cref="TMPacket" /> class.
+      ///    Initializes a new instance of the <see cref="Packet" /> class.
       /// </summary>
-      public TMPacket(EServerType server_type, EPacketType type, byte cmd)
+      public Packet(EServerType server_type, EPacketType type, byte cmd)
       {
          BufferChunk.SetNetworking();
-         Header = new TMPacketHeader(server_type);
+         Header = new PacketHeader(server_type);
 
          Header.type = (byte) type;
          Header.value = cmd;
          Header.packet_number = PacketNumber++;
          Header.datalength = 1;
-         var len = TMPacketHeader.Length;
+         var len = PacketHeader.Length;
          len += Header.datalength;
          Data = new BufferChunk((int) len);
          Data.Add(Header);
@@ -129,18 +129,18 @@ namespace TM
       }
 
       /// <summary>
-      ///    Initializes a new instance of the <see cref="TMPacket" /> class.
+      ///    Initializes a new instance of the <see cref="Packet" /> class.
       /// </summary>
-      public TMPacket(EServerType server_type, EPacketType type, 
+      public Packet(EServerType server_type, EPacketType type, 
                       byte cmd, byte value = 0, byte[] data = null)
       {
          BufferChunk.SetNetworking();
-         Header = new TMPacketHeader(server_type);
+         Header = new PacketHeader(server_type);
 
          Header.type = (byte) type;
          Header.value = value;
          Header.packet_number = PacketNumber++;
-         var len = TMPacketHeader.Length + 1; // +1 checksum
+         var len = PacketHeader.Length + 1; // +1 checksum
          Header.datalength = 1;
 
          if ((data != null) &&
@@ -168,17 +168,17 @@ namespace TM
       }
 
       /// <summary>
-      ///    Initializes a new instance of the <see cref="TMPacket" /> class.
+      ///    Initializes a new instance of the <see cref="Packet" /> class.
       /// </summary>
-      public TMPacket(EServerType server_type, EPacketType type, byte value, uint length, byte[] data)
+      public Packet(EServerType server_type, EPacketType type, byte value, uint length, byte[] data)
       {
          BufferChunk.SetNetworking();
-         Header = new TMPacketHeader(server_type);
+         Header = new PacketHeader(server_type);
 
          Header.type = (byte) type;
          Header.value = value;
          Header.packet_number = PacketNumber++;
-         var len = TMPacketHeader.Length + 1; // +1 checksum
+         var len = PacketHeader.Length + 1; // +1 checksum
          Header.datalength = 1;
 
          if ((data != null) &&
@@ -199,12 +199,12 @@ namespace TM
       }
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="TMPacket"/> class.
+      /// Initializes a new instance of the <see cref="Packet"/> class.
       /// </summary>
-      public TMPacket(EServerType server_type, EPacketType type, string data)
+      public Packet(EServerType server_type, EPacketType type, string data)
       {
          BufferChunk.SetNetworking();
-         Header = new TMPacketHeader(server_type);
+         Header = new PacketHeader(server_type);
 
          Header.type = (byte) type;
          Header.value = 0;
@@ -213,7 +213,7 @@ namespace TM
 
          if (!string.IsNullOrEmpty(data)) {
             Header.datalength = (uint) data.Length + 1; // +1 checksum
-            var len = TMPacketHeader.Length;
+            var len = PacketHeader.Length;
             len += Header.datalength;
             Data = new BufferChunk((int) len);
             Data.Add(Header);
@@ -221,7 +221,7 @@ namespace TM
             var str = Encoding.ASCII.GetString(Data.Buffer);
          } else {
             Header.datalength = 1;
-            Data = new BufferChunk((int) (TMPacketHeader.Length + 1));
+            Data = new BufferChunk((int) (PacketHeader.Length + 1));
             Data.Add(Header);
          }
 
@@ -244,7 +244,7 @@ namespace TM
       /// <summary>
       ///    The packet header
       /// </summary>
-      public TMPacketHeader Header;
+      public PacketHeader Header;
 
       /// <summary>
       /// The memory stream
@@ -376,5 +376,41 @@ namespace TM
       }
 
       #endregion
+   }
+
+   public static class PacketExt
+   {
+      /// <summary>
+      /// Nexts the PacketHeader
+      /// </summary>
+      /// <param name="buf">The buffer chunk.</param>
+      /// <returns>PacketHeader.</returns>
+      public static PacketHeader NextPacketHeader(this BufferChunk buf)
+      {
+         var header = new PacketHeader();
+         try
+         {
+            header.sign = new byte[4];
+
+            for (var i = 0; i < 4; i++)
+            {
+               header.sign[i] = buf.NextByte();
+            }
+
+            header.type = buf.NextByte();
+            header.value = buf.NextByte();
+            header.reserved = new byte[2];
+            header.reserved[0] = buf.NextByte();
+            header.reserved[1] = buf.NextByte();
+            header.datalength = buf.NextUInt32();
+            header.packet_number = buf.NextInt32();
+         }
+         catch
+         {
+            header.packet_number = -1; //
+         }
+
+         return header;
+      }
    }
 }

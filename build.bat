@@ -1,4 +1,4 @@
-::  Author: Valeriy Onuchin   2.04.2021
+::  Author: Valeriy Onuchin 02.04.2021
 
 @ECHO OFF
 
