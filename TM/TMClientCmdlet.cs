@@ -11,10 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
+using TM;
 using TM.Properties;
 using Timer = System.Timers.Timer;
+using TMSrv;
 
-namespace TM
+namespace TMCmdLet
 {
    /// <summary>
    ///   Base class of PlanCommands
@@ -363,12 +365,12 @@ namespace TM
    ///</code></example>
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
    /// </summary>
    /// 
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Plan")]
    [OutputType(typeof(TMClient))]
@@ -443,7 +445,7 @@ namespace TM
             Port = Globals.Client.Port;
          }
 
-         var OK = false;
+         bool OK;
 
          if (!Globals.Client.IsConnected) {
             OK = Globals.Client.Connect(IpAddress, Port);
@@ -551,9 +553,9 @@ namespace TM
    ///   Start-Plan
    /// 
    ///</code></example>
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsLifecycle.Start, "Plan")]
    [OutputType(typeof(TMClient))]
    public class StartPlanCmdlet : PlanCmdlet
@@ -686,9 +688,9 @@ namespace TM
    ///   Stops plan processing on remote server
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsLifecycle.Stop, "Plan")]
    [OutputType(typeof(bool))]
@@ -714,9 +716,9 @@ namespace TM
    ///   Pauses plan processing on remote server.
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsLifecycle.Suspend, "Plan")]
    [OutputType(typeof(bool))]
@@ -741,11 +743,11 @@ namespace TM
    /// <summary>
    ///   Returns result of plan processing as a list of <see cref="TM.PlanSpotFull" /> objects
    /// 
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
    /// </summary>
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsCommon.Get, "Results")]
    [OutputType(typeof(PlanSpotFull))]
    public class GetPlanResultsCmdlet : PSCmdlet
@@ -786,9 +788,9 @@ namespace TM
    /// <summary>
    ///   Clears plan on the server.
    /// 
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsCommon.Clear, "Plan")]
    [OutputType(typeof(bool))]
    public class ClearPlanCmdlet : PlanCmdlet
@@ -973,9 +975,9 @@ namespace TM
    ///    Disconnects from remote server.
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    [Cmdlet(VerbsCommunications.Disconnect, "Server")]
    [OutputType(typeof(bool))]
    public class DisconnectServerCmdlet : PlanCmdlet
@@ -1019,9 +1021,9 @@ namespace TM
    ///</code>
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Command")]
    [OutputType(typeof(bool))]
@@ -1085,9 +1087,9 @@ namespace TM
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Info")]
@@ -1134,9 +1136,9 @@ namespace TM
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Data")]
@@ -1182,9 +1184,9 @@ namespace TM
    ///   Returns Server State.
    /// 
    /// <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
-   /// <br />Implements the <see cref="TM.PlanCmdlet" />
+   /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// </summary>
-   /// <seealso cref="TM.PlanCmdlet" />
+   /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommon.Get, "ServerState")]
    [OutputType(typeof(ECommandState))]

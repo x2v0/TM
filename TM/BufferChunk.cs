@@ -25,9 +25,9 @@ namespace TM
    ///   around along with an index (or offset) and length (or chunksize).
    ///   Members:
    ///   ----------------------------------------------------------------------
-   ///   index  - offset inside the buffer where valid data starts
-   ///   length - amount of valid data
-   ///   buffer - byte[] containing the data
+   ///   - index  - offset inside the buffer where valid data starts
+   ///   - length - amount of valid data
+   ///   - buffer - byte[] containing the data
    ///   Except for constructors (which set index and length member variables),
    ///   when index and length are passed as parameters, they are used as
    ///   offsets into the valid data, not offsets into the buffer.
@@ -86,9 +86,6 @@ namespace TM
       /// <summary>
       ///    Initializes static members of the <see cref="BufferChunk" /> class.
       /// </summary>
-      /// <summary>
-      /// Initializes static members of the <see cref="BufferChunk"/> class.
-      /// </summary>
       static BufferChunk()
       {
          littleEndian = BitConverter.IsLittleEndian;
@@ -101,10 +98,6 @@ namespace TM
       /// <example>
       ///    BufferChunk bufferChunk = new BufferChunk(2000);
       /// </example>
-      /// <summary>
-      /// Initializes a new instance of the <see cref="BufferChunk"/> class.
-      /// </summary>
-      /// <param name="size">The size.</param>
       public BufferChunk(int size = 1024)
       {
          ValidateNonNegative(size);
@@ -125,10 +118,6 @@ namespace TM
       ///    byte[] buffer = new byte[2000];
       ///    BufferChunk bufferChunk = new BufferChunk(buffer);
       /// </example>
-      /// <summary>
-      /// Initializes a new instance of the <see cref="BufferChunk"/> class.
-      /// </summary>
-      /// <param name="buffer">The buffer.</param>
       public BufferChunk(byte[] buffer)
       {
          ValidateObject(buffer);
@@ -148,12 +137,6 @@ namespace TM
       ///    byte[] buffer = new byte[2000];
       ///    BufferChunk bufferChunk = new BufferChunk(buffer, 10, 200);
       /// </example>
-      /// <summary>
-      /// Initializes a new instance of the <see cref="BufferChunk"/> class.
-      /// </summary>
-      /// <param name="buffer">The buffer.</param>
-      /// <param name="index">The index.</param>
-      /// <param name="length">The length.</param>
       public BufferChunk(byte[] buffer, int index, int length)
       {
          ValidateObject(buffer);
@@ -174,32 +157,20 @@ namespace TM
       /// <summary>
       ///    Data storage
       /// </summary>
-      /// <summary>
-      /// The buffer
-      /// </summary>
       private byte[] buffer;
 
       /// <summary>
       ///    Flag indicating whether the object is disposed or not
-      /// </summary>
-      /// <summary>
-      /// The disposed
       /// </summary>
       private bool disposed;
 
       /// <summary>
       ///    Offset where the valid data starts
       /// </summary>
-      /// <summary>
-      /// The index
-      /// </summary>
       private int index;
 
       /// <summary>
       ///    Length of the valid data
-      /// </summary>
-      /// <summary>
-      /// The length
       /// </summary>
       private int length;
 
@@ -221,10 +192,6 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      /// <summary>
-      /// Gets the buffer.
-      /// </summary>
-      /// <value>The buffer.</value>
       public byte[] Buffer
       {
          get
@@ -245,10 +212,6 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      /// <summary>
-      /// Gets the index.
-      /// </summary>
-      /// <value>The index.</value>
       public int Index
       {
          get
@@ -273,10 +236,6 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      /// <summary>
-      /// Gets or sets the length.
-      /// </summary>
-      /// <value>The length.</value>
       public int Length
       {
          get
@@ -302,10 +261,6 @@ namespace TM
       ///    How much space the buffer has left (for operator+)
       /// </summary>
       /// <value>The available buffer.</value>
-      /// <summary>
-      /// Gets the available buffer.
-      /// </summary>
-      /// <value>The available buffer.</value>
       private int AvailableBuffer
       {
          get
@@ -321,11 +276,6 @@ namespace TM
       /// <summary>
       ///    Indexer used to allow us to treat a BufferChunk like a byte[].  Useful when making in place modifications or reads
       ///    from a BufferChunk.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Byte.</returns>
-      /// <summary>
-      /// Gets or sets the <see cref="System.Byte"/> at the specified index.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Byte.</returns>
@@ -362,10 +312,6 @@ namespace TM
       ///    Creates a shallow copy (new Index and Length, duplicate reference to the same Buffer) of a BufferChunk.
       /// </summary>
       /// <returns>BufferChunk instance with ref Buffer, ByVal Index, and ByVal Length</returns>
-      /// <summary>
-      /// Creates a new object that is a copy of the current instance.
-      /// </summary>
-      /// <returns>A new object that is a copy of this instance.</returns>
       public object Clone()
       {
          return new BufferChunk(buffer, index, length);
@@ -373,9 +319,6 @@ namespace TM
 
       /// <summary>
       ///    Disposes the internal state of the object
-      /// </summary>
-      /// <summary>
-      /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
       /// </summary>
       public void Dispose()
       {
@@ -395,12 +338,6 @@ namespace TM
       /// <param name="obj1">The obj1.</param>
       /// <param name="obj2">The obj2.</param>
       /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
-      /// <summary>
-      /// Compares the specified obj1.
-      /// </summary>
-      /// <param name="obj1">The obj1.</param>
-      /// <param name="obj2">The obj2.</param>
-      /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
       public static bool Compare(byte[] obj1, byte[] obj2)
       {
          var ret = false;
@@ -432,11 +369,6 @@ namespace TM
       /// </summary>
       /// <param name="source">The source.</param>
       /// <returns>System.Byte[][].</returns>
-      /// <summary>
-      /// Copies the specified source.
-      /// </summary>
-      /// <param name="source">The source.</param>
-      /// <returns>System.Byte[].</returns>
       public static byte[] Copy(byte[] source)
       {
          byte[] ret = null;
@@ -456,12 +388,6 @@ namespace TM
       /// <param name="destination">BufferChunk destination that will be appended to</param>
       /// <param name="source">BufferChunk source</param>
       /// <returns>Reference to BufferChunk destination</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="source">The source.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, BufferChunk source)
       {
          ValidateObject(source);
@@ -481,12 +407,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="source">The source.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="source">The source.</param>
@@ -530,12 +450,6 @@ namespace TM
       /// <param name="destination">The destination.</param>
       /// <param name="b">The b.</param>
       /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="b">The b.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, byte b)
       {
          if (1 > destination.AvailableBuffer) {
@@ -551,12 +465,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -582,12 +490,6 @@ namespace TM
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, float data)
       {
          var bytes = GetBytes(data);
@@ -600,12 +502,6 @@ namespace TM
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, double data)
       {
          var bytes = GetBytes(data);
@@ -614,12 +510,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -645,12 +535,6 @@ namespace TM
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, long data)
       {
          return destination += (ulong) data;
@@ -658,12 +542,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -679,12 +557,6 @@ namespace TM
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, uint data)
       {
          return destination + (int) data;
@@ -692,12 +564,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="data">The data.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -720,12 +586,6 @@ namespace TM
 
       /// <summary>
       ///    <br/>Implements the +.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="s">The s.</param>
-      /// <returns>The result of the operator.</returns>
-      /// <summary>
-      /// Implements the + operator.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="s">The s.</param>
@@ -761,11 +621,6 @@ namespace TM
       ///    BufferChunk bufferChunk = new bufferChunk(500); // Create a new BufferChunk containing a 500 byte buffer
       ///    socket.Send((byte[])bufferChunk, SocketFlags.None);    //Note the explicit cast from BufferChunk to byte[]
       /// </example>
-      /// <summary>
-      /// Performs an explicit conversion from <see cref="BufferChunk"/> to <see cref="System.Byte[]"/>.
-      /// </summary>
-      /// <param name="source">The source.</param>
-      /// <returns>The result of the conversion.</returns>
       public static explicit operator byte[](BufferChunk source)
       {
          ValidateObject(source);
@@ -786,11 +641,6 @@ namespace TM
       ///    BufferChunk bc = new BufferChunk(new byte[] {74, 97, 115, 111, 110});
       ///    if((string)bc == "Jason")...
       /// </example>
-      /// <summary>
-      /// Performs an explicit conversion from <see cref="BufferChunk"/> to <see cref="System.String"/>.
-      /// </summary>
-      /// <param name="source">The source.</param>
-      /// <returns>The result of the conversion.</returns>
       public static explicit operator string(BufferChunk source)
       {
          ValidateObject(source);
@@ -804,11 +654,6 @@ namespace TM
       /// <summary>
       ///    Explicitly cast a string to a BufferChunk.  Helpful for applications that want to send strings or XML over the
       ///    network without worrying about the String to UTF8 logic.
-      /// </summary>
-      /// <param name="source">The source.</param>
-      /// <returns>The result of the conversion.</returns>
-      /// <summary>
-      /// Performs an explicit conversion from <see cref="System.String"/> to <see cref="BufferChunk"/>.
       /// </summary>
       /// <param name="source">The source.</param>
       /// <returns>The result of the conversion.</returns>
@@ -830,11 +675,6 @@ namespace TM
       /// </summary>
       /// <param name="buffer">byte[] buffer containing valid data</param>
       /// <returns>BufferChunk</returns>
-      /// <summary>
-      /// Performs an explicit conversion from <see cref="System.Byte[]"/> to <see cref="BufferChunk"/>.
-      /// </summary>
-      /// <param name="buffer">The buffer.</param>
-      /// <returns>The result of the conversion.</returns>
       public static explicit operator BufferChunk(byte[] buffer)
       {
          // Let the constructor do the checking for us
@@ -845,10 +685,6 @@ namespace TM
       ///    Sets the networking.
       /// </summary>
       /// <param name="v">if set to <c>true</c> [v].</param>
-      /// <summary>
-      /// Sets the networking.
-      /// </summary>
-      /// <param name="v">if set to <c>true</c> [v].</param>
       public static void SetNetworking(bool v = true)
       {
          littleEndian = !v && BitConverter.IsLittleEndian; // we use network
@@ -856,9 +692,6 @@ namespace TM
 
       /// <summary>
       ///    Used to zero out the data area of the BufferChunk.
-      /// </summary>
-      /// <summary>
-      /// Clears this instance.
       /// </summary>
       public void Clear()
       {
@@ -871,11 +704,6 @@ namespace TM
       ///    Copies from.
       /// </summary>
       /// <param name="src">The SRC.</param>
-      /// <param name="length">The length.</param>
-      /// <summary>
-      /// Copies from.
-      /// </summary>
-      /// <param name="src">The source.</param>
       /// <param name="length">The length.</param>
       public void CopyFrom(IntPtr src, int length)
       {
@@ -896,11 +724,6 @@ namespace TM
       /// </summary>
       /// <param name="destination">BufferChunk</param>
       /// <param name="index">offset in the destination BufferChunk's valid data</param>
-      /// <summary>
-      /// Copies to.
-      /// </summary>
-      /// <param name="destination">The destination.</param>
-      /// <param name="index">The index.</param>
       public void CopyTo(BufferChunk destination, int index)
       {
          ValidateObject(destination);
@@ -918,11 +741,6 @@ namespace TM
 
       /// <summary>
       ///    Copies to.
-      /// </summary>
-      /// <param name="dest">The dest.</param>
-      /// <param name="length">The length.</param>
-      /// <summary>
-      /// Copies to.
       /// </summary>
       /// <param name="dest">The dest.</param>
       /// <param name="length">The length.</param>
@@ -950,11 +768,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.Byte.</returns>
-      /// <summary>
-      /// Gets the byte.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Byte.</returns>
       public byte GetByte(int index)
       {
          // Let the indexer do the checking
@@ -965,11 +778,6 @@ namespace TM
       ///    Retrieves 8 bytes inside the BufferChunk
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
-      /// <returns>System.Double.</returns>
-      /// <summary>
-      /// Gets the double.
-      /// </summary>
-      /// <param name="index">The index.</param>
       /// <returns>System.Double.</returns>
       public double GetDouble(int index)
       {
@@ -985,11 +793,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.Single.</returns>
-      /// <summary>
-      /// Gets the float.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Single.</returns>
       public float GetFloat(int index)
       {
          ValidateNonNegative(index);
@@ -1003,11 +806,6 @@ namespace TM
       ///    Retrieves 2 bytes inside the BufferChunk
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
-      /// <returns>System.Int16.</returns>
-      /// <summary>
-      /// Gets the int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
       /// <returns>System.Int16.</returns>
       public short GetInt16(int index)
       {
@@ -1023,11 +821,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.Int32.</returns>
-      /// <summary>
-      /// Gets the int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Int32.</returns>
       public int GetInt32(int index)
       {
          ValidateNonNegative(index);
@@ -1042,11 +835,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.Int64.</returns>
-      /// <summary>
-      /// Gets the int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Int64.</returns>
       public long GetInt64(int index)
       {
          return (long) GetUInt64(index);
@@ -1054,11 +842,6 @@ namespace TM
 
       /// <summary>
       ///    Gets the padded U int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt16.</returns>
-      /// <summary>
-      /// Gets the padded u int16.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.UInt16.</returns>
@@ -1098,11 +881,6 @@ namespace TM
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.UInt32.</returns>
-      /// <summary>
-      /// Gets the padded u int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt32.</returns>
       public uint GetPaddedUInt32(int index)
       {
          ValidateNonNegative(index);
@@ -1136,11 +914,6 @@ namespace TM
 
       /// <summary>
       ///    Gets the padded UInt64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt64.</returns>
-      /// <summary>
-      /// Gets the padded u int64.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.UInt64.</returns>
@@ -1180,11 +953,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.UInt16.</returns>
-      /// <summary>
-      /// Gets the u int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt16.</returns>
       public ushort GetUInt16(int index)
       {
          return (ushort) GetInt16(index);
@@ -1195,11 +963,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <returns>System.UInt32.</returns>
-      /// <summary>
-      /// Gets the u int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt32.</returns>
       public uint GetUInt32(int index)
       {
          return (uint) GetInt32(index);
@@ -1209,11 +972,6 @@ namespace TM
       ///    Retrieves 8 bytes inside the BufferChunk
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
-      /// <returns>System.UInt64.</returns>
-      /// <summary>
-      /// Gets the u int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
       /// <returns>System.UInt64.</returns>
       public ulong GetUInt64(int index)
       {
@@ -1228,12 +986,6 @@ namespace TM
       ///    Retrieves length bytes from inside the BufferChunk and converts from UTF8 string
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
-      /// <param name="length">The length.</param>
-      /// <returns>System.String.</returns>
-      /// <summary>
-      /// Gets the ut f8 string.
-      /// </summary>
-      /// <param name="index">The index.</param>
       /// <param name="length">The length.</param>
       /// <returns>System.String.</returns>
       public string GetUTF8String(int index, int length)
@@ -1270,11 +1022,6 @@ namespace TM
       ///    socket.Send((byte[])frameBuffer.NextBufferChunk(sizeToCopy));
       ///    }
       /// </example>
-      /// <summary>
-      /// Nexts the buffer chunk.
-      /// </summary>
-      /// <param name="length">The length.</param>
-      /// <returns>BufferChunk.</returns>
       public BufferChunk NextBufferChunk(int length)
       {
          // Peek will validate for us
@@ -1293,9 +1040,6 @@ namespace TM
       /// <returns>BufferChunk.</returns>
       /// <summary>
       /// Nexts the buffer chunk maximum.
-      /// </summary>
-      /// <param name="length">The length.</param>
-      /// <returns>BufferChunk.</returns>
       public BufferChunk NextBufferChunkMax(int length)
       {
          if (length > Length) {
@@ -1307,10 +1051,6 @@ namespace TM
 
       /// <summary>
       ///    Nexts the byte.
-      /// </summary>
-      /// <returns>System.Byte.</returns>
-      /// <summary>
-      /// Nexts the byte.
       /// </summary>
       /// <returns>System.Byte.</returns>
       public byte NextByte()
@@ -1328,10 +1068,6 @@ namespace TM
       ///    Nexts the Double.
       /// </summary>
       /// <returns>System.Double.</returns>
-      /// <summary>
-      /// Nexts the double.
-      /// </summary>
-      /// <returns>System.Double.</returns>
       public double NextDouble()
       {
          // Let GetInt do the checking
@@ -1345,10 +1081,6 @@ namespace TM
 
       /// <summary>
       ///    Nexts the float.
-      /// </summary>
-      /// <returns>System.Single.</returns>
-      /// <summary>
-      /// Nexts the float.
       /// </summary>
       /// <returns>System.Single.</returns>
       public float NextFloat()
@@ -1366,10 +1098,6 @@ namespace TM
       ///    Nexts the Int16.
       /// </summary>
       /// <returns>System.Int16.</returns>
-      /// <summary>
-      /// Nexts the int16.
-      /// </summary>
-      /// <returns>System.Int16.</returns>
       public short NextInt16()
       {
          // Let GetShort do the checking
@@ -1383,10 +1111,6 @@ namespace TM
 
       /// <summary>
       ///    Nexts the Int32.
-      /// </summary>
-      /// <returns>System.Int32.</returns>
-      /// <summary>
-      /// Nexts the int32.
       /// </summary>
       /// <returns>System.Int32.</returns>
       public int NextInt32()
@@ -1404,10 +1128,6 @@ namespace TM
       ///    Nexts the Int64.
       /// </summary>
       /// <returns>System.Int64.</returns>
-      /// <summary>
-      /// Nexts the int64.
-      /// </summary>
-      /// <returns>System.Int64.</returns>
       public long NextInt64()
       {
          // Let GetInt do the checking
@@ -1423,10 +1143,6 @@ namespace TM
       ///    Nexts the UInt16.
       /// </summary>
       /// <returns>System.UInt16.</returns>
-      /// <summary>
-      /// Nexts the u int16.
-      /// </summary>
-      /// <returns>System.UInt16.</returns>
       public ushort NextUInt16()
       {
          return (ushort) NextInt16();
@@ -1434,10 +1150,6 @@ namespace TM
 
       /// <summary>
       ///    Nexts the UInt32.
-      /// </summary>
-      /// <returns>System.UInt32.</returns>
-      /// <summary>
-      /// Nexts the u int32.
       /// </summary>
       /// <returns>System.UInt32.</returns>
       public uint NextUInt32()
@@ -1449,10 +1161,6 @@ namespace TM
       ///    Nexts the UInt64.
       /// </summary>
       /// <returns>System.UInt64.</returns>
-      /// <summary>
-      /// Nexts the u int64.
-      /// </summary>
-      /// <returns>System.UInt64.</returns>
       public ulong NextUInt64()
       {
          return (ulong) NextInt64();
@@ -1460,11 +1168,6 @@ namespace TM
 
       /// <summary>
       ///    Nexts the UTF8 string.
-      /// </summary>
-      /// <param name="length">The length.</param>
-      /// <returns>System.String.</returns>
-      /// <summary>
-      /// Nexts the UTF8 string.
       /// </summary>
       /// <param name="length">The length.</param>
       /// <returns>System.String.</returns>
@@ -1485,12 +1188,6 @@ namespace TM
       /// <param name="index">int index into the valid data area</param>
       /// <param name="length">int length of the data to copy</param>
       /// <returns>BufferChunk length Length that was extracted from the source BufferChunk</returns>
-      /// <summary>
-      /// Peeks the specified index.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="length">The length.</param>
-      /// <returns>BufferChunk.</returns>
       public BufferChunk Peek(int index, int length)
       {
          return new BufferChunk(buffer, this.index + index, length);
@@ -1501,9 +1198,6 @@ namespace TM
       ///    Note that the actual byte[] buffer is not reset, so the memory is not deallocated/reallocated, allowing for
       ///    more efficient reuse of memory without abusing the GC
       /// </summary>
-      /// <summary>
-      /// Resets this instance.
-      /// </summary>
       public void Reset()
       {
          index = 0;
@@ -1512,11 +1206,6 @@ namespace TM
 
       /// <summary>
       ///    Reset the BufferChunk's Index and Length pointers to supplied values
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="length">The length.</param>
-      /// <summary>
-      /// Resets the specified index.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="length">The length.</param>
@@ -1542,11 +1231,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the byte.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetByte(int index, byte data)
       {
          // Let the indexer do the checking
@@ -1558,11 +1242,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetInt16(int index, short data)
       {
          ValidateNonNegative(index);
@@ -1581,11 +1260,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetInt32(int index, int data)
       {
          ValidateNonNegative(index);
@@ -1604,11 +1278,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetInt64(int index, long data)
       {
          SetUInt64(index, (ulong) data);
@@ -1620,10 +1289,6 @@ namespace TM
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
       /// <summary>
-      /// Sets the padded u int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetPaddedUInt16(int index, ushort data)
       {
          ValidateNonNegative(index);
@@ -1658,11 +1323,6 @@ namespace TM
 
       /// <summary>
       ///    Sets the padded UInt32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
-      /// <summary>
-      /// Sets the padded u int32.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
@@ -1703,11 +1363,6 @@ namespace TM
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
-      /// <summary>
-      /// Sets the padded u int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetPaddedUInt64(int index, ulong data)
       {
          var dataSize = 8;
@@ -1745,11 +1400,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the u int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetUInt16(int index, ushort data)
       {
          SetInt16(index, (short) data);
@@ -1760,11 +1410,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the u int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetUInt32(int index, uint data)
       {
          SetInt32(index, (int) data);
@@ -1775,11 +1420,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the u int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetUInt64(int index, ulong data)
       {
          ValidateNonNegative(index);
@@ -1798,11 +1438,6 @@ namespace TM
       /// </summary>
       /// <param name="index">Offset into the valid data</param>
       /// <param name="data">Value to write at index</param>
-      /// <summary>
-      /// Sets the ut f8 string.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       public void SetUTF8String(int index, string data)
       {
          utf8.GetBytes(data, 0, data.Length, buffer, this.index + index);
@@ -1810,10 +1445,6 @@ namespace TM
 
       /// <summary>
       ///    Skips the specified length.
-      /// </summary>
-      /// <param name="len">The length.</param>
-      /// <summary>
-      /// Skips the specified length.
       /// </summary>
       /// <param name="len">The length.</param>
       public void Skip(int len)
@@ -1832,11 +1463,6 @@ namespace TM
       /// </summary>
       /// <param name="value">The value.</param>
       /// <returns>System.Byte[].</returns>
-      /// <summary>
-      /// Gets the bytes.
-      /// </summary>
-      /// <param name="value">The value.</param>
-      /// <returns>System.Byte[].</returns>
       private static unsafe byte[] GetBytes(float value)
       {
          var bytes = new byte[4];
@@ -1850,11 +1476,6 @@ namespace TM
 
       /// <summary>
       ///    Gets the bytes.
-      /// </summary>
-      /// <param name="value">The value.</param>
-      /// <returns>System.Byte[].</returns>
-      /// <summary>
-      /// Gets the bytes.
       /// </summary>
       /// <param name="value">The value.</param>
       /// <returns>System.Byte[].</returns>
@@ -1876,11 +1497,6 @@ namespace TM
       /// <param name="ptr">The IntPtr.</param>
       /// <exception cref="ArgumentException">Null pointers are invalid</exception>
       /// <exception cref="System.ArgumentException">Null pointers are invalid</exception>
-      /// <summary>
-      /// Validates the int PTR.
-      /// </summary>
-      /// <param name="ptr">The PTR.</param>
-      /// <exception cref="System.ArgumentException">Null pointers are invalid</exception>
       private static void ValidateIntPtr(IntPtr ptr)
       {
          if (ptr == IntPtr.Zero) {
@@ -1894,12 +1510,6 @@ namespace TM
       /// </summary>
       /// <param name="val">The val.</param>
       /// <exception cref="ArgumentOutOfRangeException">val - All Integer Values Must Be Positive</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">val</exception>
-      /// <summary>
-      /// Validates the non negative.
-      /// </summary>
-      /// <param name="val">The value.</param>
-      /// <exception cref="System.ArgumentOutOfRangeException">val - All Integer Values Must Be Positive</exception>
       private static void ValidateNonNegative(int val)
       {
          if (val < 0) {
@@ -1912,13 +1522,7 @@ namespace TM
       ///    BufferChunk does not accept or create objects of zero length
       /// </summary>
       /// <param name="length">The length.</param>
-      /// <exception cref="TM.BufferChunk.NoDataException">BufferChunk Does Not Accept Zero Length</exception>
-      /// <exception cref="BufferChunk.NoDataException">BufferChunk Does Not Accept Zero Length</exception>
-      /// <summary>
-      /// Validates the length of the not zero.
-      /// </summary>
-      /// <param name="length">The length.</param>
-      /// <exception cref="TM.BufferChunk.NoDataException">BufferChunk Does Not Accept Zero Length</exception>
+      /// <exception cref="TM.NoDataException">BufferChunk Does Not Accept Zero Length</exception>
       private static void ValidateNotZeroLength(int length)
       {
          if (length == 0) {
@@ -1932,12 +1536,6 @@ namespace TM
       /// </summary>
       /// <param name="o">The o.</param>
       /// <exception cref="ArgumentNullException">BufferChunk doesn't accept null objects</exception>
-      /// <exception cref="System.ArgumentNullException">BufferChunk doesn't accept null objects</exception>
-      /// <summary>
-      /// Validates the object.
-      /// </summary>
-      /// <param name="o">The o.</param>
-      /// <exception cref="System.ArgumentNullException">BufferChunk doesn't accept null objects</exception>
       private static void ValidateObject(object o)
       {
          if (o == null) {
@@ -1954,18 +1552,11 @@ namespace TM
       /// <param name="length">The length.</param>
       /// <param name="dataLength">Length of the data.</param>
       /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="System.ArgumentOutOfRangeException"></exception>
-      /// <summary>
-      /// Validates the pointer data.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="length">The length.</param>
-      /// <param name="dataLength">Length of the data.</param>
-      /// <exception cref="System.ArgumentOutOfRangeException"></exception>
       private static void ValidatePointerData(int index, int length, int dataLength)
       {
          if ((index + length) > dataLength) {
-            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture, "Index And Length Invalid Data", index, length, dataLength));
+            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture, 
+                                                                "Index And Length Invalid Data", index, length, dataLength));
          }
       }
 
@@ -1975,14 +1566,7 @@ namespace TM
       /// </summary>
       /// <param name="requested">The requested.</param>
       /// <param name="actual">The actual.</param>
-      /// <exception cref="TM.BufferChunk.InsufficientDataException"></exception>
-      /// <exception cref="BufferChunk.InsufficientDataException"></exception>
-      /// <summary>
-      /// Validates the sufficient data.
-      /// </summary>
-      /// <param name="requested">The requested.</param>
-      /// <param name="actual">The actual.</param>
-      /// <exception cref="TM.BufferChunk.InsufficientDataException"></exception>
+      /// <exception cref="TM.InsufficientDataException"></exception>
       private static void ValidateSufficientData(int requested, int actual)
       {
          if (requested > actual) {
@@ -1996,14 +1580,7 @@ namespace TM
       /// </summary>
       /// <param name="requested">The requested.</param>
       /// <param name="actual">The actual.</param>
-      /// <exception cref="TM.BufferChunk.InsufficientSpaceException"></exception>
-      /// <exception cref="BufferChunk.InsufficientSpaceException"></exception>
-      /// <summary>
-      /// Validates the sufficient space.
-      /// </summary>
-      /// <param name="requested">The requested.</param>
-      /// <param name="actual">The actual.</param>
-      /// <exception cref="TM.BufferChunk.InsufficientSpaceException"></exception>
+      /// <exception cref="TM.InsufficientSpaceException"></exception>
       private static void ValidateSufficientSpace(int requested, int actual)
       {
          if (requested > actual) {
@@ -2013,11 +1590,6 @@ namespace TM
 
       /// <summary>
       ///    Gets the double.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Double.</returns>
-      /// <summary>
-      /// Gets the double.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Double.</returns>
@@ -2037,11 +1609,6 @@ namespace TM
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Single.</returns>
-      /// <summary>
-      /// Gets the float.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Single.</returns>
       private unsafe float _GetFloat(int index)
       {
          float ret;
@@ -2055,11 +1622,6 @@ namespace TM
 
       /// <summary>
       ///    Gets Int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Int16.</returns>
-      /// <summary>
-      /// Gets the int16.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Int16.</returns>
@@ -2082,11 +1644,6 @@ namespace TM
 
       /// <summary>
       ///    Gets Int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.Int32.</returns>
-      /// <summary>
-      /// Gets the int32.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Int32.</returns>
@@ -2116,11 +1673,6 @@ namespace TM
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.UInt64.</returns>
-      /// <summary>
-      /// Gets the u int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <returns>System.UInt64.</returns>
       private unsafe ulong _GetUInt64(int index)
       {
          ulong ret;
@@ -2134,11 +1686,6 @@ namespace TM
 
       /// <summary>
       ///    Sets Int16.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
-      /// <summary>
-      /// Sets the int16.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
@@ -2157,11 +1704,6 @@ namespace TM
 
       /// <summary>
       ///    Sets Int32.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
-      /// <summary>
-      /// Sets the int32.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
@@ -2187,11 +1729,6 @@ namespace TM
       /// </summary>
       /// <param name="index">The index.</param>
       /// <param name="data">The data.</param>
-      /// <summary>
-      /// Sets the u int64.
-      /// </summary>
-      /// <param name="index">The index.</param>
-      /// <param name="data">The data.</param>
       private unsafe void _SetUInt64(int index, ulong data)
       {
          fixed (byte* pb = &buffer[this.index + index]) {
@@ -2201,10 +1738,6 @@ namespace TM
 
       /// <summary>
       ///    Expands the buffer.
-      /// </summary>
-      /// <param name="len">The length.</param>
-      /// <summary>
-      /// Expands the buffer.
       /// </summary>
       /// <param name="len">The length.</param>
       private void ExpandBuffer(int len = 1024)
@@ -2221,157 +1754,113 @@ namespace TM
       }
 
       #endregion
+   }
 
-      #region Nested classes
+   /// <summary>
+   ///    Class InsufficientDataException
+   ///    Raised when requesting more data than current buffer holds
+   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   /// </summary>
+   /// <seealso cref="System.ApplicationException" />
+   public class InsufficientDataException : ApplicationException
+   {
+      #region Constructors and destructors
 
       /// <summary>
-      ///    Class InsufficientDataException
-      ///    Raised when requesting more data than current buffer holds
-      ///    <br/>Implements the <see cref="System.ApplicationException" />
+      ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
       /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      /// <summary>
-      /// Class InsufficientDataException.
-      /// Implements the <see cref="System.ApplicationException" />
-      /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      public class InsufficientDataException : ApplicationException
+      public InsufficientDataException()
       {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
-         /// </summary>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientDataException"/> class.
-         /// </summary>
-         public InsufficientDataException()
-         {
-         }
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientDataException"/> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public InsufficientDataException(string msg) : base(msg)
-         {
-         }
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <param name="inner">The inner.</param>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientDataException"/> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <param name="inner">The inner.</param>
-         public InsufficientDataException(string msg, Exception inner) : base(msg, inner)
-         {
-         }
-
-         #endregion
       }
 
       /// <summary>
-      ///    Class InsufficientSpaceException
-      ///    Raised when trying to add more data than current buffer can hold
-      ///    <br/>Implements the <see cref="System.ApplicationException" />
+      ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
       /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      /// <summary>
-      /// Class InsufficientSpaceException.
-      /// Implements the <see cref="System.ApplicationException" />
-      /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      public class InsufficientSpaceException : ApplicationException
+      /// <param name="msg">The MSG.</param>
+      public InsufficientDataException(string msg) : base(msg)
       {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
-         /// </summary>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientSpaceException"/> class.
-         /// </summary>
-         public InsufficientSpaceException()
-         {
-         }
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientSpaceException"/> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public InsufficientSpaceException(string msg) : base(msg)
-         {
-         }
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <param name="inner">The inner.</param>
-         /// <summary>
-         /// Initializes a new instance of the <see cref="InsufficientSpaceException"/> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <param name="inner">The inner.</param>
-         public InsufficientSpaceException(string msg, Exception inner) : base(msg, inner)
-         {
-         }
-
-         #endregion
       }
 
       /// <summary>
-      ///    Class NoDataException
-      ///    Raised when requesting more data than current buffer holds
-      ///    <br/>Implements the <see cref="System.ApplicationException" />
+      ///    Initializes a new instance of the <see cref="InsufficientDataException" /> class.
       /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      /// <summary>
-      /// Class NoDataException.
-      /// Implements the <see cref="System.ApplicationException" />
-      /// </summary>
-      /// <seealso cref="System.ApplicationException" />
-      public class NoDataException : ApplicationException
+      /// <param name="msg">The MSG.</param>
+      /// <param name="inner">The inner.</param>
+      public InsufficientDataException(string msg, Exception inner) : base(msg, inner)
       {
-         #region Constructors and destructors
+      }
 
-         /// <summary>
-         /// Initializes a new instance of the <see cref="NoDataException" /> class.
-         /// </summary>
-         public NoDataException()
-         {
-         }
+      #endregion
+   }
 
-         /// <summary>
-         /// Initializes a new instance of the <see cref="NoDataException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public NoDataException(string msg) : base(msg)
-         {
-         }
+   /// <summary>
+   ///    Class InsufficientSpaceException
+   ///    Raised when trying to add more data than current buffer can hold
+   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   /// </summary>
+   /// <seealso cref="System.ApplicationException" />
+   public class InsufficientSpaceException : ApplicationException
+   {
+      #region Constructors and destructors
 
-         /// <summary>
-         /// Initializes a new instance of the <see cref="NoDataException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         /// <param name="inner">The inner.</param>
-         public NoDataException(string msg, Exception inner) : base(msg, inner)
-         {
-         }
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
+      /// </summary>
+      public InsufficientSpaceException()
+      {
+      }
 
-         #endregion
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      public InsufficientSpaceException(string msg) : base(msg)
+      {
+      }
+
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="InsufficientSpaceException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      /// <param name="inner">The inner.</param>
+      public InsufficientSpaceException(string msg, Exception inner) : base(msg, inner)
+      {
+      }
+
+      #endregion
+   }
+
+   /// <summary>
+   ///    Class NoDataException
+   ///    Raised when requesting more data than current buffer holds
+   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   /// </summary>
+   public class NoDataException : ApplicationException
+   {
+      #region Constructors and destructors
+
+      /// <summary>
+      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      /// </summary>
+      public NoDataException()
+      {
+      }
+
+      /// <summary>
+      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      public NoDataException(string msg) : base(msg)
+      {
+      }
+
+      /// <summary>
+      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      /// <param name="inner">The inner.</param>
+      public NoDataException(string msg, Exception inner) : base(msg, inner)
+      {
       }
 
       #endregion

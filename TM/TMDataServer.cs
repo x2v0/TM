@@ -20,8 +20,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TM;
+using TMSrv;
 
-namespace TM
+
+public delegate void ConnectHandler(TMDataServer pds, int res);
+public delegate void PostParseHandler(int cmd, int cid);
+public delegate void IncomingPacketHandler(TMDataServer pds, TMPacket p, byte[] pdata);
+public delegate int  MakeCommandHandler(int cmd, byte[] send_data, int n, DevDescr p_dev, short reqrespdelay);
+public delegate void ServerHandler(TMDataServer pds);
+
+namespace TMSrv
 {
 // для всех контролов заполнить:
 //   GetCntrlTemplaiteByType
@@ -281,68 +290,6 @@ static int DATA_STRUCT_NULL = NULL; // пустышка вместо данны�
 
       #endregion
    }
-
-   /// <summary>
-   /// способы подключения сервера к источнику данных
-   /// используется в ParseTagAsString, DataServers_ParseConnectType, _DataServer_Info2Tree, 
-   /// DataServers_ConnectToServer, DataServers_DisconnectFromServer, DataServers_IsConnected
-   /// </summary>
-   public enum EServerConnectType
-   {
-      /// <summary>
-      ///    The adc
-      /// </summary>
-      [Description("заглушка")]
-      NONE  =  0,
-
-      /// <summary>
-      /// библиотека linklib.h by P.Lunev:
-      /// ретранслятор на кресло,
-      /// температурные мастера,
-      /// рентген-сервер(железо)...)
-      /// </summary>
-      [Description("linklib.h")]
-      LNKLIB =    1,
-
-      /// <summary>
-      /// протокол TM_Protocol:
-      /// расширение TCP - температурный сервер-клиент,
-      /// рентген-сервер-томограф,
-      /// прокси кресла
-      /// </summary>
-      [Description("протокол TM_Protocol")]
-      TMPROTOCOL = 2,
-
-      /// <summary>
-      /// прямое подключение к COM порту (c оберткой для RS485)
-      /// реализовано для кресла,
-      /// для температурного сервера,
-      /// для ретген-сервера 
-      /// </summary>
-      [Description("прямое подключение к COM порту")]
-      DIRECT   =  4,
-
-      /// <summary>
-      /// имитация подключения к устройству - всегда успешное.
-      /// Для программ-имитаторов
-      /// </summary>
-      [Description("имитация подключения к устройству")]
-      IMITATION = 8,
-
-      /// <summary>
-      /// простое TCP - подключение к устройству.
-      /// Разбор полностью реализуется по месту использования
-      /// </summary>
-      [Description("простое TCP - подключение к устройству")]
-      TCPCUSTOM = 16,
-
-      /// <summary>
-      /// прямое подключение к ком-порту (COM порт реализовано Autonics)
-      /// </summary>
-      [Description("прямое подключение к ком-порту")]
-      RS232   =   32
-   }
-
    public class TmLnk
    {
       // sid, seg
@@ -925,8 +872,6 @@ int asknum; 			// текущий запрос (циклический счетч
 
       #region Server Events
 
-      public delegate void ConnectHandler(TMDataServer pds, int res);
-
       /// <summary>
       /// дополнительный обработчик после коннекта, вызывается в ConnectToServer
       /// </summary>
@@ -948,8 +893,6 @@ int asknum; 			// текущий запрос (циклический счетч
       /// </summary>
       public event ConnectHandler Connect;
 
-      public delegate void ServerHandler(TMDataServer pds);
-
       /// <summary>
       ///  переопределенная функция
       /// </summary>
@@ -960,14 +903,10 @@ int asknum; 			// текущий запрос (циклический счетч
       /// </summary>
       public event ServerHandler FreeServerData;
 
-      public delegate void IncomingPacketHandler(TMDataServer pds, TMPacket p, byte[] pdata);
-
       /// <summary>
       /// дополнительный обработчик входящего пакета для ParseIncommingPacketTM
       /// </summary>
       public event IncomingPacketHandler ParseIncomingPacket;
-
-      public delegate void PostParseHandler(int cmd, int cid);
 
       /// <summary>
       /// указатель на функцию - дополнительный обработчик входящих команд.
@@ -978,8 +917,6 @@ int asknum; 			// текущий запрос (циклический счетч
       ///  TMCPFS_PostParseData, Kr_PostParseData
       /// </summary>
       public event PostParseHandler PostParseData;
-
-      public delegate int MakeCommandHandler(int cmd, byte[] send_data, int n, DevDescr p_dev, short reqrespdelay);
 
       /// <summary>
       ///  внешняя функция для формирования команды к устройству.
@@ -1014,20 +951,16 @@ int asknum; 			// текущий запрос (циклический счетч
       */
 
       #endregion
-
-
       public void Dispose()
       {
          Dispose(true);
          GC.SuppressFinalize(this);
       }
-
-
       protected virtual void Dispose(bool disposing)
       {
          if (disposing) {
             Client.Dispose();
          }
       }
-      }
+   }
 }

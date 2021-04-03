@@ -18,8 +18,38 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using TM;
 using TM.Properties;
+using TMSrv;
 
+
+#region  Delegates
+
+/// <summary>
+///    Delegate ClientDataHandler
+/// </summary>
+/// <param name="data">The data.</param>
+/// <param name="bytesRead">The bytes read.</param>
+public delegate void ClientDataHandler(BufferChunk data = null, int bytesRead = 0);
+
+/// <summary>
+///    Delegate ClientHandler
+/// </summary>
+public delegate void ClientHandler();
+
+/// <summary>
+///    Delegate PlanResultsHandler
+/// </summary>
+/// <param name="results">The results.</param>
+public delegate void PlanResultsHandler(List<PlanSpotResult> results);
+
+/// <summary>
+///    Delegate ServerStateChangedHandler
+/// </summary>
+/// <param name="state">The state.</param>
+public delegate void ServerStateChangedHandler(ECommandState state);
+
+#endregion
 namespace TM
 {
    /// <summary>
@@ -135,40 +165,12 @@ namespace TM
 
       #endregion
 
-      #region  Delegates
-
-      /// <summary>
-      ///    Delegate ClientHandleData
-      /// </summary>
-      /// <param name="data">The data.</param>
-      /// <param name="bytesRead">The bytes read.</param>
-      public delegate void ClientHandleData(BufferChunk data = null, int bytesRead = 0);
-
-      /// <summary>
-      ///    Delegate ClientHandler
-      /// </summary>
-      public delegate void ClientHandler();
-
-      /// <summary>
-      ///    Delegate PlanResultsHandler
-      /// </summary>
-      /// <param name="results">The results.</param>
-      public delegate void PlanResultsHandler(List<PlanSpotResult> results);
-
-      /// <summary>
-      ///    Delegate ServerStateChangedHandler
-      /// </summary>
-      /// <param name="state">The state.</param>
-      public delegate void ServerStateChangedHandler(ECommandState state);
-
-      #endregion
-
       #region Public events
 
       /// <summary>
       ///    Occurs when [data block received].
       /// </summary>
-      public event ClientHandleData DataBlockReceived;
+      public event ClientDataHandler DataBlockReceived;
 
       /// <summary>
       ///    Occurs when [on error received].
@@ -264,7 +266,6 @@ namespace TM
          get;
          set;
       }
-            
       public string IP
       {
          get
@@ -495,7 +496,7 @@ namespace TM
       /// <param name="file">The file with plan data.</param>
       /// <returns>BufferChunk. The raw array of bytes</returns>
       /// <exception cref="System.IO.FileNotFoundException"></exception>
-      /// <exception cref="TM.TMClient.ReadPlanException">
+      /// <exception cref="ReadPlanException">
       /// </exception>
       /// <exception cref="FileNotFoundException"></exception>
       public static List<PlanSpot> LoadPlanData(string file)
@@ -587,7 +588,7 @@ namespace TM
       /// <param name="spots">The spots.</param>
       /// <param name="nblocks">The nblocks.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendPlanException">
+      /// <exception cref="TM.SendPlanException">
       /// </exception>
       public static bool SendPlan(TMClient client, List<PlanSpot> spots, uint nblocks = 10)
       {
@@ -648,7 +649,7 @@ namespace TM
       /// <param name="spots">The plan as list of spots.</param>
       /// <param name="nblocks">The nblocks.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendPlanException"></exception>
+      /// <exception cref="TM.SendPlanException"></exception>
       public static bool SendPlan(TMClient client, Dictionary<int, PlanSpot> spots, uint nblocks = 10)
       {
          var list = new List<PlanSpot>();
@@ -918,7 +919,7 @@ namespace TM
       /// <param name="cmd">The EPlanCommand.</param>
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendCommandException"></exception>
+      /// <exception cref="TM.SendCommandException"></exception>
       public bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)
       {
          bool ret;
@@ -960,7 +961,7 @@ namespace TM
       /// <param name="data">The data.</param>
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendDataException"></exception>
+      /// <exception cref="TM.SendDataException"></exception>
       public bool SendData(byte[] data, EServerType server_type = EServerType.MCS)
       {
          bool ret;
@@ -1009,7 +1010,7 @@ namespace TM
       /// <param name="data">The data.</param>
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendDataException"></exception>
+      /// <exception cref="TM.SendDataException"></exception>
       public bool SendData(uint len, byte[] data, EServerType server_type = EServerType.MCS)
       {
          bool ret;
@@ -1047,7 +1048,7 @@ namespace TM
       /// <param name="info">The information.</param>
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="TM.TMClient.SendInfoException"></exception>
+      /// <exception cref="TM.SendInfoException"></exception>
       public bool SendInfo(string info, EServerType server_type = EServerType.MCS)
       {
          bool ret;
@@ -1368,107 +1369,108 @@ namespace TM
 
       #endregion
 
-      #region Nested classes
+   }
+
+   #region Exception classes
+
+   /// <summary>
+   ///    Exception during reading plan from a file
+   ///    <br />Implements the <see cref="System.Exception" />
+   /// </summary>
+   /// <seealso cref="System.Exception" />
+   public class ReadPlanException : Exception
+   {
+      #region Constructors and destructors
 
       /// <summary>
-      ///    Exception during reading plan from a file
-      ///    <br />Implements the <see cref="System.Exception" />
+      ///    Initializes a new instance of the <see cref="ReadPlanException" /> class.
       /// </summary>
-      /// <seealso cref="System.Exception" />
-      public class ReadPlanException : Exception
+      /// <param name="file">The file.</param>
+      public ReadPlanException(string file) : base(Resources.Failed_to_read + " " + Resources.plan_data + ": " + file)
       {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="ReadPlanException" /> class.
-         /// </summary>
-         /// <param name="file">The file.</param>
-         public ReadPlanException(string file) : base(Resources.Failed_to_read + " " + Resources.plan_data + ": " + file)
-         {
-         }
-
-         #endregion
-      }
-
-      /// <summary>
-      ///    Exception during sending command to server
-      ///    <br />Implements the <see cref="System.Exception" />
-      /// </summary>
-      /// <seealso cref="System.Exception" />
-      public class SendCommandException : Exception
-      {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="SendCommandException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public SendCommandException(string msg) : base(msg)
-         {
-         }
-
-         #endregion
-      }
-
-      /// <summary>
-      ///    Exception during sending DATA to server
-      ///    <br />Implements the <see cref="System.Exception" />
-      /// </summary>
-      /// <seealso cref="System.Exception" />
-      public class SendDataException : Exception
-      {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="SendDataException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public SendDataException(string msg) : base(msg)
-         {
-         }
-
-         #endregion
-      }
-
-      /// <summary>
-      ///    Exception during sending info to server
-      ///    <br />Implements the <see cref="System.Exception" />
-      /// </summary>
-      /// <seealso cref="System.Exception" />
-      public class SendInfoException : Exception
-      {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="SendInfoException" /> class.
-         /// </summary>
-         /// <param name="msg">The MSG.</param>
-         public SendInfoException(string msg) : base(msg)
-         {
-         }
-
-         #endregion
-      }
-
-      /// <summary>
-      ///    Exception during sending plan to server
-      ///    <br />Implements the <see cref="System.Exception" />
-      /// </summary>
-      /// <seealso cref="System.Exception" />
-      public class SendPlanException : Exception
-      {
-         #region Constructors and destructors
-
-         /// <summary>
-         ///    Initializes a new instance of the <see cref="SendPlanException" /> class.
-         /// </summary>
-         public SendPlanException() : base(Resources.Failed_to_send + " " + Resources.plan_data)
-         {
-         }
-
-         #endregion
       }
 
       #endregion
    }
+
+   /// <summary>
+   ///    Exception during sending command to server
+   ///    <br />Implements the <see cref="System.Exception" />
+   /// </summary>
+   /// <seealso cref="System.Exception" />
+   public class SendCommandException : Exception
+   {
+      #region Constructors and destructors
+
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="SendCommandException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      public SendCommandException(string msg) : base(msg)
+      {
+      }
+
+      #endregion
+   }
+
+   /// <summary>
+   ///    Exception during sending DATA to server
+   ///    <br />Implements the <see cref="System.Exception" />
+   /// </summary>
+   /// <seealso cref="System.Exception" />
+   public class SendDataException : Exception
+   {
+      #region Constructors and destructors
+
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="SendDataException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      public SendDataException(string msg) : base(msg)
+      {
+      }
+
+      #endregion
+   }
+
+   /// <summary>
+   ///    Exception during sending info to server
+   ///    <br />Implements the <see cref="System.Exception" />
+   /// </summary>
+   /// <seealso cref="System.Exception" />
+   public class SendInfoException : Exception
+   {
+      #region Constructors and destructors
+
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="SendInfoException" /> class.
+      /// </summary>
+      /// <param name="msg">The MSG.</param>
+      public SendInfoException(string msg) : base(msg)
+      {
+      }
+
+      #endregion
+   }
+
+   /// <summary>
+   ///    Exception during sending plan to server
+   ///    <br />Implements the <see cref="System.Exception" />
+   /// </summary>
+   /// <seealso cref="System.Exception" />
+   public class SendPlanException : Exception
+   {
+      #region Constructors and destructors
+
+      /// <summary>
+      ///    Initializes a new instance of the <see cref="SendPlanException" /> class.
+      /// </summary>
+      public SendPlanException() : base(Resources.Failed_to_send + " " + Resources.plan_data)
+      {
+      }
+
+      #endregion
+   }
+
+   #endregion
 }

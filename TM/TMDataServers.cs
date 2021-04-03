@@ -10,8 +10,9 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using TM;
 
-namespace TM
+namespace TMSrv
 {
 
    /// <summary>
