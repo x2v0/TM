@@ -15,7 +15,7 @@ using TM;
 
 namespace TMSrv
 {
-   class PFSProxyServer : TMDataServer
+   public class PFSProxyServer : TMDataServer
    {
    }
 }

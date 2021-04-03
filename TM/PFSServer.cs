@@ -15,7 +15,7 @@ using TM;
 
 namespace TMSrv
 {
-   class PFSServer : TMDataServer
+   public class PFSServer : TMDataServer
    {
    }
 }

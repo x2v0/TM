@@ -15,7 +15,7 @@ using TM;
 
 namespace TMSrv
 {
-   class ACCServer : TMDataServer
+   public class ACCServer : TMDataServer
    {
    }
 }

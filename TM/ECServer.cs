@@ -15,7 +15,7 @@ using TM;
 
 namespace TMSrv
 {
-   class ECServer : TMDataServer
+   public class ECServer : TMDataServer
    {
    }
 }

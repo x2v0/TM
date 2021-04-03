@@ -464,10 +464,10 @@ namespace TM
       ///    Dumps the plan data.
       /// </summary>
       /// <param name="plan">The plan data.</param>
-      public static void DumpPlan(Dictionary<int, PlanSpot> plan)
+      public static void DumpPlan(List<PlanSpot> plan)
       {
          try {
-            foreach (var spot in plan.Values) {
+            foreach (var spot in plan) {
                Console.WriteLine(spot);
             }
          } catch {
