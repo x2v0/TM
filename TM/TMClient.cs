@@ -54,27 +54,6 @@ namespace TM
 
       #region Public properties
 
-      public static string Language
-      {
-         get
-         {
-            return fLanguage;
-         }
-
-         set
-         {
-            fLanguage = value;
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(fLanguage);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(fLanguage);
-
-            var customCulture = (CultureInfo) Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-
-            Thread.CurrentThread.CurrentCulture = customCulture;
-         }
-      }
-
-
       /// <summary>
       ///    Set Debugging ON/OFF
       /// </summary>
@@ -83,7 +62,7 @@ namespace TM
       {
          get
          {
-          return DebugPreference == 2;
+            return DebugPreference == 2;
          }
          set
          {
@@ -103,6 +82,26 @@ namespace TM
       {
          get;
          set;
+      }
+
+      public static string Language
+      {
+         get
+         {
+            return fLanguage;
+         }
+
+         set
+         {
+            fLanguage = value;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(fLanguage);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(fLanguage);
+
+            var customCulture = (CultureInfo) Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            Thread.CurrentThread.CurrentCulture = customCulture;
+         }
       }
 
       #endregion
@@ -125,13 +124,6 @@ namespace TM
       #endregion
 
       #region Constructors and destructors
-
-      /// <summary>
-      ///    Initializes a new instance of the <see cref="TM.Client" /> class.
-      /// </summary>
-      public Client()
-      {
-      }
 
       #endregion
 
@@ -209,6 +201,7 @@ namespace TM
          get;
          private set;
       }
+
       public string IP
       {
          get
@@ -241,7 +234,9 @@ namespace TM
          get
          {
             try {
-               if ((Sender != null) && (Sender.Client != null) && Sender.Client.Connected) {
+               if ((Sender != null) &&
+                   (Sender.Client != null) &&
+                   Sender.Client.Connected) {
                   /* pear to Sender documentation on Poll:
                    * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
                    * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
@@ -279,7 +274,7 @@ namespace TM
       {
          get
          {
-          return ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
+            return ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
          }
       }
 
@@ -323,7 +318,7 @@ namespace TM
       /// <value><c>true</c> if [processing is on]; otherwise, <c>false</c>.</value>
       public bool ProcessingIsOn
       {
-         get; 
+         get;
          set;
       }
 
@@ -335,7 +330,7 @@ namespace TM
       {
          get
          {
-            return  ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
+            return ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
          }
       }
 
@@ -372,7 +367,7 @@ namespace TM
       /// <param name="ip">The ip.</param>
       /// <param name="port">The port.</param>
       /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-      public bool Connect(string ip = null, int port = 0)
+      public virtual bool Connect(string ip = null, int port = 0)
       {
          Port = port;
          IpAddress = ip;
@@ -389,8 +384,7 @@ namespace TM
 
          if (!ok) {
             if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_connect_to + " " + 
-                                 IpAddress + " , " + Resources.port_number + " = " + Port);
+               Console.WriteLine(Resources.Failed_to_connect_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
             }
 
             return false;
@@ -400,30 +394,52 @@ namespace TM
          fListenThread.Start();
 
          if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Connected_to + " " + IpAddress +
-                              " , " + Resources.port_number + " = " + Port);
+            Console.WriteLine(Resources.Connected_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
          }
 
-         if (ServerConnected != null) ServerConnected.Invoke();
+         if (ServerConnected != null) {
+            ServerConnected.Invoke();
+         }
 
          return true;
       }
 
       /// <summary>
-      ///    Disconnects this TM.Client.
+      ///    Disconnects 
       /// </summary>
       /// <returns><c>true</c> if disconnect is OK, <c>false</c> otherwise.</returns>
-      public bool Disconnect()
+      public virtual bool Disconnect()
       {
-
          if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
             Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
          }
 
          Reset();
-         if (ServerDisconnected != null) ServerDisconnected.Invoke();
+         if (ServerDisconnected != null) {
+            ServerDisconnected.Invoke();
+         }
 
          return true;
+      }
+
+      /// <summary>
+      ///    Process received data from server 
+      /// </summary>
+      public virtual void ProcessData(BufferChunk readData, int numberOfBytesRead)
+      {
+         if (DataBlockReceived != null) {
+            DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
+         }
+      }
+
+      /// <summary>
+      ///    Process received state data from server 
+      /// </summary>
+      public virtual void ProcessState(StateData stateData)
+      {
+         if (ServerStateChanged != null) {
+            ServerStateChanged.Invoke(StateData);
+         }
       }
 
       /// <summary>
@@ -435,12 +451,15 @@ namespace TM
 
          fListenThread = null;
 
-         if ((Sender != null) && Sender.Connected) {
+         if ((Sender != null) &&
+             Sender.Connected) {
             fNetworkStream.Close();
             fNetworkStream = null;
          }
 
-         if (Sender != null) Sender.Close();
+         if (Sender != null) {
+            Sender.Close();
+         }
 
          Sender = null;
       }
@@ -537,7 +556,7 @@ namespace TM
       /// </summary>
       /// <param name="p">The Packet.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      public bool Send(Packet p)
+      public virtual bool Send(Packet p)
       {
          if (Sender == null) {
             return false;
@@ -663,11 +682,13 @@ namespace TM
                   if (InfoReceived != null) {
                      InfoReceived.Invoke();
                   }
+
                   break;
                case EPacketType.Error:
                   if (ErrorReceived != null) {
                      ErrorReceived.Invoke();
                   }
+
                   break;
                case EPacketType.Data:
                {
@@ -687,32 +708,6 @@ namespace TM
          }
 
          Disconnect();
-      }
-
-      public virtual void ProcessState(StateData stateData)
-      {
-         if (ServerStateChanged != null) {
-            ServerStateChanged.Invoke(StateData);
-         }
-      }
-
-      public virtual void ProcessData(BufferChunk readData, int numberOfBytesRead)
-      {
-         if (DataBlockReceived != null) {
-            DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
-         }
-      }
-
-      public ulong SpotsPassed
-      {
-         get;
-         private set;
-      }
-
-      public uint SpotsTotal
-      {
-         get;
-         private set;
       }
 
       #endregion

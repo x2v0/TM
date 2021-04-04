@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using TM;
 using TM.Properties;
-using TMCmdLet;
 using TMSrv;
 
 namespace TMPlan
@@ -43,6 +42,11 @@ namespace TMPlan
       #region Public events
 
       /// <summary>
+      ///    Occurs when [plan cleraed].
+      /// </summary>
+      public event ClientHandler PlanCleared;
+
+      /// <summary>
       ///    Occurs when [plan processing is finished].
       /// </summary>
       public event ClientHandler PlanFinished;
@@ -53,29 +57,24 @@ namespace TMPlan
       public event ClientHandler PlanLoaded;
 
       /// <summary>
-      ///    Occurs when [plan started].
-      /// </summary>
-      public event ClientHandler PlanStarted;
-
-      /// <summary>
       ///    Occurs when [plan paused].
       /// </summary>
       public event ClientHandler PlanPaused;
 
       /// <summary>
-      ///    Occurs when [plan stopped].
-      /// </summary>
-      public event ClientHandler PlanStopped;
-
-      /// <summary>
-      ///    Occurs when [plan cleraed].
-      /// </summary>
-      public event ClientHandler PlanCleared;
-
-      /// <summary>
       ///    Occurs when part of [plan results processed and received].
       /// </summary>
       public event PlanResultsHandler PlanResultsProcessed;
+
+      /// <summary>
+      ///    Occurs when [plan started].
+      /// </summary>
+      public event ClientHandler PlanStarted;
+
+      /// <summary>
+      ///    Occurs when [plan stopped].
+      /// </summary>
+      public event ClientHandler PlanStopped;
 
       #endregion
 
@@ -85,12 +84,11 @@ namespace TMPlan
       ///    Gets the processing state of the server.
       /// </summary>
       /// <value>The state of processing on the server.</value>
-      public EPlanState EPlanState 
+      public EPlanState EPlanState
       {
          get;
          protected set;
       }
-
 
       /// <summary>
       ///    Loaded plan data
@@ -110,6 +108,12 @@ namespace TMPlan
       {
          get;
          set;
+      }
+
+      public EPlanState PlanState
+      {
+         get;
+         private set;
       }
 
       /// <summary>
@@ -132,13 +136,7 @@ namespace TMPlan
          private set;
       }
 
-      public EPlanState PlanState
-      {
-         get;
-         private set;
-      }
-   
-   #endregion
+      #endregion
 
       #region Public methods
 
@@ -172,6 +170,12 @@ namespace TMPlan
          }
       }
 
+      public static List<Spot> LoadPlan(string file)
+      {
+         var client = This ?? new PlanClient();
+         return client.Load(file);
+      }
+
       /// <summary>
       ///    SendCommand(EPlanCommand.GETSTATE); to the server.
       /// </summary>
@@ -179,12 +183,6 @@ namespace TMPlan
       public bool AskServerState()
       {
          return SendCommand(EPlanCommand.GETSTATE);
-      }
-      
-      private void ClearPlan()
-      {
-         Plan.Clear();
-         PlanResults.Clear();
       }
 
       /// <summary>
@@ -197,7 +195,7 @@ namespace TMPlan
 
          ClearPlan();
 
-         if (ret && PlanCleared != null) {
+         if (ret && (PlanCleared != null)) {
             PlanCleared.Invoke();
          }
 
@@ -255,12 +253,12 @@ namespace TMPlan
 
          ok = Start();
 
-        
 
          while (ProcessingIsOn) {
             ok = AskServerState();
 
-            if (!ok || (PlanState == EPlanState.NOTREADY)) {
+            if (!ok ||
+                (PlanState == EPlanState.NOTREADY)) {
                if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
                   Console.WriteLine(Resources.Server_not_ready);
                }
@@ -268,9 +266,12 @@ namespace TMPlan
                //return null;
             }
 
-            if ((PlanState == EPlanState.FINISHED) && (PlanResults.Count > 1)) {
+            if ((PlanState == EPlanState.FINISHED) &&
+                (PlanResults.Count > 1)) {
                ProcessingIsOn = false;
-               if (PlanFinished != null) PlanFinished.Invoke();
+               if (PlanFinished != null) {
+                  PlanFinished.Invoke();
+               }
             }
 
             Thread.Sleep(300);
@@ -308,7 +309,8 @@ namespace TMPlan
       /// <exception cref="FileNotFoundException"></exception>
       public List<Spot> Load(string file)
       {
-         if (string.IsNullOrEmpty(file) || !File.Exists(file)) {
+         if (string.IsNullOrEmpty(file) ||
+             !File.Exists(file)) {
             if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
                Console.WriteLine(Resources.Loading_PlanData + " : " + Resources.file_not_found + " - " + file);
             }
@@ -331,11 +333,13 @@ namespace TMPlan
                   string line;
 
                   while ((line = sr.ReadLine()) != null) {
-                     if (string.IsNullOrEmpty(line) || line.StartsWith("//")) {
+                     if (string.IsNullOrEmpty(line) ||
+                         line.StartsWith("//")) {
                         continue;
                      }
 
-                     if ((line == "\n") || (line == "\r\n")) {
+                     if ((line == "\n") ||
+                         (line == "\r\n")) {
                         continue;
                      }
 
@@ -354,9 +358,7 @@ namespace TMPlan
                         Plan.Add(spot);
                      } catch (Exception ex) {
                         if (Globals.Debug) { // ActionPreference.Continue
-                           Console.WriteLine(Resources.Failed_to_load + 
-                                             " PlanData (" + Resources.wrong_format_data + "), " + 
-                                             Resources.file + " - " + file + "\nentries = " + cnt + " " +
+                           Console.WriteLine(Resources.Failed_to_load + " PlanData (" + Resources.wrong_format_data + "), " + Resources.file + " - " + file + "\nentries = " + cnt + " " +
                                              Resources.Error + ": " + ex.Message);
                         }
 
@@ -366,8 +368,7 @@ namespace TMPlan
                }
 
                if (Globals.Debug) { // ActionPreference.Continue
-                  Console.WriteLine("PlanData" + " " + Resources.loaded + 
-                                    ": entries = " + cnt + ", size = " + (length / 1000.0) + " Kb");
+                  Console.WriteLine("PlanData" + " " + Resources.loaded + ": entries = " + cnt + ", size = " + (length / 1000.0) + " Kb");
                }
             }
 
@@ -378,19 +379,11 @@ namespace TMPlan
             return Plan;
          } catch (Exception ex) {
             if (Globals.Debug) { // ActionPreference.Continue  = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + 
-                                 ", " + Resources.file + " - " + file + "\nentries = " + 
-                                 cnt + " " + Resources.Error + ": " + ex.Message);
+               Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + ", " + Resources.file + " - " + file + "\nentries = " + cnt + " " + Resources.Error + ": " + ex.Message);
             }
 
             throw new ReadPlanException(file);
          }
-      }
-
-      public static List<Spot> LoadPlan(string file)
-      {
-         var client = This ?? new PlanClient();
-         return client.Load(file);
       }
 
       /// <summary>
@@ -400,16 +393,52 @@ namespace TMPlan
       public bool Pause()
       {
          var ret = SendCommand(EPlanCommand.PAUSEPLAN);
-         if (ret && PlanPaused != null) {
+         if (ret && (PlanPaused != null)) {
             PlanPaused.Invoke();
          }
 
          return ret;
       }
 
-      public override void ProcessState(StateData data) 
+      /// <summary>
+      ///    Converts BufferChunk to SpotResults
+      /// </summary>
+      /// <param name="data">The data.</param>
+      /// <param name="bytesRead">The bytes read.</param>
+      public override void ProcessData(BufferChunk data, int bytesRead)
       {
-         PlanState = (EPlanState)data.state;
+         if ((data == null) ||
+             (PlanState != EPlanState.INPROCESS)) {
+            return;
+         }
+
+         var len = bytesRead;
+         var dt = (int) SpotResult.Length;
+
+         try {
+            while (len >= 0) {
+               var spot = (SpotResult) data.NextSpotResult();
+
+               if (spot.done == 1) {
+                  PlanResults.Add(spot);
+               }
+
+               len -= dt;
+            }
+         } catch {
+            // ignored
+         }
+
+         if (PlanResultsProcessed != null) {
+            PlanResultsProcessed.Invoke(PlanResults);
+         }
+
+         base.ProcessData(data, bytesRead);
+      }
+
+      public override void ProcessState(StateData data)
+      {
+         PlanState = (EPlanState) data.state;
          SpotsPassed = data.spots_passed;
          SpotsTotal = data.spots_count;
 
@@ -419,7 +448,8 @@ namespace TMPlan
             }
          }
 
-         if (PlanState == EPlanState.FINISHED && PlanFinished != null) {
+         if ((PlanState == EPlanState.FINISHED) &&
+             (PlanFinished != null)) {
             PlanFinished.Invoke();
          }
 
@@ -454,8 +484,7 @@ namespace TMPlan
 
          var len = Spot.Length * nblocks;
          if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + 
-                              (plan.Length / 1000.0) + " Kb");
+            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + (plan.Length / 1000.0) + " Kb");
          }
 
          try {
@@ -594,7 +623,6 @@ namespace TMPlan
             if (PlanStarted != null) {
                PlanStarted.Invoke();
             }
-            
          }
 
          ProcessingIsOn = ret;
@@ -608,9 +636,10 @@ namespace TMPlan
       public bool Stop()
       {
          var ret = SendCommand(EPlanCommand.STOPPLAN);
-         if (ret && PlanStopped != null) {
+         if (ret && (PlanStopped != null)) {
             PlanStopped.Invoke();
          }
+
          return ret;
       }
 
@@ -618,39 +647,10 @@ namespace TMPlan
 
       #region Private methods
 
-      /// <summary>
-      ///    Converts BufferChunk to SpotResults
-      /// </summary>
-      /// <param name="data">The data.</param>
-      /// <param name="bytesRead">The bytes read.</param>
-      public override void ProcessData(BufferChunk data, int bytesRead)
+      private void ClearPlan()
       {
-         if (data == null || PlanState != EPlanState.INPROCESS) {
-            return;
-         }
-
-         var len = bytesRead;
-         var dt = (int) SpotResult.Length;
-
-         try {
-            while (len >= 0) {
-               var spot = (SpotResult) data.NextSpotResult();
-
-               if (spot.done == 1) {
-                  PlanResults.Add(spot);
-               }
-
-               len -= dt;
-            }
-         } catch {
-            // ignored
-         }
-
-         if (PlanResultsProcessed != null) {
-            PlanResultsProcessed.Invoke(PlanResults);
-         }
-
-         base.ProcessData(data, bytesRead);
+         Plan.Clear();
+         PlanResults.Clear();
       }
 
       #endregion
@@ -669,8 +669,7 @@ namespace TMPlan
       ///    Initializes a new instance of the <see cref="ReadPlanException" /> class.
       /// </summary>
       /// <param name="file">The file.</param>
-      public ReadPlanException(string file) : base(Resources.Failed_to_read + 
-                                                   " " + Resources.plan_data + ": " + file)
+      public ReadPlanException(string file) : base(Resources.Failed_to_read + " " + Resources.plan_data + ": " + file)
       {
       }
 
