@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StartPlanCmdlet
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StartPlanCmdlet
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="png" src="../../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="TMCmdLet.StartPlanCmdlet">
+  
+  
+  <h1 id="TMCmdLet_StartPlanCmdlet" data-uid="TMCmdLet.StartPlanCmdlet" class="text-break">Class StartPlanCmdlet
+  </h1>
+  <div class="markdown level0 summary">
+Starts plan processing on remote server<p>
+Returns <a class="xref" href="TM.Client.html">Client</a> object
+<example><pre><code>   # Load module
+   Import-Module ./TM.Client.dll
+
+   # Set default Hostname:Port
+   Set-DefaultServer localhost 9996
+
+   # Read plan from file and send it to server
+   $client = Get-Plan test_plan.txt | Send-Plan
+
+   # Subscribe to PlanFinished event to run script { Write-Host &quot;Congratulations!&quot; }
+   Register-ObjectEvent $client PlanFinished -Action { Write-Host &quot;Congratulations!&quot; }
+
+   # Starts the plan processing on remote server
+   Start-Plan</code></pre></example>
+<br>Implements the <a class="xref" href="TMCmdLet.PlanCmdlet.html">PlanCmdlet</a>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">System.Management.Automation.Internal.InternalCommand</span></div>
+    <div class="level2"><span class="xref">System.Management.Automation.Cmdlet</span></div>
+    <div class="level3"><span class="xref">System.Management.Automation.PSCmdlet</span></div>
+    <div class="level4"><a class="xref" href="TMCmdLet.PlanCmdlet.html">PlanCmdlet</a></div>
+    <div class="level5"><span class="xref">StartPlanCmdlet</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="TMCmdLet.PlanCmdlet.html#TMCmdLet_PlanCmdlet_IpAddress">PlanCmdlet.IpAddress</a>
+    </div>
+    <div>
+      <a class="xref" href="TMCmdLet.PlanCmdlet.html#TMCmdLet_PlanCmdlet_Port">PlanCmdlet.Port</a>
+    </div>
+    <div>
+      <a class="xref" href="TMCmdLet.PlanCmdlet.html#TMCmdLet_PlanCmdlet_OK">PlanCmdlet.OK</a>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.CurrentProviderLocation(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.GetUnresolvedProviderPathFromPSPath(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.GetResolvedProviderPathFromPSPath(System.String, System.Management.Automation.ProviderInfo)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.GetVariableValue(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.GetVariableValue(System.String, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.ParameterSetName</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.MyInvocation</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.InvokeCommand</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.Host</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.SessionState</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.Events</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.JobRepository</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.PSCmdlet.InvokeProvider</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.GetResourceString(System.String, System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteError(System.Management.Automation.ErrorRecord)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteObject(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteObject(System.Object, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteVerbose(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteWarning(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteCommandDetail(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteProgress(System.Management.Automation.ProgressRecord)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.WriteDebug(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldProcess(System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldProcess(System.String, System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldProcess(System.String, System.String, System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldProcess(System.String, System.String, System.String, System.Management.Automation.ShouldProcessReason)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldContinue(System.String, System.String)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ShouldContinue(System.String, System.String, System.Boolean, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.Invoke()</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.Invoke&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.TransactionAvailable()</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.ThrowTerminatingError(System.Management.Automation.ErrorRecord)</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.BeginProcessing()</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.EndProcessing()</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.Stopping</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.CommandRuntime</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Cmdlet.CurrentPSTransaction</span>
+    </div>
+    <div>
+      <span class="xref">System.Management.Automation.Internal.InternalCommand.CommandOrigin</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="TMCmdLet.html">TMCmdLet</a></h6>
+  <h6><strong>Assembly</strong>: TM.dll</h6>
+  <h5 id="TMCmdLet_StartPlanCmdlet_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Cmdlet(&quot;Start&quot;, &quot;Plan&quot;)]
+[OutputType(new Type[]{typeof(Client)})]
+public class StartPlanCmdlet : PlanCmdlet</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_StartPlanCmdlet_Resume.md&amp;value=---%0Auid%3A%20TMCmdLet.StartPlanCmdlet.Resume%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L583">View Source</a>
+  </span>
+  <a id="TMCmdLet_StartPlanCmdlet_Resume_" data-uid="TMCmdLet.StartPlanCmdlet.Resume*"></a>
+  <h4 id="TMCmdLet_StartPlanCmdlet_Resume" data-uid="TMCmdLet.StartPlanCmdlet.Resume">Resume</h4>
+  <div class="markdown level1 summary">
+Resume plan processing <a class="xref" href="TM.Client.html">Client</a>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+public SwitchParameter Resume { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Management.Automation.SwitchParameter</span></td>
+        <td>The resume.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_StartPlanCmdlet_ProcessRecord.md&amp;value=---%0Auid%3A%20TMCmdLet.StartPlanCmdlet.ProcessRecord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L599">View Source</a>
+  </span>
+  <a id="TMCmdLet_StartPlanCmdlet_ProcessRecord_" data-uid="TMCmdLet.StartPlanCmdlet.ProcessRecord*"></a>
+  <h4 id="TMCmdLet_StartPlanCmdlet_ProcessRecord" data-uid="TMCmdLet.StartPlanCmdlet.ProcessRecord">ProcessRecord()</h4>
+  <div class="markdown level1 summary">
+Start plan processing on remote server
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void ProcessRecord()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="TMCmdLet.PlanCmdlet.html#TMCmdLet_PlanCmdlet_ProcessRecord">PlanCmdlet.ProcessRecord()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_StartPlanCmdlet_StopProcessing.md&amp;value=---%0Auid%3A%20TMCmdLet.StartPlanCmdlet.StopProcessing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L628">View Source</a>
+  </span>
+  <a id="TMCmdLet_StartPlanCmdlet_StopProcessing_" data-uid="TMCmdLet.StartPlanCmdlet.StopProcessing*"></a>
+  <h4 id="TMCmdLet_StartPlanCmdlet_StopProcessing" data-uid="TMCmdLet.StartPlanCmdlet.StopProcessing">StopProcessing()</h4>
+  <div class="markdown level1 summary">
+On Control-C, the plan execution will immediately cancel.<p>
+This allows a cancellation to occur during plan execution without having<p>
+to wait for the end of processing.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void StopProcessing()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Management.Automation.Cmdlet.StopProcessing()</span></div>
+  <h3 id="seealso">See Also</h3>
+  <div class="seealso">
+      <div><a class="xref" href="TMCmdLet.PlanCmdlet.html">PlanCmdlet</a></div>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_StartPlanCmdlet.md&amp;value=---%0Auid%3A%20TMCmdLet.StartPlanCmdlet%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L554" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+      	<div class="grad-bottom"></div>
+      		<div class="footer">
+      			<div class="container" style="display:flex">
+      				<div style="flex:1; justify-content:center; text-align:center">
+      					<a href="https://github.com/x2v0/tm"><img alt="GitHub Repo" src="/images/github.png" width="auto" height="25" border="0"></a>
+      				</div>
+      				<div style="flex:1; justify-content:flex-end; text-align:right">
+      					<a href="#top">Back to top</a>
+      				</div>
+      			</div>
+      		</div>
+      	</footer></div>
+      
+    
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

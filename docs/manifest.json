@@ -1,0 +1,1137 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/xtovo/wrk/TM/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html",
+          "hash": "egzvD8wiQM/sZpvf9FLdfg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.BufferChunk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.BufferChunk.html",
+          "hash": "KOF6BfrSotnfpZrnC/Qgfw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.BufferChunkExt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.BufferChunkExt.html",
+          "hash": "klk8j5tOiZvjFemq3IaMtA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.Client.html",
+          "hash": "9xbxrQ32b4mBdNmfIYO4vQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EComPortErr.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EComPortErr.html",
+          "hash": "JJU8Vn9dZvwzhu5zS2kaJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.ECommandError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.ECommandError.html",
+          "hash": "ErZJ4t6xZdezGFVPph+5bw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EConfigTag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EConfigTag.html",
+          "hash": "d+vakklEOTzInJDFQGnI0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EConnectType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EConnectType.html",
+          "hash": "J05/MWV2OvWzLwWF6HV3vA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EControlType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EControlType.html",
+          "hash": "osJLWDLzHX7+EdjyL1LU0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EDataCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EDataCommand.html",
+          "hash": "fjK/oNci1c6qc5B9yqdGjQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EDevErrorStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EDevErrorStatus.html",
+          "hash": "9QZJqxi+PiiCJhaBkVlbcA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EDeviceStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EDeviceStatus.html",
+          "hash": "J1MCeW61kyE2OxzWobfUyw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EDeviceType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EDeviceType.html",
+          "hash": "Xg0lBsWTLZR4uCJKVNH6SA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EPacketSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EPacketSettings.html",
+          "hash": "7NlHH+5YehVdH3JUejdhkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EPacketType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EPacketType.html",
+          "hash": "PSNIMZ44eP9IGz3GCP8nIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EPlanState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EPlanState.html",
+          "hash": "TpMoxNeKdXnfaa6sTo80UQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EProcessState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EProcessState.html",
+          "hash": "aKPYwcie4S18Ex+YX0pacw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EServerConnectSignature.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EServerConnectSignature.html",
+          "hash": "rB6CIFAp8wwTZDHpJFqLNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.EServerType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.EServerType.html",
+          "hash": "YOVp/ySuv0TvtuouqIWbxA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.ESpotResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.ESpotResult.html",
+          "hash": "kxilKa5MSSqKRSBPHKUOgQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.Extensions.html",
+          "hash": "N+q/lFPvO9wK5XXnSRKqdw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.Globals.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.Globals.html",
+          "hash": "i2IrUM84lYkfpMoNUvR+7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.InsufficientDataException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.InsufficientDataException.html",
+          "hash": "Fq905svSM+fG2t9o/Q/hZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.InsufficientSpaceException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.InsufficientSpaceException.html",
+          "hash": "VUWPZXj9amB0lA1Fael3xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.NoDataException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.NoDataException.html",
+          "hash": "pdRh9yIJAviWph7Ex7XpXw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.Packet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.Packet.html",
+          "hash": "kL/dsqD25w5nlFY9Qho8Lg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.PacketExt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.PacketExt.html",
+          "hash": "VOEvbkWwxlkm+fd5TQbj6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.PacketHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.PacketHeader.html",
+          "hash": "iDvMLmRyHKkpJgrIb4LlQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.PacketSignature.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.PacketSignature.html",
+          "hash": "L+u4j1iK/qHlMo980bAxVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.SendCommandException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.SendCommandException.html",
+          "hash": "jxu2gb0vIGe/wi+mVbWdSg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.SendDataException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.SendDataException.html",
+          "hash": "35IEh5mXp1YJKJV5pmFrwg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.SendInfoException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.SendInfoException.html",
+          "hash": "h0zwYI2yDiRpTvgdPvK4Cw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TM.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TM.html",
+          "hash": "6/4o1R+dTujoTPJOYD1nkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.ClearPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.ClearPlanCmdlet.html",
+          "hash": "PkX8mRLhgEPwX/giy7om2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.ConnectServerCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.ConnectServerCmdlet.html",
+          "hash": "GrU7Ltv4G19fA7KRG4q5gQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.DisconnectServerCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.DisconnectServerCmdlet.html",
+          "hash": "W2tvaHCZ+16f/BdIEYUVTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.GetPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.GetPlanCmdlet.html",
+          "hash": "opWJk1WSNgY2jgSP9wJ01Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.GetPlanResultsCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.GetPlanResultsCmdlet.html",
+          "hash": "2Sr2bHGj33Qq1oCtXT9OTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.GetServerStateCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.GetServerStateCmdlet.html",
+          "hash": "HsKQMkhbczPTb0FJdYCd/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.InvokePlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.InvokePlanCmdlet.html",
+          "hash": "lYSSJ1rsA+/apKVpSvWtDw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.PlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.PlanCmdlet.html",
+          "hash": "XqC3vmYRua4hvbMUetsCRA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SendCommandCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SendCommandCmdlet.html",
+          "hash": "2mDmjVJftTP3JI3G/sIW3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SendDataCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SendDataCmdlet.html",
+          "hash": "Ew56+Qf3pdz6gsbyWYMY8A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SendInfoCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SendInfoCmdlet.html",
+          "hash": "r5zSVhuU+GVTX7mkIRzGzA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SendPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SendPlanCmdlet.html",
+          "hash": "gkOrjxY9oMHu3cuDBM19Sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SetDefaultsCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SetDefaultsCmdlet.html",
+          "hash": "ZHP/r6JEebfuOUtVkp02AA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.StartPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.StartPlanCmdlet.html",
+          "hash": "3BOSES3AkI8gVnMSgyNYig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.StopPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.StopPlanCmdlet.html",
+          "hash": "0zGDQWPvFgeH9ZoeHwKegQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.SuspendPlanCmdlet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.SuspendPlanCmdlet.html",
+          "hash": "oL23d+wpdX8SkknFK6wG/Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMCmdLet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMCmdLet.html",
+          "hash": "9E3ry/kejTpBq4rA4W8ujA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.EPlanCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.EPlanCommand.html",
+          "hash": "qmSl86f4hrmKFagXtAKKSg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.PlanClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.PlanClient.html",
+          "hash": "l29DSEoe3h4flcfKOi2HTQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.PlanExt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.PlanExt.html",
+          "hash": "JPvEPqrnEAI8BBi76MKn5Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.PlanResultsHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.PlanResultsHandler.html",
+          "hash": "MHDFLv8NKhHpPGgm8k5J4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.ReadPlanException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.ReadPlanException.html",
+          "hash": "ZbXNtEXf9I+05mQ61MZTJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.SendPlanException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.SendPlanException.html",
+          "hash": "91WqJRlRrs7dnFXP8zAXyQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.Spot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.Spot.html",
+          "hash": "R5zgoF9Q1XLqkjw5wNqa0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.SpotFull.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.SpotFull.html",
+          "hash": "IOpp3RpgtBZaK1Xl1hnqZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.SpotResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.SpotResult.html",
+          "hash": "y5prZ2q71H6+tAnf2ndacQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.SpotTopass.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.SpotTopass.html",
+          "hash": "2HkQWzhvrGVhCvCZXK32iA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMPlan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMPlan.html",
+          "hash": "cLWOyomGUSrNPFh6jMK2hw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.ACCServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.ACCServer.html",
+          "hash": "w/4KAr/HPZrXmWCEu7LNgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.ComPortData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.ComPortData.html",
+          "hash": "RPzK+zuB877aC2G+H72uNQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.DACADC_data.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.DACADC_data.html",
+          "hash": "rkymaKuZQtGB6lqE6keARg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.DevDescr.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.DevDescr.html",
+          "hash": "DvIW1D7Xkxw9AS+lG+bpqg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.ECServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.ECServer.html",
+          "hash": "TjH7k43Jiie27LAlt+vWPA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.MC_PT.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.MC_PT.html",
+          "hash": "7TfgEg4gtSYyAfGQXso4Lw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.MC_PT_ILH.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.MC_PT_ILH.html",
+          "hash": "DSjCEu6tVkWUYFWYPT28cA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.MainCServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.MainCServer.html",
+          "hash": "U3WJkzYYCred/gVOM5rY3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.PFSProxyServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.PFSProxyServer.html",
+          "hash": "rHUvh4PXjz6QBV8MhID/wA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.PFSServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.PFSServer.html",
+          "hash": "sQggFgY1x2HLkHQCOdhikA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.Server.ntm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.Server.ntm.html",
+          "hash": "tWCZ+V+74VBCBnjZsw0SJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.Server.html",
+          "hash": "1FERbsSBB20b4nlLwvW1lA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.ServerState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.ServerState.html",
+          "hash": "SJI3NbvBu4OagLUnJ70Z0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.StateData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.StateData.html",
+          "hash": "E2xdHerKn2jIIOwW0/WlRQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.TermoServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.TermoServer.html",
+          "hash": "fzGLUzQsJJ7pzNhy/BR34g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.TmLnk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.TmLnk.html",
+          "hash": "fnov6oerzbXHfhXoGGgrCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.VCControl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.VCControl.html",
+          "hash": "DFH19b/FT7/htV3q46MuIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.XRayServer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.XRayServer.html",
+          "hash": "cfE2W/1MmoN6UlDk2kN+bA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/TM/TMSrv.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/TMSrv.html",
+          "hash": "ad9pb+SuRQSz1i+/rqCA5Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/TM/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/TM/toc.html",
+          "hash": "SYvjuWp9TXvrDwyWynKPDw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "T8d/j03THQ5KHUcgsaWpyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "rCzh9kfLxZ4Ze6GglNYNAw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html",
+          "hash": "mFHmftszURt1NswehDUJBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/overview.html",
+          "hash": "9pnI304+jcw2UvX2Qc53ig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Y+PyYxLi2ZNtJpWyyH48kQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "umMXvtz4yuvpfGSidUS7EA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 5,
+          "skipped_file_count": 5
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 79,
+          "skipped_file_count": 79
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+.navbar{background-color: #dbf1f6; border: 0px 0px 0px;}
+.navbar-inverse .navbar-nav>li>a,.navbar-inverse .navbar-text{color:black; font-weight: bold}
+.navbar-inverse{border: 0 px}
+.navbar-inverse .navbar-nav>.active>a,.navbar-inverse .navbar-nav>.active>a:focus,.navbar-inverse .navbar-nav>.active>a:hover{color:white;background-color: rgb(12, 95, 219)}
+
+.navbar-inverse .navbar-nav>li>a:focus,.navbar-inverse .navbar-nav>li>a:hover{color: white ; background-color:rgb(12, 95, 219)}
+
+.navbar-nav>li>a{height: 54px}
+.toc .nav>li.active>a:link,.toc .nav>li.active>a:visited { color: rgb(12, 95, 219)}
+.toc .nav > li.active > a {color: rgb(12, 95, 219)}
+.affix > ul > li.active > a, .affix > ul > li.active > a:before {color: rgb(12, 95, 219);font-weight: bold}
+.affix ul > li.active > a, .affix ul > li.active > a:before {color: rgb(12, 95, 219);}
+.subnav{color:black; background-color:rgb(12, 95, 219);}
+
+
+#autocollapse .navbar-header{height: 54px}
+
+.collapse.in,
+.collapsing {
+  text-align: left;
+}
+
+html {
+	font-family: Lato-Black;
+	display: inline-grid;
+}
+header .navbar {
+  border-width: 0 0 0px;
+  border-radius: 0;
+}
+
+body {
+	font-size: 15px;
+	padding: 0;
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+	color: #000;
+}
+
+a:link {
+	text-decoration: none;
+	color: rgb(12, 95, 219);
+}
+
+a:visited {
+	text-decoration: none;
+	color: rgb(12, 95, 219);
+}
+
+.subnav a:link {
+	text-decoration: none;
+	color: rgb(255,255,255);
+}
+
+.subnav a:visited {
+	text-decoration: none;
+	color: rgb(255,255,255);
+}
+
+img[src*="Fusee"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}

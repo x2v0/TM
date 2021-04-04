@@ -1,0 +1,12 @@
+- name: Описание
+  href: articles/overview.md
+- name: Документация
+  href: articles/index.md
+- name: Справочник
+  href: api/TM/TM.html
+- name: GitHub
+  href: https://github.com/x2v0/TM
+- name: Примеры
+  href: https://github.com/x2v0/MainCClient.NET
+- name: Программы
+  href: https://github.com/x2v0/MainCClient.NET

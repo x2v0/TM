@@ -1,0 +1,1210 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PlanClient
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PlanClient
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="png" src="../../logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="TMPlan.PlanClient">
+  
+  
+  <h1 id="TMPlan_PlanClient" data-uid="TMPlan.PlanClient" class="text-break">Class PlanClient
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="TM.Client.html">Client</a></div>
+    <div class="level2"><span class="xref">PlanClient</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ConnectionTryCount">Client.ConnectionTryCount</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ReadData">Client.ReadData</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Sender">Client.Sender</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_DataBlockReceived">Client.DataBlockReceived</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ErrorReceived">Client.ErrorReceived</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_InfoReceived">Client.InfoReceived</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ServerConnected">Client.ServerConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ServerDisconnected">Client.ServerDisconnected</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ServerStateChanged">Client.ServerStateChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Debug">Client.Debug</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_DebugPreference">Client.DebugPreference</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Header">Client.Header</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_IP">Client.IP</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_IpAddress">Client.IpAddress</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_IsConnected">Client.IsConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_LocalEndPoint">Client.LocalEndPoint</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_LocalIpAddress">Client.LocalIpAddress</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_LocalPort">Client.LocalPort</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Port">Client.Port</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ProcessingIsOn">Client.ProcessingIsOn</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_ProcessState">Client.ProcessState</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_RemoteEndPoint">Client.RemoteEndPoint</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_StateData">Client.StateData</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Dispose">Client.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Connect_System_String_System_Int32_">Client.Connect(String, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Disconnect">Client.Disconnect()</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Send_System_Byte___TM_EServerType_">Client.Send(Byte[], EServerType)</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Send_TM_BufferChunk_TM_EServerType_">Client.Send(BufferChunk, EServerType)</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Send_System_UInt32_System_Byte___TM_EServerType_">Client.Send(UInt32, Byte[], EServerType)</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_Send_TM_Packet_">Client.Send(Packet)</a>
+    </div>
+    <div>
+      <a class="xref" href="TM.Client.html#TM_Client_SendInfo_System_String_TM_EServerType_">Client.SendInfo(String, EServerType)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="TMPlan.html">TMPlan</a></h6>
+  <h6><strong>Assembly</strong>: TM.dll</h6>
+  <h5 id="TMPlan_PlanClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class PlanClient : Client, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient__ctor.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L32">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient__ctor_" data-uid="TMPlan.PlanClient.#ctor*"></a>
+  <h4 id="TMPlan_PlanClient__ctor" data-uid="TMPlan.PlanClient.#ctor">PlanClient()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PlanClient()</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_This.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.This%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L26">View Source</a>
+  </span>
+  <h4 id="TMPlan_PlanClient_This" data-uid="TMPlan.PlanClient.This">This</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PlanClient This</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="TMPlan.PlanClient.html">PlanClient</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Plan.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Plan%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L68">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Plan_" data-uid="TMPlan.PlanClient.Plan*"></a>
+  <h4 id="TMPlan_PlanClient_Plan" data-uid="TMPlan.PlanClient.Plan">Plan</h4>
+  <div class="markdown level1 summary">
+Loaded plan data
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Spot&gt; Plan { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.Spot.html">Spot</a>&gt;</td>
+        <td>The plan.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_PlanResults.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.PlanResults%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L77">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_PlanResults_" data-uid="TMPlan.PlanClient.PlanResults*"></a>
+  <h4 id="TMPlan_PlanClient_PlanResults" data-uid="TMPlan.PlanClient.PlanResults">PlanResults</h4>
+  <div class="markdown level1 summary">
+Processed plan results
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;SpotResult&gt; PlanResults { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.SpotResult.html">SpotResult</a>&gt;</td>
+        <td>The plan results.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_PlanState.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.PlanState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L102">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_PlanState_" data-uid="TMPlan.PlanClient.PlanState*"></a>
+  <h4 id="TMPlan_PlanClient_PlanState" data-uid="TMPlan.PlanClient.PlanState">PlanState</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EPlanState PlanState { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="TM.EPlanState.html">EPlanState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_SpotsPassed.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.SpotsPassed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L86">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_SpotsPassed_" data-uid="TMPlan.PlanClient.SpotsPassed*"></a>
+  <h4 id="TMPlan_PlanClient_SpotsPassed" data-uid="TMPlan.PlanClient.SpotsPassed">SpotsPassed</h4>
+  <div class="markdown level1 summary">
+Gets the number of spots processed.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint SpotsPassed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td>The spots passed.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_SpotsTotal.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.SpotsTotal%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L96">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_SpotsTotal_" data-uid="TMPlan.PlanClient.SpotsTotal*"></a>
+  <h4 id="TMPlan_PlanClient_SpotsTotal" data-uid="TMPlan.PlanClient.SpotsTotal">SpotsTotal</h4>
+  <div class="markdown level1 summary">
+Gets the number of spots total in plan.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint SpotsTotal { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td>The spots total.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_AskServerState.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.AskServerState%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L146">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_AskServerState_" data-uid="TMPlan.PlanClient.AskServerState*"></a>
+  <h4 id="TMPlan_PlanClient_AskServerState" data-uid="TMPlan.PlanClient.AskServerState">AskServerState()</h4>
+  <div class="markdown level1 summary">
+SendCommand(EPlanCommand.GETSTATE); to the server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AskServerState()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Clear.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L155">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Clear_" data-uid="TMPlan.PlanClient.Clear*"></a>
+  <h4 id="TMPlan_PlanClient_Clear" data-uid="TMPlan.PlanClient.Clear">Clear()</h4>
+  <div class="markdown level1 summary">
+Clears the plan.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Clear()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Dump.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Dump%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L163">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Dump_" data-uid="TMPlan.PlanClient.Dump*"></a>
+  <h4 id="TMPlan_PlanClient_Dump" data-uid="TMPlan.PlanClient.Dump">Dump()</h4>
+  <div class="markdown level1 summary">
+Dumps the plan results.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dump()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Dump_System_Collections_Generic_List_TMPlan_Spot__.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Dump(System.Collections.Generic.List%7BTMPlan.Spot%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L116">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Dump_" data-uid="TMPlan.PlanClient.Dump*"></a>
+  <h4 id="TMPlan_PlanClient_Dump_System_Collections_Generic_List_TMPlan_Spot__" data-uid="TMPlan.PlanClient.Dump(System.Collections.Generic.List{TMPlan.Spot})">Dump(List&lt;Spot&gt;)</h4>
+  <div class="markdown level1 summary">
+Dumps the plan data.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Dump(List&lt;Spot&gt; plan)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.Spot.html">Spot</a>&gt;</td>
+        <td><span class="parametername">plan</span></td>
+        <td>The plan data.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Dump_System_Collections_Generic_List_TMPlan_SpotResult__.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Dump(System.Collections.Generic.List%7BTMPlan.SpotResult%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L131">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Dump_" data-uid="TMPlan.PlanClient.Dump*"></a>
+  <h4 id="TMPlan_PlanClient_Dump_System_Collections_Generic_List_TMPlan_SpotResult__" data-uid="TMPlan.PlanClient.Dump(System.Collections.Generic.List{TMPlan.SpotResult})">Dump(List&lt;SpotResult&gt;)</h4>
+  <div class="markdown level1 summary">
+Dumps the plan results.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Dump(List&lt;SpotResult&gt; results)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.SpotResult.html">SpotResult</a>&gt;</td>
+        <td><span class="parametername">results</span></td>
+        <td>The results.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Execute_System_String_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Execute(System.String%2CSystem.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L182">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Execute_" data-uid="TMPlan.PlanClient.Execute*"></a>
+  <h4 id="TMPlan_PlanClient_Execute_System_String_System_String_System_Int32_" data-uid="TMPlan.PlanClient.Execute(System.String,System.String,System.Int32)">Execute(String, String, Int32)</h4>
+  <div class="markdown level1 summary">
+<pre><code>LoadPlan(file) - loads the specified file with plan data.
+SendPlan()     - sends plan to the server specified by ip nad port
+StartPlan()    - starts plan processing on the server
+while (ProcessingIsOn) - waits for results of processing
+when results of plan processing received from server, fills PlanResults list
+if (ServerState == EPlanState.FINISHED) - execute PlanFinished() event</code></pre>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;SpotFull&gt; Execute(string file, string ip = null, int port = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">file</span></td>
+        <td>The file with plan data.</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">ip</span></td>
+        <td>The server IP.</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">port</span></td>
+        <td>The port.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.SpotFull.html">SpotFull</a>&gt;</td>
+        <td>Dictionary&lt;System.Int32, SpotFull>.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Load_System_String_.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Load(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L265">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Load_" data-uid="TMPlan.PlanClient.Load*"></a>
+  <h4 id="TMPlan_PlanClient_Load_System_String_" data-uid="TMPlan.PlanClient.Load(System.String)">Load(String)</h4>
+  <div class="markdown level1 summary">
+Reads the file and loads the plan data.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Spot&gt; Load(string file)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">file</span></td>
+        <td>The file with plan data.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.Spot.html">Spot</a>&gt;</td>
+        <td>BufferChunk. The raw array of bytes</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.FileNotFoundException</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="TMPlan.ReadPlanException.html">ReadPlanException</a></td>
+        <td>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.IO.FileNotFoundException</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Pause.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Pause%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L343">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Pause_" data-uid="TMPlan.PlanClient.Pause*"></a>
+  <h4 id="TMPlan_PlanClient_Pause" data-uid="TMPlan.PlanClient.Pause">Pause()</h4>
+  <div class="markdown level1 summary">
+Pauses the plan processing on server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Pause()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Reset.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Reset%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L347">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Reset_" data-uid="TMPlan.PlanClient.Reset*"></a>
+  <h4 id="TMPlan_PlanClient_Reset" data-uid="TMPlan.PlanClient.Reset">Reset()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Reset()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="TM.Client.html#TM_Client_Reset">Client.Reset()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Send_System_Collections_Generic_List_TMPlan_Spot__.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Send(System.Collections.Generic.List%7BTMPlan.Spot%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L416">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Send_" data-uid="TMPlan.PlanClient.Send*"></a>
+  <h4 id="TMPlan_PlanClient_Send_System_Collections_Generic_List_TMPlan_Spot__" data-uid="TMPlan.PlanClient.Send(System.Collections.Generic.List{TMPlan.Spot})">Send(List&lt;Spot&gt;)</h4>
+  <div class="markdown level1 summary">
+Sends the loaded plan to server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Send(List&lt;Spot&gt; plan = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.Spot.html">Spot</a>&gt;</td>
+        <td><span class="parametername">plan</span></td>
+        <td>The plan.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Send_System_Collections_Generic_List_TMPlan_Spot__System_UInt32_.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Send(System.Collections.Generic.List%7BTMPlan.Spot%7D%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L361">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Send_" data-uid="TMPlan.PlanClient.Send*"></a>
+  <h4 id="TMPlan_PlanClient_Send_System_Collections_Generic_List_TMPlan_Spot__System_UInt32_" data-uid="TMPlan.PlanClient.Send(System.Collections.Generic.List{TMPlan.Spot},System.UInt32)">Send(List&lt;Spot&gt;, UInt32)</h4>
+  <div class="markdown level1 summary">
+Sends the plan to server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Send(List&lt;Spot&gt; spots, uint nblocks = 10U)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="TMPlan.Spot.html">Spot</a>&gt;</td>
+        <td><span class="parametername">spots</span></td>
+        <td>The spots.</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">nblocks</span></td>
+        <td>The nblocks.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Send_System_Object___.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Send(System.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L430">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Send_" data-uid="TMPlan.PlanClient.Send*"></a>
+  <h4 id="TMPlan_PlanClient_Send_System_Object___" data-uid="TMPlan.PlanClient.Send(System.Object[])">Send(Object[])</h4>
+  <div class="markdown level1 summary">
+Sends the plan as array of PSObjects to remote server
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Send(object[] arr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">arr</span></td>
+        <td>The array of PSObjects.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if success, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_SendCommand_TMPlan_EPlanCommand_TM_EServerType_.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.SendCommand(TMPlan.EPlanCommand%2CTM.EServerType)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L469">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_SendCommand_" data-uid="TMPlan.PlanClient.SendCommand*"></a>
+  <h4 id="TMPlan_PlanClient_SendCommand_TMPlan_EPlanCommand_TM_EServerType_" data-uid="TMPlan.PlanClient.SendCommand(TMPlan.EPlanCommand,TM.EServerType)">SendCommand(EPlanCommand, EServerType)</h4>
+  <div class="markdown level1 summary">
+Sends the EPlanCommand to server.
+<pre><code>public enum EPlanCommand
+{
+[Description(&quot;запрос на статус сервера&quot;)]
+GETSTATE = 1,
+
+[Description(&quot;запрос на очистку плана &quot;)]
+CLEARPLAN = 2,
+
+[Description(&quot;запрос на старт плана &quot;)]
+STARTPLAN = 3,
+
+[Description(&quot;запрос на паузу&quot;)]
+PAUSEPLAN = 4,
+
+[Description(&quot;запрос на останов&quot;)]
+STOPPLAN = 5
+}</code></pre>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="TMPlan.EPlanCommand.html">EPlanCommand</a></td>
+        <td><span class="parametername">cmd</span></td>
+        <td>The EPlanCommand.</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="TM.EServerType.html">EServerType</a></td>
+        <td><span class="parametername">server_type</span></td>
+        <td>Type of the server.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> on success, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="TM.SendCommandException.html">SendCommandException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Start.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Start%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L507">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Start_" data-uid="TMPlan.PlanClient.Start*"></a>
+  <h4 id="TMPlan_PlanClient_Start" data-uid="TMPlan.PlanClient.Start">Start()</h4>
+  <div class="markdown level1 summary">
+Starts the plan processing on remote server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Start()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_Stop.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.Stop%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L516">View Source</a>
+  </span>
+  <a id="TMPlan_PlanClient_Stop_" data-uid="TMPlan.PlanClient.Stop*"></a>
+  <h4 id="TMPlan_PlanClient_Stop" data-uid="TMPlan.PlanClient.Stop">Stop()</h4>
+  <div class="markdown level1 summary">
+Stops the plan processing on remote server.
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Stop()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><code>true</code> if OK, <code>false</code> otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_PlanFinished.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.PlanFinished%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L48">View Source</a>
+  </span>
+  <h4 id="TMPlan_PlanClient_PlanFinished" data-uid="TMPlan.PlanClient.PlanFinished">PlanFinished</h4>
+  <div class="markdown level1 summary">
+Occurs when [plan processing is finished].
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ClientHandler PlanFinished</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ClientHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_PlanLoaded.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.PlanLoaded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L53">View Source</a>
+  </span>
+  <h4 id="TMPlan_PlanClient_PlanLoaded" data-uid="TMPlan.PlanClient.PlanLoaded">PlanLoaded</h4>
+  <div class="markdown level1 summary">
+Occurs when [plan loaded].
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ClientHandler PlanLoaded</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ClientHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient_PlanResultsProcessed.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient.PlanResultsProcessed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L58">View Source</a>
+  </span>
+  <h4 id="TMPlan_PlanClient_PlanResultsProcessed" data-uid="TMPlan.PlanClient.PlanResultsProcessed">PlanResultsProcessed</h4>
+  <div class="markdown level1 summary">
+Occurs when part of [plan results processed and received].
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event PlanResultsHandler PlanResultsProcessed</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="TMPlan.PlanResultsHandler.html">PlanResultsHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMPlan_PlanClient.md&amp;value=---%0Auid%3A%20TMPlan.PlanClient%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/x2v0/tm/blob/master/TM/TMPlan.cs/#L22" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+      	<div class="grad-bottom"></div>
+      		<div class="footer">
+      			<div class="container" style="display:flex">
+      				<div style="flex:1; justify-content:center; text-align:center">
+      					<a href="https://github.com/x2v0/tm"><img alt="GitHub Repo" src="/images/github.png" width="auto" height="25" border="0"></a>
+      				</div>
+      				<div style="flex:1; justify-content:flex-end; text-align:right">
+      					<a href="#top">Back to top</a>
+      				</div>
+      			</div>
+      		</div>
+      	</footer></div>
+      
+    
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
