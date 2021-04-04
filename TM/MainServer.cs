@@ -1,12 +1,4 @@
-﻿// $Id: $
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
+﻿
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;

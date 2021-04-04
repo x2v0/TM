@@ -71,6 +71,31 @@ namespace TM
          }
       }
 
+
+      /// <summary>
+      ///    Set Debugging ON/OFF
+      /// </summary>
+      /// <value><c>true</c> if debug; otherwise, <c>false</c>.</value>
+      public static bool Debug
+      {
+         get => DebugPreference == 2;
+         set => DebugPreference = value ? 2 : 0;
+      }
+
+      /// <summary>
+      ///    Enum.ActionPreference:
+      ///    <code>
+      /// Continue 	         2 	- Debug is ON
+      /// SilentlyContinue 	0 	- Debug is OFF
+      /// </code>
+      /// </summary>
+      /// <value>The debug preference.</value>
+      public static int DebugPreference
+      {
+         get;
+         set;
+      }
+
       #endregion
    }
 
@@ -97,7 +122,7 @@ namespace TM
       /// </summary>
       public Client()
       {
-         DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
+         Globals.DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
          Globals.Language = "ru";
       }
 
@@ -169,30 +194,6 @@ namespace TM
       #region Public properties
 
       /// <summary>
-      ///    Set Debugging ON/OFF
-      /// </summary>
-      /// <value><c>true</c> if debug; otherwise, <c>false</c>.</value>
-      public static bool Debug
-      {
-         get => DebugPreference == 2;
-         set => DebugPreference = value ? 2 : 0;
-      }
-
-      /// <summary>
-      ///    Enum.ActionPreference:
-      ///    <code>
-      /// Continue 	      2 	- Debug is ON
-      /// SilentlyContinue 	0 	- Debug is OFF
-      /// </code>
-      /// </summary>
-      /// <value>The debug preference.</value>
-      public static int DebugPreference
-      {
-         get;
-         set;
-      }
-
-      /// <summary>
       ///    Gets the packet header.
       /// </summary>
       /// <value>The header.</value>
@@ -201,7 +202,6 @@ namespace TM
          get;
          private set;
       }
-
       public string IP => IpAddress;
 
       /// <summary>
@@ -356,8 +356,9 @@ namespace TM
          var ok = CreateSender(IpAddress, Port);
 
          if (!ok) {
-            if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_connect_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
+            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+               Console.WriteLine(Resources.Failed_to_connect_to + " " + 
+                                 IpAddress + " , " + Resources.port_number + " = " + Port);
             }
 
             return false;
@@ -366,8 +367,9 @@ namespace TM
          fListenThread = new Thread(ListenForData);
          fListenThread.Start();
 
-         if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Connected_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
+         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            Console.WriteLine(Resources.Connected_to + " " + IpAddress +
+                              " , " + Resources.port_number + " = " + Port);
          }
 
          ServerConnected?.Invoke();
@@ -381,13 +383,13 @@ namespace TM
       /// <returns><c>true</c> if disconnect is OK, <c>false</c> otherwise.</returns>
       public bool Disconnect()
       {
-         ServerDisconnected?.Invoke();
 
-         if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
+         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
             Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
          }
 
          Reset();
+         ServerDisconnected?.Invoke();
 
          return true;
       }
@@ -435,7 +437,7 @@ namespace TM
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
 
-            if (DebugPreference == 2) { // ActionPreference.Continue
+            if (Globals.Debug) { // ActionPreference.Continue
                Console.WriteLine(msg);
             }
 
@@ -484,7 +486,7 @@ namespace TM
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
 
-            if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
                Console.WriteLine(msg);
             }
 
@@ -536,7 +538,7 @@ namespace TM
          }
 
          try {
-            if (DebugPreference == 2) { // ActionPreference.Continue
+            if (Globals.Debug) { // ActionPreference.Continue
                Console.WriteLine(Resources.Sending_info_to_server + ": " + info);
             }
 
@@ -545,7 +547,7 @@ namespace TM
          } catch (Exception ex) {
             var msg = "SendInfo : " + ex.Message;
 
-            if (DebugPreference == 2) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
                Console.WriteLine(msg);
             }
 
@@ -585,7 +587,7 @@ namespace TM
                return true;
             }
          } catch (Exception ex) {
-            if (DebugPreference == 2) { // ActionPreference.Continue
+            if (Globals.Debug) { // ActionPreference.Continue
                Console.WriteLine(ex.Message);
             }
 

@@ -1,12 +1,4 @@
-﻿// $Id: $
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,26 +18,6 @@ namespace TM
       #region Public methods
 
       /// <summary>
-      /// Adds the specified header.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <param name="header">The header.</param>
-      /// <returns>BufferChunk.</returns>
-      public static BufferChunk Add(this BufferChunk buf, PacketHeader header)
-      {
-         buf.Reset();
-
-         buf += header.sign;
-         buf += header.type;
-         buf += header.value;
-         buf += header.reserved;
-         buf += header.datalength;
-         buf += header.packet_number;
-
-         return buf;
-      }
-
-      /// <summary>
       /// Bytes the array to structure.
       /// </summary>
       /// <param name="bytearray">The bytearray.</param>
@@ -57,7 +29,8 @@ namespace TM
          var length = Marshal.SizeOf(structureObj);
          var ptr = Marshal.AllocHGlobal(length);
          Marshal.Copy(bytearray, 0, ptr, length);
-         structureObj = Marshal.PtrToStructure(Marshal.UnsafeAddrOfPinnedArrayElement(bytearray, position), structureObj.GetType());
+         structureObj = Marshal.PtrToStructure(Marshal.UnsafeAddrOfPinnedArrayElement(bytearray, position), 
+                                               structureObj.GetType());
          Marshal.FreeHGlobal(ptr);
          return structureObj;
       }
@@ -80,14 +53,16 @@ namespace TM
       }
 
       /// <summary>
-      /// This is not suitable for large files because the SEND() buffer may get filled up and throw an exception
-      /// if you attempt to write to it. You should change this to use the strongly typed networkstream and ensure
+      /// This is not suitable for large files because the SEND() buffer
+      /// may get filled up and throw an exception if you attempt to write to it.
+      /// You should change this to use the strongly typed network stream and ensure
       /// you have enough room to send data
       /// </summary>
       /// <param name="source">The source.</param>
       /// <param name="destination">The destination.</param>
       /// <param name="completed">The completed.</param>
-      public static void Copy(this Stream source, Stream destination, Action<Stream, Stream, Exception> completed = null)
+      public static void Copy(this Stream source, Stream destination, 
+                              Action<Stream, Stream, Exception> completed = null)
       {
          var buffer = new byte[1024 * 16];
          int read;
@@ -127,53 +102,6 @@ namespace TM
 
          return attributes.Length > 0 ? attributes[0].Description : str;
       }
-
-      /// <summary>
-      /// Mcs the pt ilh.
-      /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>MC_PT_ILH.</returns>
-      public static MC_PT_ILH MC_PT_ILH(this BufferChunk buf)
-      {
-         var state = new MC_PT_ILH();
-
-         try {
-            state.sign = Encoding.ASCII.GetBytes("TMCL");
-            state.type = buf.NextInt32();
-            state.s_info = buf.NextInt32();
-            state.t_procent = buf.NextDouble();
-            state.ir_tm = buf.NextInt32();
-            state.spots_count = buf.NextInt32();
-         } catch {
-            state.sign = Encoding.ASCII.GetBytes("0000");
-            return state;
-         }
-
-         return state;
-      }
-
-      /// <summary>
-      /// Reads the server state data from buffer chunk.
-      /// </summary>
-      /// <param name="buf">The buffer chunk.</param>
-      /// <returns>System.Nullable&lt;State2Pass&gt;.</returns>
-      public static StateData StateData(this BufferChunk buf)
-      {
-         var state = new StateData();
-
-         try {
-            state.state = buf.NextInt32();
-            state.lasterror = buf.NextUInt32();
-            state.spots_passed = buf.NextUInt32();
-            state.spots_count = buf.NextUInt32();
-         } catch {
-            state.state = (int)EProcessState.UNKNOWN;
-            return state;
-         }
-
-         return state;
-      }
-
 
       /// <summary>
       /// Splits the string.

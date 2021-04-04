@@ -1,12 +1,4 @@
-﻿// $Id: $
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
+﻿
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -376,41 +368,5 @@ namespace TM
       }
 
       #endregion
-   }
-
-   public static class PacketExt
-   {
-      /// <summary>
-      /// Nexts the PacketHeader
-      /// </summary>
-      /// <param name="buf">The buffer chunk.</param>
-      /// <returns>PacketHeader.</returns>
-      public static PacketHeader NextPacketHeader(this BufferChunk buf)
-      {
-         var header = new PacketHeader();
-         try
-         {
-            header.sign = new byte[4];
-
-            for (var i = 0; i < 4; i++)
-            {
-               header.sign[i] = buf.NextByte();
-            }
-
-            header.type = buf.NextByte();
-            header.value = buf.NextByte();
-            header.reserved = new byte[2];
-            header.reserved[0] = buf.NextByte();
-            header.reserved[1] = buf.NextByte();
-            header.datalength = buf.NextUInt32();
-            header.packet_number = buf.NextInt32();
-         }
-         catch
-         {
-            header.packet_number = -1; //
-         }
-
-         return header;
-      }
    }
 }

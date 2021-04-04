@@ -1,11 +1,4 @@
-﻿// $Id: $
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
+﻿
 
 using System;
 using System.Collections.Generic;
@@ -81,7 +74,7 @@ namespace TMCmdLet
       protected override void ProcessRecord()
       {
          var client = PlanClient.This ?? new PlanClient();
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (string.IsNullOrEmpty(IpAddress)) {
             IpAddress = client.IpAddress;
@@ -107,7 +100,7 @@ namespace TMCmdLet
 
    /// <summary>
    ///   Read plan data from file specified by -Path
-   ///   Returns plan data as list of <see cref="TM.Spot" /> objects.
+   ///   Returns plan data as list of <see cref="TMPlan.Spot" /> objects.
    ///   For example:
    ///      $plan = Get-Plan -Path test_plan.txt
    /// 
@@ -147,7 +140,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          var path = SessionState.Path.CurrentLocation.Path;
          path = System.IO.Path.Combine(path, Path);
@@ -236,8 +229,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
-
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
          var path = SessionState.Path.CurrentLocation.Path;
 
          Path = System.IO.Path.Combine(path, Path);
@@ -320,15 +312,15 @@ namespace TMCmdLet
       protected override void StopProcessing()
       {
          var client = PlanClient.This ?? new PlanClient();
-         var sav = TM.Client.DebugPreference;
-         TM.Client.DebugPreference = (int) ActionPreference.Continue;
+         var sav = TM.Globals.DebugPreference;
+         TM.Globals.DebugPreference = (int) ActionPreference.Continue;
 
          if (client != null) {
             client.Stop();
             client.ProcessingIsOn = false;
          }
 
-         TM.Client.DebugPreference = sav;
+         TM.Globals.DebugPreference = sav;
       }
 
       #endregion
@@ -343,7 +335,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         if ((EPlanState)state == EPlanState.INPROCESS && !TM.Client.Debug) { // plan processing is ON
+         if ((EPlanState)state == EPlanState.INPROCESS && !TM.Globals.Debug) { // plan processing is ON
             var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
             Console.Write("\r"+Resources.Plan_processed+" = " + passed + "%  ");
          }
@@ -380,7 +372,7 @@ namespace TMCmdLet
       #region  Fields
 
       /// <summary>
-      /// The plan - list of <see cref="TM.Spot" />s
+      /// The plan - list of <see cref="TMPlan.Spot" />s
       /// </summary>
       private readonly List<Spot> Plan = new List<Spot>();
 
@@ -471,7 +463,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (Input == null) {
             return;
@@ -533,7 +525,7 @@ namespace TMCmdLet
    ///<example><code>
    /// 
    ///   # Load module
-   ///   Import-Module ./TM.Client.dll
+   ///   Import-Module ./Globals.Debug
    /// 
    ///   # Set default Hostname:Port
    ///   Set-DefaultServer localhost 9996
@@ -628,15 +620,15 @@ namespace TMCmdLet
       protected override void StopProcessing()
       {
          var client = PlanClient.This ?? new PlanClient();
-         var sav = TM.Client.DebugPreference;
-         TM.Client.DebugPreference = (int) ActionPreference.Continue;
+         var sav = TM.Globals.DebugPreference;
+         TM.Globals.DebugPreference = (int) ActionPreference.Continue;
 
          if (client != null) {
             client.Stop();
          }
 
          theTimer.Stop();
-         TM.Client.DebugPreference = sav;
+         TM.Globals.DebugPreference = sav;
       }
 
       #endregion
@@ -665,7 +657,7 @@ namespace TMCmdLet
          }
 
          if (!OK || (client.PlanState == EPlanState.NOTREADY)) {
-            if (TM.Client.DebugPreference == (int) ActionPreference.Continue) {
+            if (TM.Globals.DebugPreference == (int) ActionPreference.Continue) {
                WriteDebug(Resources.Server_not_ready);
             }
          }
@@ -741,7 +733,7 @@ namespace TMCmdLet
    }
 
    /// <summary>
-   ///   Returns result of plan processing as a list of <see cref="TM.SpotFull" /> objects
+   ///   Returns result of plan processing as a list of <see cref="TMPlan.SpotFull" /> objects
    /// 
    /// <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
    /// <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
@@ -761,7 +753,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          foreach (var spot in client.PlanResults) {
             var plan = client.Plan[spot.id];
@@ -865,7 +857,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (string.IsNullOrEmpty(IpAddress)) {
             IpAddress = client.IpAddress;
@@ -887,13 +879,13 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var sav = TM.Client.DebugPreference;
-         TM.Client.DebugPreference = (int) ActionPreference.Continue;
+         var sav = TM.Globals.DebugPreference;
+         TM.Globals.DebugPreference = (int) ActionPreference.Continue;
 
          var client = PlanClient.This ?? new PlanClient();
          client?.Disconnect();
 
-         TM.Client.DebugPreference = sav;
+         TM.Globals.DebugPreference = sav;
       }
 
       #endregion
@@ -956,7 +948,7 @@ namespace TMCmdLet
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         TM.Client.DebugPreference = (int) GetVariableValue("DebugPreference");
+         TM.Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          client.IpAddress = IpAddress;
          client.Port = Port;

@@ -862,6 +862,58 @@ references:
   commentId: T:TM.BufferChunkExt
   fullName: TM.BufferChunkExt
   nameWithType: BufferChunkExt
+- uid: TM.BufferChunkExt.Add(TM.BufferChunk,TM.PacketHeader)
+  name: Add(BufferChunk, PacketHeader)
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_Add_TM_BufferChunk_TM_PacketHeader_
+  commentId: M:TM.BufferChunkExt.Add(TM.BufferChunk,TM.PacketHeader)
+  fullName: TM.BufferChunkExt.Add(TM.BufferChunk, TM.PacketHeader)
+  nameWithType: BufferChunkExt.Add(BufferChunk, PacketHeader)
+- uid: TM.BufferChunkExt.Add*
+  name: Add
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_Add_
+  commentId: Overload:TM.BufferChunkExt.Add
+  isSpec: "True"
+  fullName: TM.BufferChunkExt.Add
+  nameWithType: BufferChunkExt.Add
+- uid: TM.BufferChunkExt.MC_PT_ILH(TM.BufferChunk)
+  name: MC_PT_ILH(BufferChunk)
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_MC_PT_ILH_TM_BufferChunk_
+  commentId: M:TM.BufferChunkExt.MC_PT_ILH(TM.BufferChunk)
+  fullName: TM.BufferChunkExt.MC_PT_ILH(TM.BufferChunk)
+  nameWithType: BufferChunkExt.MC_PT_ILH(BufferChunk)
+- uid: TM.BufferChunkExt.MC_PT_ILH*
+  name: MC_PT_ILH
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_MC_PT_ILH_
+  commentId: Overload:TM.BufferChunkExt.MC_PT_ILH
+  isSpec: "True"
+  fullName: TM.BufferChunkExt.MC_PT_ILH
+  nameWithType: BufferChunkExt.MC_PT_ILH
+- uid: TM.BufferChunkExt.NextPacketHeader(TM.BufferChunk)
+  name: NextPacketHeader(BufferChunk)
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_NextPacketHeader_TM_BufferChunk_
+  commentId: M:TM.BufferChunkExt.NextPacketHeader(TM.BufferChunk)
+  fullName: TM.BufferChunkExt.NextPacketHeader(TM.BufferChunk)
+  nameWithType: BufferChunkExt.NextPacketHeader(BufferChunk)
+- uid: TM.BufferChunkExt.NextPacketHeader*
+  name: NextPacketHeader
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_NextPacketHeader_
+  commentId: Overload:TM.BufferChunkExt.NextPacketHeader
+  isSpec: "True"
+  fullName: TM.BufferChunkExt.NextPacketHeader
+  nameWithType: BufferChunkExt.NextPacketHeader
+- uid: TM.BufferChunkExt.StateData(TM.BufferChunk)
+  name: StateData(BufferChunk)
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_StateData_TM_BufferChunk_
+  commentId: M:TM.BufferChunkExt.StateData(TM.BufferChunk)
+  fullName: TM.BufferChunkExt.StateData(TM.BufferChunk)
+  nameWithType: BufferChunkExt.StateData(BufferChunk)
+- uid: TM.BufferChunkExt.StateData*
+  name: StateData
+  href: api/TM/TM.BufferChunkExt.html#TM_BufferChunkExt_StateData_
+  commentId: Overload:TM.BufferChunkExt.StateData
+  isSpec: "True"
+  fullName: TM.BufferChunkExt.StateData
+  nameWithType: BufferChunkExt.StateData
 - uid: TM.Client
   name: Client
   href: api/TM/TM.Client.html
@@ -906,32 +958,6 @@ references:
   commentId: E:TM.Client.DataBlockReceived
   fullName: TM.Client.DataBlockReceived
   nameWithType: Client.DataBlockReceived
-- uid: TM.Client.Debug
-  name: Debug
-  href: api/TM/TM.Client.html#TM_Client_Debug
-  commentId: P:TM.Client.Debug
-  fullName: TM.Client.Debug
-  nameWithType: Client.Debug
-- uid: TM.Client.Debug*
-  name: Debug
-  href: api/TM/TM.Client.html#TM_Client_Debug_
-  commentId: Overload:TM.Client.Debug
-  isSpec: "True"
-  fullName: TM.Client.Debug
-  nameWithType: Client.Debug
-- uid: TM.Client.DebugPreference
-  name: DebugPreference
-  href: api/TM/TM.Client.html#TM_Client_DebugPreference
-  commentId: P:TM.Client.DebugPreference
-  fullName: TM.Client.DebugPreference
-  nameWithType: Client.DebugPreference
-- uid: TM.Client.DebugPreference*
-  name: DebugPreference
-  href: api/TM/TM.Client.html#TM_Client_DebugPreference_
-  commentId: Overload:TM.Client.DebugPreference
-  isSpec: "True"
-  fullName: TM.Client.DebugPreference
-  nameWithType: Client.DebugPreference
 - uid: TM.Client.Disconnect
   name: Disconnect()
   href: api/TM/TM.Client.html#TM_Client_Disconnect
@@ -2557,19 +2583,6 @@ references:
   commentId: T:TM.Extensions
   fullName: TM.Extensions
   nameWithType: Extensions
-- uid: TM.Extensions.Add(TM.BufferChunk,TM.PacketHeader)
-  name: Add(BufferChunk, PacketHeader)
-  href: api/TM/TM.Extensions.html#TM_Extensions_Add_TM_BufferChunk_TM_PacketHeader_
-  commentId: M:TM.Extensions.Add(TM.BufferChunk,TM.PacketHeader)
-  fullName: TM.Extensions.Add(TM.BufferChunk, TM.PacketHeader)
-  nameWithType: Extensions.Add(BufferChunk, PacketHeader)
-- uid: TM.Extensions.Add*
-  name: Add
-  href: api/TM/TM.Extensions.html#TM_Extensions_Add_
-  commentId: Overload:TM.Extensions.Add
-  isSpec: "True"
-  fullName: TM.Extensions.Add
-  nameWithType: Extensions.Add
 - uid: TM.Extensions.ByteArrayToStructure(System.Byte[],System.Object,System.Int32)
   name: ByteArrayToStructure(Byte[], Object, Int32)
   href: api/TM/TM.Extensions.html#TM_Extensions_ByteArrayToStructure_System_Byte___System_Object_System_Int32_
@@ -2624,19 +2637,6 @@ references:
   isSpec: "True"
   fullName: TM.Extensions.Description
   nameWithType: Extensions.Description
-- uid: TM.Extensions.MC_PT_ILH(TM.BufferChunk)
-  name: MC_PT_ILH(BufferChunk)
-  href: api/TM/TM.Extensions.html#TM_Extensions_MC_PT_ILH_TM_BufferChunk_
-  commentId: M:TM.Extensions.MC_PT_ILH(TM.BufferChunk)
-  fullName: TM.Extensions.MC_PT_ILH(TM.BufferChunk)
-  nameWithType: Extensions.MC_PT_ILH(BufferChunk)
-- uid: TM.Extensions.MC_PT_ILH*
-  name: MC_PT_ILH
-  href: api/TM/TM.Extensions.html#TM_Extensions_MC_PT_ILH_
-  commentId: Overload:TM.Extensions.MC_PT_ILH
-  isSpec: "True"
-  fullName: TM.Extensions.MC_PT_ILH
-  nameWithType: Extensions.MC_PT_ILH
 - uid: TM.Extensions.SplitString(System.String,System.Int32)
   name: SplitString(String, Int32)
   href: api/TM/TM.Extensions.html#TM_Extensions_SplitString_System_String_System_Int32_
@@ -2650,19 +2650,6 @@ references:
   isSpec: "True"
   fullName: TM.Extensions.SplitString
   nameWithType: Extensions.SplitString
-- uid: TM.Extensions.StateData(TM.BufferChunk)
-  name: StateData(BufferChunk)
-  href: api/TM/TM.Extensions.html#TM_Extensions_StateData_TM_BufferChunk_
-  commentId: M:TM.Extensions.StateData(TM.BufferChunk)
-  fullName: TM.Extensions.StateData(TM.BufferChunk)
-  nameWithType: Extensions.StateData(BufferChunk)
-- uid: TM.Extensions.StateData*
-  name: StateData
-  href: api/TM/TM.Extensions.html#TM_Extensions_StateData_
-  commentId: Overload:TM.Extensions.StateData
-  isSpec: "True"
-  fullName: TM.Extensions.StateData
-  nameWithType: Extensions.StateData
 - uid: TM.Extensions.ToBool(System.String,System.Boolean)
   name: ToBool(String, Boolean)
   href: api/TM/TM.Extensions.html#TM_Extensions_ToBool_System_String_System_Boolean_
@@ -2763,6 +2750,32 @@ references:
   commentId: T:TM.Globals
   fullName: TM.Globals
   nameWithType: Globals
+- uid: TM.Globals.Debug
+  name: Debug
+  href: api/TM/TM.Globals.html#TM_Globals_Debug
+  commentId: P:TM.Globals.Debug
+  fullName: TM.Globals.Debug
+  nameWithType: Globals.Debug
+- uid: TM.Globals.Debug*
+  name: Debug
+  href: api/TM/TM.Globals.html#TM_Globals_Debug_
+  commentId: Overload:TM.Globals.Debug
+  isSpec: "True"
+  fullName: TM.Globals.Debug
+  nameWithType: Globals.Debug
+- uid: TM.Globals.DebugPreference
+  name: DebugPreference
+  href: api/TM/TM.Globals.html#TM_Globals_DebugPreference
+  commentId: P:TM.Globals.DebugPreference
+  fullName: TM.Globals.DebugPreference
+  nameWithType: Globals.DebugPreference
+- uid: TM.Globals.DebugPreference*
+  name: DebugPreference
+  href: api/TM/TM.Globals.html#TM_Globals_DebugPreference_
+  commentId: Overload:TM.Globals.DebugPreference
+  isSpec: "True"
+  fullName: TM.Globals.DebugPreference
+  nameWithType: Globals.DebugPreference
 - uid: TM.Globals.IP
   name: IP
   href: api/TM/TM.Globals.html#TM_Globals_IP
@@ -3024,25 +3037,6 @@ references:
   isSpec: "True"
   fullName: TM.Packet.TotalSize
   nameWithType: Packet.TotalSize
-- uid: TM.PacketExt
-  name: PacketExt
-  href: api/TM/TM.PacketExt.html
-  commentId: T:TM.PacketExt
-  fullName: TM.PacketExt
-  nameWithType: PacketExt
-- uid: TM.PacketExt.NextPacketHeader(TM.BufferChunk)
-  name: NextPacketHeader(BufferChunk)
-  href: api/TM/TM.PacketExt.html#TM_PacketExt_NextPacketHeader_TM_BufferChunk_
-  commentId: M:TM.PacketExt.NextPacketHeader(TM.BufferChunk)
-  fullName: TM.PacketExt.NextPacketHeader(TM.BufferChunk)
-  nameWithType: PacketExt.NextPacketHeader(BufferChunk)
-- uid: TM.PacketExt.NextPacketHeader*
-  name: NextPacketHeader
-  href: api/TM/TM.PacketExt.html#TM_PacketExt_NextPacketHeader_
-  commentId: Overload:TM.PacketExt.NextPacketHeader
-  isSpec: "True"
-  fullName: TM.PacketExt.NextPacketHeader
-  nameWithType: PacketExt.NextPacketHeader
 - uid: TM.PacketHeader
   name: PacketHeader
   href: api/TM/TM.PacketHeader.html
@@ -4241,6 +4235,12 @@ references:
   isSpec: "True"
   fullName: TMPlan.PlanClient.Plan
   nameWithType: PlanClient.Plan
+- uid: TMPlan.PlanClient.PlanCleared
+  name: PlanCleared
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanCleared
+  commentId: E:TMPlan.PlanClient.PlanCleared
+  fullName: TMPlan.PlanClient.PlanCleared
+  nameWithType: PlanClient.PlanCleared
 - uid: TMPlan.PlanClient.PlanFinished
   name: PlanFinished
   href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanFinished
@@ -4253,6 +4253,12 @@ references:
   commentId: E:TMPlan.PlanClient.PlanLoaded
   fullName: TMPlan.PlanClient.PlanLoaded
   nameWithType: PlanClient.PlanLoaded
+- uid: TMPlan.PlanClient.PlanPaused
+  name: PlanPaused
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanPaused
+  commentId: E:TMPlan.PlanClient.PlanPaused
+  fullName: TMPlan.PlanClient.PlanPaused
+  nameWithType: PlanClient.PlanPaused
 - uid: TMPlan.PlanClient.PlanResults
   name: PlanResults
   href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanResults
@@ -4272,6 +4278,12 @@ references:
   commentId: E:TMPlan.PlanClient.PlanResultsProcessed
   fullName: TMPlan.PlanClient.PlanResultsProcessed
   nameWithType: PlanClient.PlanResultsProcessed
+- uid: TMPlan.PlanClient.PlanStarted
+  name: PlanStarted
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanStarted
+  commentId: E:TMPlan.PlanClient.PlanStarted
+  fullName: TMPlan.PlanClient.PlanStarted
+  nameWithType: PlanClient.PlanStarted
 - uid: TMPlan.PlanClient.PlanState
   name: PlanState
   href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanState
@@ -4285,6 +4297,12 @@ references:
   isSpec: "True"
   fullName: TMPlan.PlanClient.PlanState
   nameWithType: PlanClient.PlanState
+- uid: TMPlan.PlanClient.PlanStopped
+  name: PlanStopped
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_PlanStopped
+  commentId: E:TMPlan.PlanClient.PlanStopped
+  fullName: TMPlan.PlanClient.PlanStopped
+  nameWithType: PlanClient.PlanStopped
 - uid: TMPlan.PlanClient.Reset
   name: Reset()
   href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_Reset

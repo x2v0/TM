@@ -110,7 +110,7 @@ Disconnects from remote server.
       <h4><a class="xref" href="TMCmdLet.GetPlanCmdlet.html">GetPlanCmdlet</a></h4>
       <section>
 Read plan data from file specified by -Path
-Returns plan data as list of <see cref="!:TM.Spot"></see> objects.
+Returns plan data as list of <a class="xref" href="TMPlan.Spot.html">Spot</a> objects.
 For example:
  $plan = Get-Plan -Path test_plan.txt
 
@@ -119,7 +119,7 @@ For example:
 </section>
       <h4><a class="xref" href="TMCmdLet.GetPlanResultsCmdlet.html">GetPlanResultsCmdlet</a></h4>
       <section>
-Returns result of plan processing as a list of <see cref="!:TM.SpotFull"></see> objects
+Returns result of plan processing as a list of <a class="xref" href="TMPlan.SpotFull.html">SpotFull</a> objects
 
 <br>Implements the <a class="xref" href="TMCmdLet.PlanCmdlet.html">PlanCmdlet</a>
 <br>Implements the <span class="xref">System.Management.Automation.PSCmdlet</span>
@@ -216,7 +216,7 @@ That allows to skip calling (-ip &quot;hostname&quot; -port XXX) in PlanCmdlets
 Starts plan processing on remote server<p>
 Returns <a class="xref" href="TM.Client.html">Client</a> object
 <example><pre><code>   # Load module
-   Import-Module ./TM.Client.dll
+   Import-Module ./Globals.Debug
 
    # Set default Hostname:Port
    Set-DefaultServer localhost 9996
@@ -267,7 +267,7 @@ Pauses plan processing on remote server.
       		<div class="footer">
       			<div class="container" style="display:flex">
       				<div style="flex:1; justify-content:center; text-align:center">
-      					<a href="https://github.com/x2v0/tm"><img alt="GitHub Repo" src="/images/github.png" width="auto" height="25" border="0"></a>
+      					<a href="https://github.com/x2v0/tm"><img alt="GitHub" src="/images/avatar64.png" width="auto" height="32" border="0"></a>
       				</div>
       				<div style="flex:1; justify-content:flex-end; text-align:right">
       					<a href="#top">Back to top</a>

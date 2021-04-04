@@ -1,59 +1,52 @@
-﻿// $Id: $
-
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
+using TMSrv;
 
 namespace TM
 {
    /// <summary>
    ///    Overview:
-   /// <code>
-   ///   ----------------------------------------------------------------------
+   ///    <code>
+   ///   ----------------------------------------------------------------
    ///   BufferChunk is a helper class created to make network
    ///   calls in DotNet easier by allowing byte[] to be passed
    ///   around along with an index (or offset) and length (or chunksize).
    ///   Members:
-   ///   ----------------------------------------------------------------------
+   ///   ----------------------------------------------------------------
    ///   - index  - offset inside the buffer where valid data starts
    ///   - length - amount of valid data
    ///   - buffer - byte[] containing the data
-   ///   Except for constructors (which set index and length member variables),
-   ///   when index and length are passed as parameters, they are used as
-   ///   offsets into the valid data, not offsets into the buffer.
+   ///   Except for constructors (which set index and length member 
+   ///   variables), when index and length are passed as parameters,
+   ///   they are used as offsets into the valid data, not offsets
+   ///   into the buffer.
    ///    Object State:
-   ///   ----------------------------------------------------------------------
+   ///   ----------------------------------------------------------------
    ///   BufferChunk does not accept or return null or zero-length objects.
    ///   However, it is valid
-   ///    for a BufferChunk to be in a state where it has no data to manipulate
-   ///   i.e. length == 0 this.index + this.length cannot be &gt; buffer.Length
-   ///   index + length cannot be &gt; this.length when manipulating inside the
-   ///   valid data
+   ///    for a BufferChunk to be in a state where it has no data to
+   ///   manipulate i.e. length == 0 this.index + this.length cannot be &gt;
+   ///   buffer.Length index + length cannot be &gt; this.length when
+   ///   manipulating inside the valid data
    ///    index must be &gt;= 0
    ///    length must be &gt;= 0
    ///    Integral types:
-   ///    ---------------------------------------------------------------------
+   ///    --------------------------------------------------------------
    ///    BufferChunk allows the reading and writing of integral types
-   ///    (Int16, Int32, Int64 and the unsigned counterparts) into the byte[].
+   ///    (Int16, Int32, Int64 and the unsigned counterparts)
+   ///    into the byte[].
    /// </code>
-   ///    <br/>Implements the <see cref="System.IDisposable" />
-   ///    <br/>Implements the <see cref="System.ICloneable" />
+   ///    <br />Implements the <see cref="System.IDisposable" />
+   ///    <br />Implements the <see cref="System.ICloneable" />
    /// </summary>
    /// <seealso cref="System.IDisposable" />
    /// <seealso cref="System.ICloneable" />
    /// <summary>
-   /// Class BufferChunk.
-   /// Implements the <see cref="System.IDisposable" />
-   /// Implements the <see cref="System.ICloneable" />
+   ///    Class BufferChunk.
+   ///    Implements the <see cref="System.IDisposable" />
+   ///    Implements the <see cref="System.ICloneable" />
    /// </summary>
    /// <seealso cref="System.IDisposable" />
    /// <seealso cref="System.ICloneable" />
@@ -66,7 +59,7 @@ namespace TM
       ///    For doing conversions with strings
       /// </summary>
       /// <summary>
-      /// The UTF8
+      ///    The UTF8
       /// </summary>
       private static readonly UTF8Encoding utf8 = new UTF8Encoding();
 
@@ -74,7 +67,7 @@ namespace TM
       ///    The little endian
       /// </summary>
       /// <summary>
-      /// The little endian
+      ///    The little endian
       /// </summary>
       private static bool littleEndian;
 
@@ -191,13 +184,7 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      public byte[] Buffer
-      {
-         get
-         {
-            return buffer;
-         }
-      }
+      public byte[] Buffer => buffer;
 
       /// <summary>
       ///    Index points to the start of the valid data area
@@ -211,13 +198,7 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      public int Index
-      {
-         get
-         {
-            return index;
-         }
-      }
+      public int Index => index;
 
       /// <summary>
       ///    Length is amount of valid data in the buffer
@@ -237,10 +218,7 @@ namespace TM
       /// </example>
       public int Length
       {
-         get
-         {
-            return length;
-         }
+         get => length;
 
          set
          {
@@ -260,13 +238,7 @@ namespace TM
       ///    How much space the buffer has left (for operator+)
       /// </summary>
       /// <value>The available buffer.</value>
-      private int AvailableBuffer
-      {
-         get
-         {
-            return buffer.Length - index - length;
-         }
-      }
+      private int AvailableBuffer => buffer.Length - index - length;
 
       #endregion
 
@@ -341,8 +313,7 @@ namespace TM
       {
          var ret = false;
 
-         if ((obj1 == null) ||
-             (obj2 == null)) {
+         if ((obj1 == null) || (obj2 == null)) {
             if (obj1 == obj2) {
                ret = true;
             }
@@ -405,7 +376,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="source">The source.</param>
@@ -444,7 +415,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="b">The b.</param>
@@ -463,7 +434,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -484,7 +455,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -496,7 +467,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -508,7 +479,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -529,40 +500,40 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, long data)
       {
-         return destination += (ulong)data;
+         return destination += (ulong) data;
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, ushort data)
       {
-         return destination + (short)data;
+         return destination + (short) data;
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
       /// <returns>The result of the operator.</returns>
       public static BufferChunk operator +(BufferChunk destination, uint data)
       {
-         return destination + (int)data;
+         return destination + (int) data;
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="data">The data.</param>
@@ -584,7 +555,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    <br/>Implements the +.
+      ///    <br />Implements the +.
       /// </summary>
       /// <param name="destination">The destination.</param>
       /// <param name="s">The s.</param>
@@ -602,7 +573,7 @@ namespace TM
 
          ValidateSufficientSpace(bytes.Length, destination.AvailableBuffer);
 
-         return destination += (BufferChunk)bytes;
+         return destination += (BufferChunk) bytes;
       }
 
       /// <summary>
@@ -646,7 +617,7 @@ namespace TM
          ValidateNotZeroLength(source.length);
 
          lock (utf8) {
-            return utf8.GetString((byte[])source);
+            return utf8.GetString((byte[]) source);
          }
       }
 
@@ -836,7 +807,7 @@ namespace TM
       /// <returns>System.Int64.</returns>
       public long GetInt64(int index)
       {
-         return (long)GetUInt64(index);
+         return (long) GetUInt64(index);
       }
 
       /// <summary>
@@ -854,7 +825,7 @@ namespace TM
          var dataSize = 2;
          if ((index + dataSize) <= length) // All the data requested
          {
-            ret = (ushort)_GetInt16(index);
+            ret = (ushort) _GetInt16(index);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -867,7 +838,7 @@ namespace TM
                   shift = offset;
                }
 
-               ret += (ushort)(buffer[this.index + index + offset] << (shift * 8));
+               ret += (ushort) (buffer[this.index + index + offset] << (shift * 8));
                offset++;
             }
          }
@@ -890,7 +861,7 @@ namespace TM
          var dataSize = 4;
          if ((index + dataSize) < length) // All the data requested
          {
-            ret = (uint)_GetInt32(index);
+            ret = (uint) _GetInt32(index);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -903,7 +874,7 @@ namespace TM
                   shift = offset;
                }
 
-               ret += (uint)buffer[this.index + index + offset] << (shift * 8);
+               ret += (uint) buffer[this.index + index + offset] << (shift * 8);
                offset++;
             }
          }
@@ -935,11 +906,11 @@ namespace TM
 
             if (littleEndian) {
                for (int offset = 0, shift = dataSize - 1; offset < availableData; offset++, shift--) {
-                  ret += (ulong)buffer[indexOffset + offset] << (shift * 8);
+                  ret += (ulong) buffer[indexOffset + offset] << (shift * 8);
                }
             } else {
                for (int offset = 0, shift = 0; offset < availableData; offset++, shift++) {
-                  ret += (ulong)buffer[indexOffset + offset] << (shift * 8);
+                  ret += (ulong) buffer[indexOffset + offset] << (shift * 8);
                }
             }
          }
@@ -954,7 +925,7 @@ namespace TM
       /// <returns>System.UInt16.</returns>
       public ushort GetUInt16(int index)
       {
-         return (ushort)GetInt16(index);
+         return (ushort) GetInt16(index);
       }
 
       /// <summary>
@@ -964,7 +935,7 @@ namespace TM
       /// <returns>System.UInt32.</returns>
       public uint GetUInt32(int index)
       {
-         return (uint)GetInt32(index);
+         return (uint) GetInt32(index);
       }
 
       /// <summary>
@@ -1038,7 +1009,7 @@ namespace TM
       /// <param name="length">The length.</param>
       /// <returns>BufferChunk.</returns>
       /// <summary>
-      /// Nexts the buffer chunk maximum.
+      ///    Nexts the buffer chunk maximum.
       public BufferChunk NextBufferChunkMax(int length)
       {
          if (length > Length) {
@@ -1144,7 +1115,7 @@ namespace TM
       /// <returns>System.UInt16.</returns>
       public ushort NextUInt16()
       {
-         return (ushort)NextInt16();
+         return (ushort) NextInt16();
       }
 
       /// <summary>
@@ -1153,7 +1124,7 @@ namespace TM
       /// <returns>System.UInt32.</returns>
       public uint NextUInt32()
       {
-         return (uint)NextInt32();
+         return (uint) NextInt32();
       }
 
       /// <summary>
@@ -1162,7 +1133,7 @@ namespace TM
       /// <returns>System.UInt64.</returns>
       public ulong NextUInt64()
       {
-         return (ulong)NextInt64();
+         return (ulong) NextInt64();
       }
 
       /// <summary>
@@ -1279,7 +1250,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetInt64(int index, long data)
       {
-         SetUInt64(index, (ulong)data);
+         SetUInt64(index, (ulong) data);
       }
 
       /// <summary>
@@ -1301,7 +1272,7 @@ namespace TM
          var dataSize = 2;
          if ((index + dataSize) < length) // All the data requested
          {
-            _SetInt16(index, (short)data);
+            _SetInt16(index, (short) data);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -1314,7 +1285,7 @@ namespace TM
                   shift = offset;
                }
 
-               buffer[this.index + index + offset] = (byte)(data >> (shift * 8));
+               buffer[this.index + index + offset] = (byte) (data >> (shift * 8));
                offset++;
             }
          }
@@ -1338,7 +1309,7 @@ namespace TM
          var dataSize = 4;
          if ((index + dataSize) < length) // All the data requested
          {
-            _SetInt32(index, (int)data);
+            _SetInt32(index, (int) data);
          } else // The rest of the data in the buffer
          {
             var offset = 0;
@@ -1351,7 +1322,7 @@ namespace TM
                   shift = offset;
                }
 
-               buffer[this.index + index + offset] = (byte)(data >> (shift * 8));
+               buffer[this.index + index + offset] = (byte) (data >> (shift * 8));
                offset++;
             }
          }
@@ -1384,11 +1355,11 @@ namespace TM
 
             if (littleEndian) {
                for (int offset = 0, shift = dataSize - 1; offset < availableData; offset++, shift--) {
-                  buffer[indexOffset + offset] = (byte)(data >> (shift * 8));
+                  buffer[indexOffset + offset] = (byte) (data >> (shift * 8));
                }
             } else {
                for (int offset = 0, shift = 0; offset < availableData; offset++, shift++) {
-                  buffer[indexOffset + offset] = (byte)(data >> (shift * 8));
+                  buffer[indexOffset + offset] = (byte) (data >> (shift * 8));
                }
             }
          }
@@ -1401,7 +1372,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetUInt16(int index, ushort data)
       {
-         SetInt16(index, (short)data);
+         SetInt16(index, (short) data);
       }
 
       /// <summary>
@@ -1411,7 +1382,7 @@ namespace TM
       /// <param name="data">Value to write at index</param>
       public void SetUInt32(int index, uint data)
       {
-         SetInt32(index, (int)data);
+         SetInt32(index, (int) data);
       }
 
       /// <summary>
@@ -1467,7 +1438,7 @@ namespace TM
          var bytes = new byte[4];
 
          fixed (byte* b = bytes) {
-            *(int*)b = *(int*)&value;
+            *(int*) b = *(int*) &value;
          }
 
          return bytes;
@@ -1483,7 +1454,7 @@ namespace TM
          var bytes = new byte[8];
 
          fixed (byte* b = bytes) {
-            *(int*)b = *(int*)&value;
+            *(int*) b = *(int*) &value;
          }
 
          return bytes;
@@ -1554,8 +1525,7 @@ namespace TM
       private static void ValidatePointerData(int index, int length, int dataLength)
       {
          if ((index + length) > dataLength) {
-            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture,
-                                                                "Index And Length Invalid Data", index, length, dataLength));
+            throw new ArgumentOutOfRangeException(string.Format(CultureInfo.CurrentCulture, "Index And Length Invalid Data", index, length, dataLength));
          }
       }
 
@@ -1597,7 +1567,7 @@ namespace TM
          double ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(double*)pb;
+            ret = *(double*) pb;
          }
 
          return ret;
@@ -1613,7 +1583,7 @@ namespace TM
          float ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(float*)pb;
+            ret = *(float*) pb;
          }
 
          return ret;
@@ -1630,12 +1600,12 @@ namespace TM
 
          // BigEndian network -> LittleEndian architecture
          if (littleEndian) {
-            ret = (short)(buffer[this.index + index + 0] << (1 * 8));
-            ret += (short)(buffer[this.index + index + 1] << (0 * 8));
+            ret = (short) (buffer[this.index + index + 0] << (1 * 8));
+            ret += (short) (buffer[this.index + index + 1] << (0 * 8));
          } else // BigEndian network -> BigEndian architecture
          {
-            ret = (short)(buffer[this.index + index + 0] << (0 * 8));
-            ret += (short)(buffer[this.index + index + 1] << (1 * 8));
+            ret = (short) (buffer[this.index + index + 0] << (0 * 8));
+            ret += (short) (buffer[this.index + index + 1] << (1 * 8));
          }
 
          return ret;
@@ -1677,7 +1647,7 @@ namespace TM
          ulong ret;
 
          fixed (byte* pb = &buffer[this.index + index]) {
-            ret = *(ulong*)pb;
+            ret = *(ulong*) pb;
          }
 
          return ret;
@@ -1692,12 +1662,12 @@ namespace TM
       {
          // LittleEndian architecture -> BigEndian network
          if (littleEndian) {
-            buffer[this.index + index + 0] = (byte)(data >> (1 * 8));
-            buffer[this.index + index + 1] = (byte)(data >> (0 * 8));
+            buffer[this.index + index + 0] = (byte) (data >> (1 * 8));
+            buffer[this.index + index + 1] = (byte) (data >> (0 * 8));
          } else // BigEndian architecture -> BigEndian network
          {
-            buffer[this.index + index + 0] = (byte)(data >> (0 * 8));
-            buffer[this.index + index + 1] = (byte)(data >> (1 * 8));
+            buffer[this.index + index + 0] = (byte) (data >> (0 * 8));
+            buffer[this.index + index + 1] = (byte) (data >> (1 * 8));
          }
       }
 
@@ -1710,16 +1680,16 @@ namespace TM
       {
          // LittleEndian architecture -> BigEndian network
          if (littleEndian) {
-            buffer[this.index + index + 0] = (byte)(data >> (3 * 8));
-            buffer[this.index + index + 1] = (byte)(data >> (2 * 8));
-            buffer[this.index + index + 2] = (byte)(data >> (1 * 8));
-            buffer[this.index + index + 3] = (byte)(data >> (0 * 8));
+            buffer[this.index + index + 0] = (byte) (data >> (3 * 8));
+            buffer[this.index + index + 1] = (byte) (data >> (2 * 8));
+            buffer[this.index + index + 2] = (byte) (data >> (1 * 8));
+            buffer[this.index + index + 3] = (byte) (data >> (0 * 8));
          } else // BigEndian architecture -> BigEndian network
          {
-            buffer[this.index + index + 0] = (byte)(data >> (0 * 8));
-            buffer[this.index + index + 1] = (byte)(data >> (1 * 8));
-            buffer[this.index + index + 2] = (byte)(data >> (2 * 8));
-            buffer[this.index + index + 3] = (byte)(data >> (3 * 8));
+            buffer[this.index + index + 0] = (byte) (data >> (0 * 8));
+            buffer[this.index + index + 1] = (byte) (data >> (1 * 8));
+            buffer[this.index + index + 2] = (byte) (data >> (2 * 8));
+            buffer[this.index + index + 3] = (byte) (data >> (3 * 8));
          }
       }
 
@@ -1731,7 +1701,7 @@ namespace TM
       private unsafe void _SetUInt64(int index, ulong data)
       {
          fixed (byte* pb = &buffer[this.index + index]) {
-            *(ulong*)pb = data;
+            *(ulong*) pb = data;
          }
       }
 
@@ -1743,8 +1713,7 @@ namespace TM
       {
          var largerBuffer = new byte[length + len];
 
-         if ((buffer != null) &&
-             (length > 0)) {
+         if ((buffer != null) && (length > 0)) {
             Array.Copy(buffer, 0, largerBuffer, 0, length);
          }
 
@@ -1758,7 +1727,7 @@ namespace TM
    /// <summary>
    ///    Class InsufficientDataException
    ///    Raised when requesting more data than current buffer holds
-   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   ///    <br />Implements the <see cref="System.ApplicationException" />
    /// </summary>
    /// <seealso cref="System.ApplicationException" />
    public class InsufficientDataException : ApplicationException
@@ -1795,7 +1764,7 @@ namespace TM
    /// <summary>
    ///    Class InsufficientSpaceException
    ///    Raised when trying to add more data than current buffer can hold
-   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   ///    <br />Implements the <see cref="System.ApplicationException" />
    /// </summary>
    /// <seealso cref="System.ApplicationException" />
    public class InsufficientSpaceException : ApplicationException
@@ -1832,21 +1801,21 @@ namespace TM
    /// <summary>
    ///    Class NoDataException
    ///    Raised when requesting more data than current buffer holds
-   ///    <br/>Implements the <see cref="System.ApplicationException" />
+   ///    <br />Implements the <see cref="System.ApplicationException" />
    /// </summary>
    public class NoDataException : ApplicationException
    {
       #region Constructors and destructors
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      ///    Initializes a new instance of the <see cref="NoDataException" /> class.
       /// </summary>
       public NoDataException()
       {
       }
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      ///    Initializes a new instance of the <see cref="NoDataException" /> class.
       /// </summary>
       /// <param name="msg">The MSG.</param>
       public NoDataException(string msg) : base(msg)
@@ -1854,7 +1823,7 @@ namespace TM
       }
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="NoDataException" /> class.
+      ///    Initializes a new instance of the <see cref="NoDataException" /> class.
       /// </summary>
       /// <param name="msg">The MSG.</param>
       /// <param name="inner">The inner.</param>
@@ -1865,8 +1834,104 @@ namespace TM
       #endregion
    }
 
-   public static class BufferChunkExt 
+   public static class BufferChunkExt
    {
+      #region Public methods
 
+      /// <summary>
+      ///    Adds the specified header.
+      /// </summary>
+      /// <param name="buf">The buf.</param>
+      /// <param name="header">The header.</param>
+      /// <returns>BufferChunk.</returns>
+      public static BufferChunk Add(this BufferChunk buf, PacketHeader header)
+      {
+         buf.Reset();
+
+         buf += header.sign;
+         buf += header.type;
+         buf += header.value;
+         buf += header.reserved;
+         buf += header.datalength;
+         buf += header.packet_number;
+
+         return buf;
+      }
+
+      /// <summary>
+      /// </summary>
+      /// <param name="buf">The buf.</param>
+      /// <returns>MC_PT_ILH.</returns>
+      public static MC_PT_ILH MC_PT_ILH(this BufferChunk buf)
+      {
+         var state = new MC_PT_ILH();
+
+         try {
+            state.sign = Encoding.ASCII.GetBytes("TMCL");
+            state.type = buf.NextInt32();
+            state.s_info = buf.NextInt32();
+            state.t_procent = buf.NextDouble();
+            state.ir_tm = buf.NextInt32();
+            state.spots_count = buf.NextInt32();
+         } catch {
+            state.sign = Encoding.ASCII.GetBytes("0000");
+            return state;
+         }
+
+         return state;
+      }
+
+      /// <summary>
+      ///    Nexts the PacketHeader
+      /// </summary>
+      /// <param name="buf">The buffer chunk.</param>
+      /// <returns>PacketHeader.</returns>
+      public static PacketHeader NextPacketHeader(this BufferChunk buf)
+      {
+         var header = new PacketHeader();
+         try {
+            header.sign = new byte[4];
+
+            for (var i = 0; i < 4; i++) {
+               header.sign[i] = buf.NextByte();
+            }
+
+            header.type = buf.NextByte();
+            header.value = buf.NextByte();
+            header.reserved = new byte[2];
+            header.reserved[0] = buf.NextByte();
+            header.reserved[1] = buf.NextByte();
+            header.datalength = buf.NextUInt32();
+            header.packet_number = buf.NextInt32();
+         } catch {
+            header.packet_number = -1; //
+         }
+
+         return header;
+      }
+
+      /// <summary>
+      ///    Reads the server state data from buffer chunk.
+      /// </summary>
+      /// <param name="buf">The buffer chunk.</param>
+      /// <returns>System.Nullable&lt;State2Pass&gt;.</returns>
+      public static StateData StateData(this BufferChunk buf)
+      {
+         var state = new StateData();
+
+         try {
+            state.state = buf.NextInt32();
+            state.lasterror = buf.NextUInt32();
+            state.spots_passed = buf.NextUInt32();
+            state.spots_count = buf.NextUInt32();
+         } catch {
+            state.state = (int) EProcessState.UNKNOWN;
+            return state;
+         }
+
+         return state;
+      }
+
+      #endregion
    }
 }
