@@ -53,12 +53,10 @@
     <Compile Include="ACCServer.cs" />
     <Compile Include="BufferChunk.cs" />
     <Compile Include="ECServer.cs" />
-    <Compile Include="MainCServer.cs" />
+    <Compile Include="MainServer.cs" />
     <Compile Include="PFSProxyServer.cs" />
     <Compile Include="PFSServer.cs" />
     <Compile Include="TermoServer.cs" />
-    <Compile Include="TMDataServer.cs" />
-    <Compile Include="TMDataServers.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,7 +72,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TMPacket.cs" />
-    <Compile Include="TM_protocol.cs" />
+    <Compile Include="TMProtocol.cs" />
+    <Compile Include="TMServer.cs" />
+    <Compile Include="TMServers.cs" />
     <Compile Include="XRayServer.cs" />
   </ItemGroup>
   <ItemGroup>
