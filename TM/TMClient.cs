@@ -131,8 +131,6 @@ namespace TM
       /// </summary>
       public Client()
       {
-         Globals.DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
-         Globals.Language = "ru";
       }
 
       #endregion
@@ -686,7 +684,9 @@ namespace TM
                      break;
                   }
 
-                  if (DataBlockReceived != null) DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
+                  if (DataBlockReceived != null) {
+                     DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
+                  }
                   break;
             }
 

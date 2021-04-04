@@ -4209,6 +4209,19 @@ references:
   isSpec: "True"
   fullName: TMPlan.PlanClient.Load
   nameWithType: PlanClient.Load
+- uid: TMPlan.PlanClient.LoadPlan(System.String)
+  name: LoadPlan(String)
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_LoadPlan_System_String_
+  commentId: M:TMPlan.PlanClient.LoadPlan(System.String)
+  fullName: TMPlan.PlanClient.LoadPlan(System.String)
+  nameWithType: PlanClient.LoadPlan(String)
+- uid: TMPlan.PlanClient.LoadPlan*
+  name: LoadPlan
+  href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_LoadPlan_
+  commentId: Overload:TMPlan.PlanClient.LoadPlan
+  isSpec: "True"
+  fullName: TMPlan.PlanClient.LoadPlan
+  nameWithType: PlanClient.LoadPlan
 - uid: TMPlan.PlanClient.Pause
   name: Pause()
   href: api/TM/TMPlan.PlanClient.html#TMPlan_PlanClient_Pause

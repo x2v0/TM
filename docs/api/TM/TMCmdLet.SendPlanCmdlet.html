@@ -86,12 +86,12 @@
   <div class="markdown level0 summary">
 Sends plan data to remote server.
 Returns <a class="xref" href="TM.Client.html">Client</a> object (the same object as in Connect-Server)
-
-<example><pre><code>   $client = Get-Plan test_plan.txt | Send-Plan
-      or
-   $plan = Get-Plan test_plan.txt
-   $client = Send-Plan $plan</code></pre></example>
-
+<example>
+<pre><code>$client = Get-Plan test_plan.txt | Send-Plan
+or
+$plan = Get-Plan test_plan.txt
+$client = Send-Plan $plan</code></pre>
+</example>
 <br>Implements the <span class="xref">System.Management.Automation.Cmdlet</span>
 <br>Implements the <a class="xref" href="TMCmdLet.PlanCmdlet.html">PlanCmdlet</a>
 <br>Implements the <span class="xref">System.Management.Automation.PSCmdlet</span>
@@ -255,7 +255,7 @@ public class SendPlanCmdlet : PSCmdlet</code></pre>
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_Input.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.Input%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L387">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L370">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_Input_" data-uid="TMCmdLet.SendPlanCmdlet.Input*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_Input" data-uid="TMCmdLet.SendPlanCmdlet.Input">Input</h4>
@@ -289,7 +289,7 @@ public object Input { get; set; }</code></pre>
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_IpAddress.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.IpAddress%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L400">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L382">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_IpAddress_" data-uid="TMCmdLet.SendPlanCmdlet.IpAddress*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_IpAddress" data-uid="TMCmdLet.SendPlanCmdlet.IpAddress">IpAddress</h4>
@@ -323,7 +323,7 @@ public string IpAddress { get; set; }</code></pre>
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_Port.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.Port%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L414">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L394">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_Port_" data-uid="TMCmdLet.SendPlanCmdlet.Port*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_Port" data-uid="TMCmdLet.SendPlanCmdlet.Port">Port</h4>
@@ -359,7 +359,7 @@ public int Port { get; set; }</code></pre>
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_EndProcessing.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.EndProcessing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L431">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L409">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_EndProcessing_" data-uid="TMCmdLet.SendPlanCmdlet.EndProcessing*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_EndProcessing" data-uid="TMCmdLet.SendPlanCmdlet.EndProcessing">EndProcessing()</h4>
@@ -378,7 +378,7 @@ Ends the processing.
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_ProcessRecord.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.ProcessRecord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L462">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L440">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_ProcessRecord_" data-uid="TMCmdLet.SendPlanCmdlet.ProcessRecord*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_ProcessRecord" data-uid="TMCmdLet.SendPlanCmdlet.ProcessRecord">ProcessRecord()</h4>
@@ -397,13 +397,15 @@ ProcessRecord implementation
     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet_StopProcessing.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet.StopProcessing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L515">View Source</a>
+    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L495">View Source</a>
   </span>
   <a id="TMCmdLet_SendPlanCmdlet_StopProcessing_" data-uid="TMCmdLet.SendPlanCmdlet.StopProcessing*"></a>
   <h4 id="TMCmdLet_SendPlanCmdlet_StopProcessing" data-uid="TMCmdLet.SendPlanCmdlet.StopProcessing">StopProcessing()</h4>
   <div class="markdown level1 summary">
-On receiving the StopProcessing() request, the cmdlet will immediately cancel.<p>
-This allows a cancellation to occur during a connection request without having<p>
+On receiving the StopProcessing() request, the cmdlet will immediately cancel.
+<p>
+This allows a cancellation to occur during a connection request without having
+<p>
 to wait for the timeout.
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -430,7 +432,7 @@ to wait for the timeout.
                     <a href="https://github.com/x2v0/tm/new/master/apiSpec/new?filename=TMCmdLet_SendPlanCmdlet.md&amp;value=---%0Auid%3A%20TMCmdLet.SendPlanCmdlet%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L368" class="contribution-link">View Source</a>
+                    <a href="https://github.com/x2v0/tm/blob/master/TM/TMClientCmdlet.cs/#L351" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
@@ -447,7 +449,7 @@ to wait for the timeout.
       		<div class="footer">
       			<div class="container" style="display:flex">
       				<div style="flex:1; justify-content:center; text-align:center">
-      					<a href="https://github.com/x2v0/tm"><img alt="GitHub" src="/images/github.svg" width="auto" height="24" border="0">GitHub</a>
+      					<a href="https://github.com/x2v0/tm"><img alt="GitHub" src="/images/github.svg" width="auto" height="24" border="0">   GitHub</a>
       				</div>
       				<div style="flex:1; justify-content:flex-end; text-align:right">
       					<a href="#top">В начало</a>

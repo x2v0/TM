@@ -170,19 +170,24 @@ namespace TMPlan
       {
          return SendCommand(EPlanCommand.GETSTATE);
       }
+      
+      private void ClearPlan()
+      {
+         Plan.Clear();
+         PlanResults.Clear();
+      }
 
       /// <summary>
-      ///    Clears the plan.
+      ///    Clears the plan data.
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public bool Clear()
       {
          var ret = SendCommand(EPlanCommand.CLEARPLAN);
 
-         Plan.Clear();
-         PlanResults.Clear();
+         ClearPlan();
 
-         if (PlanCleared != null) {
+         if (ret && PlanCleared != null) {
             PlanCleared.Invoke();
          }
 
@@ -222,8 +227,6 @@ namespace TMPlan
          if (!ok) {
             return null;
          }
-
-         Clear();
 
          ok = Load(file) != null;
 
@@ -396,7 +399,7 @@ namespace TMPlan
       }
       public override void Reset()
       {
-         Clear();
+         ClearPlan();
          base.Reset();
          ServerStateChanged -= OnServerStateChanged;
       }
@@ -412,7 +415,6 @@ namespace TMPlan
       public bool Send(List<Spot> spots, uint nblocks = 10)
       {
          var ok = false;
-         Clear();
 
          BufferChunk.SetNetworking();
          var plan = new BufferChunk();
@@ -423,7 +425,8 @@ namespace TMPlan
 
          var len = Spot.Length * nblocks;
          if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + (plan.Length / 1000.0) + " Kb");
+            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + 
+                              (plan.Length / 1000.0) + " Kb");
          }
 
          try {
@@ -526,7 +529,7 @@ namespace TMPlan
          }
 
          if (cmd == EPlanCommand.CLEARPLAN) {
-            Clear();
+            ClearPlan();
          }
 
          try {

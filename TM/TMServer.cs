@@ -915,7 +915,7 @@ int asknum; 			// текущий запрос (циклический счетч
       /// </summary>
       public event MakeCommandHandler MakeCommand;
 
-      public TM.Client Client = new TM.Client();
+      public Client Client = new Client();
 
       /// <summary>
       ///  уникальная начинка сервера в соответствии с типом
