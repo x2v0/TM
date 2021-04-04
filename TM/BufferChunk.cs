@@ -184,7 +184,17 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      public byte[] Buffer => buffer;
+      public byte[] Buffer
+      {
+         get
+         {
+            return buffer;
+         }
+         set
+         {
+            buffer = value;
+         }
+      }
 
       /// <summary>
       ///    Index points to the start of the valid data area
@@ -198,7 +208,18 @@ namespace TM
       ///    SocketFlags.None, endPoint);
       ///    }
       /// </example>
-      public int Index => index;
+      public int Index
+      {
+         get
+         {
+           return index;
+         }
+
+         set
+         {
+            index = value;
+         }
+      }
 
       /// <summary>
       ///    Length is amount of valid data in the buffer
@@ -218,7 +239,10 @@ namespace TM
       /// </example>
       public int Length
       {
-         get => length;
+         get
+         {
+            return length;
+         }
 
          set
          {
@@ -238,7 +262,13 @@ namespace TM
       ///    How much space the buffer has left (for operator+)
       /// </summary>
       /// <value>The available buffer.</value>
-      private int AvailableBuffer => buffer.Length - index - length;
+      private int AvailableBuffer
+      {
+         get
+         {
+            return buffer.Length - index - length;
+         }
+      }
 
       #endregion
 

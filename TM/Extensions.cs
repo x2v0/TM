@@ -78,7 +78,7 @@ namespace TM
          } catch (Exception ex) {
             Console.WriteLine(MethodBase.GetCurrentMethod() + " : " + ex.Message);
 
-            completed?.Invoke(source, destination, ex);
+            if (completed != null) completed.Invoke(source, destination, ex);
          }
 
          source.Close();

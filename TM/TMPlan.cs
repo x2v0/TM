@@ -89,6 +89,7 @@ namespace TMPlan
       public List<Spot> Plan
       {
          get;
+         set;
       }
 
       /// <summary>
@@ -98,6 +99,7 @@ namespace TMPlan
       public List<SpotResult> PlanResults
       {
          get;
+         set;
       }
 
       /// <summary>
@@ -175,11 +177,14 @@ namespace TMPlan
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public bool Clear()
       {
-         var ret = true;//SendCommand(EPlanCommand.CLEARPLAN);
+         var ret = SendCommand(EPlanCommand.CLEARPLAN);
 
-         Plan?.Clear();
-         PlanResults?.Clear();
-         PlanCleared?.Invoke();
+         Plan.Clear();
+         PlanResults.Clear();
+
+         if (PlanCleared != null) {
+            PlanCleared.Invoke();
+         }
 
          return ret;
       }
@@ -253,7 +258,7 @@ namespace TMPlan
 
             if ((ProcessState == EPlanState.FINISHED) && (PlanResults.Count > 1)) {
                ProcessingIsOn = false;
-               PlanFinished?.Invoke();
+               if (PlanFinished != null) PlanFinished.Invoke();
             }
 
             Thread.Sleep(300);
@@ -303,8 +308,6 @@ namespace TMPlan
          var length = 0L;
 
          try {
-            var client = This ?? new PlanClient();
-
             var r = new Regex(@"\s+");
 
             if (Globals.Debug) { // ActionPreference.Continue
@@ -336,7 +339,7 @@ namespace TMPlan
 
                         cnt++;
                         length += Spot.Length;
-                        client?.Plan.Add(spot);
+                        Plan.Add(spot);
                      } catch (Exception ex) {
                         if (Globals.Debug) { // ActionPreference.Continue
                            Console.WriteLine(Resources.Failed_to_load + 
@@ -356,9 +359,11 @@ namespace TMPlan
                }
             }
 
-            PlanLoaded?.Invoke();
+            if (PlanLoaded != null) {
+               PlanLoaded.Invoke();
+            }
 
-            return client.Plan;
+            return Plan;
          } catch (Exception ex) {
             if (Globals.Debug) { // ActionPreference.Continue  = Debugging is ON
                Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + 
@@ -370,6 +375,12 @@ namespace TMPlan
          }
       }
 
+      public static List<Spot> LoadPlan(string file)
+      {
+         var client = This ?? new PlanClient();
+         return client.Load(file);
+      }
+
       /// <summary>
       ///    Pauses the plan processing on server.
       /// </summary>
@@ -377,8 +388,8 @@ namespace TMPlan
       public bool Pause()
       {
          var ret = SendCommand(EPlanCommand.PAUSEPLAN);
-         if (ret) {
-            PlanPaused?.Invoke();
+         if (ret && PlanPaused != null) {
+            PlanPaused.Invoke();
          }
 
          return ret;
@@ -547,8 +558,8 @@ namespace TMPlan
       public bool Start()
       {
          var ret = SendCommand(EPlanCommand.STARTPLAN);
-         if (ret) {
-            PlanStarted?.Invoke();
+         if (ret && PlanStarted != null) {
+            PlanStarted.Invoke();
          }
          return ret;
       }
@@ -560,8 +571,8 @@ namespace TMPlan
       public bool Stop()
       {
          var ret = SendCommand(EPlanCommand.STOPPLAN);
-         if (ret) {
-            PlanStopped?.Invoke();
+         if (ret && PlanStopped != null) {
+            PlanStopped.Invoke();
          }
          return ret;
       }
@@ -586,8 +597,8 @@ namespace TMPlan
             return;
          }
 
-         if (PlanState == EPlanState.FINISHED) {
-            PlanFinished?.Invoke();
+         if (PlanState == EPlanState.FINISHED && PlanFinished != null) {
+            PlanFinished.Invoke();
          }
       }
 
@@ -619,7 +630,7 @@ namespace TMPlan
             // ignored
          }
 
-         PlanResultsProcessed?.Invoke(PlanResults);
+         if (PlanResultsProcessed != null) PlanResultsProcessed.Invoke(PlanResults);
       }
 
       #endregion

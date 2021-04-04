@@ -72,6 +72,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TMPacket.cs" />
+    <Compile Include="TMPlan.cs" />
     <Compile Include="TMProtocol.cs" />
     <Compile Include="TMServer.cs" />
     <Compile Include="TMServers.cs" />
@@ -95,9 +96,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Help\TMClient.chm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Test\Connect2Server.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

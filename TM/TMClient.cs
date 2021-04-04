@@ -56,7 +56,10 @@ namespace TM
 
       public static string Language
       {
-         get => fLanguage;
+         get
+         {
+            return fLanguage;
+         }
 
          set
          {
@@ -78,8 +81,14 @@ namespace TM
       /// <value><c>true</c> if debug; otherwise, <c>false</c>.</value>
       public static bool Debug
       {
-         get => DebugPreference == 2;
-         set => DebugPreference = value ? 2 : 0;
+         get
+         {
+          return DebugPreference == 2;
+         }
+         set
+         {
+            DebugPreference = value ? 2 : 0;
+         }
       }
 
       /// <summary>
@@ -202,7 +211,18 @@ namespace TM
          get;
          private set;
       }
-      public string IP => IpAddress;
+      public string IP
+      {
+         get
+         {
+            return IpAddress;
+         }
+
+         set
+         {
+            IpAddress = value;
+         }
+      }
 
       /// <summary>
       ///    Gets the server IP address.
@@ -257,19 +277,37 @@ namespace TM
       ///    Gets the local end point.
       /// </summary>
       /// <value>The local end point.</value>
-      public IPEndPoint LocalEndPoint => ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
+      public IPEndPoint LocalEndPoint
+      {
+         get
+         {
+          return ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
+         }
+      }
 
       /// <summary>
       ///    Gets the local IP address.
       /// </summary>
       /// <value>The local IP address.</value>
-      public string LocalIpAddress => LocalEndPoint != null ? LocalEndPoint.Address.ToString() : string.Empty;
+      public string LocalIpAddress
+      {
+         get
+         {
+            return LocalEndPoint != null ? LocalEndPoint.Address.ToString() : string.Empty;
+         }
+      }
 
       /// <summary>
       ///    Gets the local port.
       /// </summary>
       /// <value>The local port.</value>
-      public int LocalPort => LocalEndPoint?.Port ?? 0;
+      public int LocalPort
+      {
+         get
+         {
+            return LocalEndPoint != null ? LocalEndPoint.Port : 0;
+         }
+      }
 
       /// <summary>
       ///    Gets the remote server port.
@@ -305,7 +343,13 @@ namespace TM
       ///    Gets the remote end point.
       /// </summary>
       /// <value>The remote end point.</value>
-      public IPEndPoint RemoteEndPoint => ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
+      public IPEndPoint RemoteEndPoint
+      {
+         get
+         {
+            return  ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
+         }
+      }
 
       /// <summary>
       ///    Gets the StateData structure.
@@ -372,7 +416,7 @@ namespace TM
                               " , " + Resources.port_number + " = " + Port);
          }
 
-         ServerConnected?.Invoke();
+         if (ServerConnected != null) ServerConnected.Invoke();
 
          return true;
       }
@@ -389,7 +433,7 @@ namespace TM
          }
 
          Reset();
-         ServerDisconnected?.Invoke();
+         if (ServerDisconnected != null) ServerDisconnected.Invoke();
 
          return true;
       }
@@ -408,7 +452,7 @@ namespace TM
             fNetworkStream = null;
          }
 
-         Sender?.Close();
+         if (Sender != null) Sender.Close();
 
          Sender = null;
       }
@@ -628,21 +672,21 @@ namespace TM
 
             switch ((EPacketType) Header.type) {
                case EPacketType.Info:
-                  InfoReceived?.Invoke();
+                  if (InfoReceived != null) InfoReceived.Invoke();
                   break;
                case EPacketType.Error:
-                  ErrorReceived?.Invoke();
+                  if (ErrorReceived != null) ErrorReceived.Invoke();
                   break;
                case EPacketType.Data:
                   var cmd = (EDataCommand) Header.value;
 
                   if (cmd == EDataCommand.STATE) {
                      StateData = ReadData.StateData();
-                     ServerStateChanged?.Invoke(StateData.state);
+                     if (ServerStateChanged != null) ServerStateChanged.Invoke(StateData.state);
                      break;
                   }
 
-                  DataBlockReceived?.Invoke(ReadData, numberOfBytesRead);
+                  if (DataBlockReceived != null) DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
                   break;
             }
 

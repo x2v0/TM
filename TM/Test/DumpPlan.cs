@@ -1,13 +1,14 @@
 using System.Collections.Generic;
-using TM;
+using TMPlan;
 
 namespace My
 {
    public class Plan
    {  
-      public List<PlanSpot> Load(string file)
+      public List<Spot> Load(string file)
       {
-         return TMClient.LoadPlanData(file);
+
+         return PlanClient.LoadPlan(file);
       }
    }
 }
