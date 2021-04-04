@@ -7,7 +7,8 @@ namespace My
    {  
       public List<Spot> Load(string file)
       {
-         return TMClient.LoadPlanData(file);
+
+         return PlanClient.LoadPlan(file);
       }
    }
 }
