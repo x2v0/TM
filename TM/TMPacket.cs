@@ -83,7 +83,7 @@ namespace TM
       {
          var sb = new StringBuilder();
          var t = (EPacketType) type;
-         var v = (EPlanCommand) value;
+         var v = (EProcessState) value;
          sb.AppendLine("sign = " + Encoding.ASCII.GetString(sign) + ", type = " + 
                        t.Description() + ", value = " + v + ", datalength = " + 
                        datalength + ", packet_number = " + packet_number);

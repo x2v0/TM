@@ -1,13 +1,4 @@
-﻿// $Id: $
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
-//TM_protocol.h : protocol for ThermoControl Server and Clients dialogs
+﻿//TM_protocol.h : protocol for ThermoControl Server and Clients dialogs
 //                                                  
 // autor: Aleksey Shestopalov 
 // email: ashestopalov@yandex.ru
@@ -33,22 +24,22 @@ namespace TM
       SHOTSBLOCK = 1,
 
       /// <summary>
-      ///    текущее состояние сервера  клиент-сервер <see cref="TM.MCS_State_topass" />
+      ///    текущее состояние сервера  клиент-сервер <see cref="TM.State2Pass" />
       /// </summary>
-      [Description("текущее состояние сервера клиент<-сервер MCS_State_topass")]
+      [Description("текущее состояние сервера клиент<-сервер")]
       STATE = 2,
 
       /// <summary>
-      ///    результат выполнения серии выстрелов клиент-сервер MCS_shot_results_topass
+      ///    результат выполнения серии выстрелов клиент-сервер
       /// </summary>
-      [Description("результат выполнения серии выстрелов клиент<-сервер MCS_shot_results_topass")]
+      [Description("результат выполнения серии выстрелов клиент<-сервер")]
       SHOTSRESULTS = 3 // 
    }
 
    /// <summary>
-   ///    состояния сервера MainControl (транслятор, симулятор) по протоколу TM
+   ///    состояния сервера в процессе исполнения плана
    /// </summary>
-   public enum ECommandState
+   public enum EPlanState
    {
       /// <summary>
       ///    не определенный
@@ -57,7 +48,7 @@ namespace TM
       UNKNOWN = 111, // 
 
       /// <summary>
-      ///    "не готов
+      ///    не готов
       /// </summary>
       [Description("не готов")]
       NOTREADY = 0,
@@ -88,9 +79,9 @@ namespace TM
    }
 
    /// <summary>
-   ///    состояния сервера MainControl как возвращаемое значение MainControl
+   ///   динамическое состояние сервера
    /// </summary>
-   public enum EServerState
+   public enum EProcessState
    {
       /// <summary>
       ///    не определён
@@ -111,7 +102,7 @@ namespace TM
       READY = 0,
 
       /// <summary>
-      ///    получен фай
+      ///    получен файл
       /// </summary>
       [Description("получен файл")]
       FILEACCEPTED = 1,
@@ -1313,7 +1304,7 @@ namespace TM
    /// используется в ParseTagAsString, ParseConnectType, _DataServer_Info2Tree, <br/>
    /// ConnectToServer, DisconnectFromServer, IsConnected <br/>
    /// </summary>
-   public enum EServerConnectType
+   public enum EConnectType
    {
       /// <summary>
       ///    заглушка
@@ -1322,13 +1313,15 @@ namespace TM
       NONE = 0, //
 
       /// <summary>
-      ///    библиотека linklib.h by P.Lunev (ретранслятор на кресло, температурные мастера, рентген-сервер(железо)...)
+      ///    библиотека linklib.h by P.Lunev (ретранслятор на кресло,
+      ///      температурные мастера, рентген-сервер(железо)...)
       /// </summary>
       [Description("библиотека linklib.h by P.Lunev (ретранслятор на кресло, температурные мастера, рентген-сервер(железо)...)")]
       LNKLIB = 1,
 
       /// <summary>
-      ///    протокол TM_Protocol ( расширение TCP - температурный сервер-клиент, рентген-сервер-томограф, прокси кресла )
+      ///    протокол TM_Protocol ( расширение TCP - температурный сервер-клиент,
+      ///    рентген-сервер-томограф, прокси кресла )
       /// </summary>
       [Description("протокол TM_Protocol ( расширение TCP - температурный сервер-клиент, рентген-сервер-томограф, прокси кресла )")]
       TMPROTOCOL = 2,

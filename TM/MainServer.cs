@@ -20,82 +20,80 @@ namespace TMSrv
    ///    состояние сервера MainCServer - структура ServerData в DataServer
    /// </summary>
    [StructLayout(LayoutKind.Sequential)]
-   public struct MCS_State
+   public struct ServerState
    {
       /// <summary>
-      ///    The length of MCS_State structure
+      ///    The length of structure
       /// </summary>
-      public static uint Length = (uint) Marshal.SizeOf(typeof(MCS_State));
+      public static uint Length = (uint) Marshal.SizeOf(typeof(ServerState));
 
       #region  Fields
 
-      // состояние транслятора или симулятора:
       /// <summary>
-      ///    The state
+      ///   текущее  состояние транслятора или симулятора - MCS_STATE_READY
       /// </summary>
       [Description("текущее состояние сервера из списка состояний")]
-      public uint state; // текущее состояние сервера из списка состояний - MCS_STATE_READY
+      public uint state;
 
       /// <summary>
-      ///    The lasterror
+      ///    последняя возникшая ошибка, приведшая к отказу  - MCS_ERR_NOERROR 
       /// </summary>
-      [Description("крайняя возникшая ошибка, приведшая к отказу")]
-      public uint lasterror; // крайняя возникшая ошибка, приведшая к отказу  - MCS_ERR_NOERROR 
+      [Description("последняя возникшая ошибка, приведшая к отказу")]
+      public uint lasterror; 
 
       /// <summary>
       ///    количество уже произведенных выстрелов в плане
       /// </summary>
       [Description("количество уже произведенных выстрелов в плане")]
-      public uint spots_passed; // 
+      public uint spots_passed;
 
       /// <summary>
-      ///    The pcount passed
+      ///    количество выпущенных протонов по плану
       /// </summary>
       [Description("количество выпущенных протонов по плану")]
-      public float pcount_passed; // количество выпущенных протонов по плану
+      public float pcount_passed;
 
       /// <summary>
-      ///    The spots on remote
+      ///    количество выстрелов в плане на удаленном сервере
       /// </summary>
       [Description("количество выстрелов в плане на удаленном сервер")]
       public uint spots_on_remote; // 
 
-      //ARArray spots;					// набор выстрелов для исполнения ускорителем. Элементы типа plan_spot
       /// <summary>
-      ///    The arr
+      ///    массив выстрелов для исполнения ускорителем. Элементы типа TMPlan.Spot
       /// </summary>
       [Description("массив элементов")]
-      private readonly IntPtr arr; // массив элементов
+      private readonly IntPtr arr;
 
       /// <summary>
-      ///    The elsize
+      ///   размер элемента (байт) == TMPlan.Spot.Length
       /// </summary>
       [Description("размер элемента (байт)")]
-      public int elsize; // размер элемента (байт)
+      public int elsize;
 
       /// <summary>
-      ///    The size
+      ///    размер массива (кол-во элементов)
       /// </summary>
       [Description("размер массива (кол-во элементов)")]
-      public int size; // 
+      public int size;
 
       /// <summary>
-      ///    The count
+      ///    текущий размер массива (кол-во элементов)
       /// </summary>
       [Description("текущий размер массива (кол-во элементов)")]
-      public int count; // текущий размер массива (кол-во элементов)
+      public int count;
 
       /// <summary>
-      ///    The incsize
+      ///    приращение массива
       /// </summary>
       [Description("приращение массива")]
-      public int incsize; // приращение массива
+      public int incsize;
 
       /// <summary>
-      ///    The plan finished
+      ///     флаг - план исполнен, для предотвращения повторного запуска плана
       /// </summary>
       [Description("флаг - план исполнен, для предотвращения повторного запуска плана")]
-      public uint plan_finished; // флаг - план исполнен, для предотвращения повторного запуска плана
+      public uint plan_finished;
 
       /// <summary>
       ///    The waitshots count
@@ -103,69 +101,68 @@ namespace TMSrv
       public uint waitshots_count;
 
       /// <summary>
-      ///    The state mc
+      ///     текущее состояние сервера MainControl - MC_STATE_READY
       /// </summary>
       [Description("текущее состояние сервера MainControl")]
-      public int stateMC; // текущее состояние сервера MainControl - MC_STATE_READY
+      public int stateMC;
 
       /// <summary>
-      ///    The progress
+      ///    прогресс исполнения текущего плана 
       /// </summary>
       [Description("прогресс исполнения текущего плана")]
-      public double progress; // прогресс исполнения текущего плана 
+      public double progress;
 
       /// <summary>
-      ///    The time
+      ///    общее время выполнения облучения
       /// </summary>
       [Description("общее время выполнения облучения")]
-      public float time; // общее время выполнения облучения
+      public float time;
 
       /// <summary>
-      ///    The start time
+      ///    время старта облучения возвращенное Timer()
       /// </summary>
       [Description("время старта облучения возвращенное Timer")]
-      public float startTime; // время старта облучения возвращенное Timer()
+      public float startTime;
 
       /// <summary>
-      ///    The spots pcount
+      ///    суммарное количество протонов для пересчета исполнения
       /// </summary>
       [Description("суммарное количество протонов для пересчета исполнения")]
-      public double spots_pcount; // суммарное количество протонов для пересчета исполнения
+      public double spots_pcount;
 
       /// <summary>
-      ///    The state mc changed
+      ///    флаг - состояние изменилось, требуется рассылка клиентам
       /// </summary>
       [Description("флаг - состояние изменилось, требуется рассылка клиентам")]
-      public int stateMC_changed; // флаг - состояние изменилось, требуется рассылка клиентам
+      public int stateMC_changed;
 
       /// <summary>
-      ///    The progress new
+      ///    прогресс исполнения текущего плана (присланный сервером)
       /// </summary>
       [Description("прогресс исполнения текущего плана")]
-      public double progress_new; // прогресс исполнения текущего плана (присланный сервером)
+      public double progress_new;
 
       // входящие данные от самой программы в транслятор, используются MainCInt
-
       #endregion
    }
 
    /// <summary>
-   ///    состояние сервера MainCServer - структура для пересылки
+   ///    состояние сервера - структура для пересылки
    /// </summary>
    [StructLayout(LayoutKind.Sequential)]
-   public struct MCS_State_topass
+   public struct StateData
    {
       #region  Fields
 
       /// <summary>
-      ///    The length of MCS_State_topass structure
+      ///    The length of State2Pass structure
       /// </summary>
-      public static uint Length = (uint) Marshal.SizeOf(typeof(MCS_State_topass));
+      public static uint Length = (uint) Marshal.SizeOf(typeof(StateData));
 
       /// <summary>
-      ///    текущее состояние сервера из списка состояний - MCS_STATE_READY
+      ///    текущее состояние сервера из списка состояний - EProccessState
       /// </summary>
-      [Description("текущее состояние сервера из списка состояний - MCS_STATE_READY")]
+      [Description("текущее состояние сервера из списка состояний - EProccessState.READY")]
       public int state;
 
       /// <summary>
@@ -194,59 +191,11 @@ namespace TMSrv
       public override string ToString()
       {
          var sb = new StringBuilder();
-         sb.AppendLine("Статус сервера : state = " + ((EServerState) state).Description() + ", lasterror = " + lasterror + ", spots_passed = " + spots_passed + ", spots_count = " + spots_count);
+         sb.AppendLine("Статус сервера : state = " + ((EProcessState) state).Description() + 
+                       ", lasterror = " + lasterror + ", spots_passed = " + spots_passed + 
+                       ", spots_count = " + spots_count);
          return sb.ToString();
       }
-   }
-
-   /// <summary>
-   ///    состояние сервера MainCServer - структура для пересылки <br />
-   ///    используется в обоих протоколах
-   /// </summary>
-   public struct MCS_spot_results_topass
-   {
-      #region Static fields
-
-      /// <summary>
-      ///    The length of MCS_spot_results_topass structure
-      /// </summary>
-      public static uint Length = (uint) Marshal.SizeOf(typeof(MCS_spot_results_topass));
-
-      #endregion
-
-      #region  Fields
-
-      /// <summary>
-      ///    результат выполнения MCS_SHOT_RESULT_DONE
-      /// </summary>
-      [Description("результат выполнения MCS_SHOT_RESULT_DONE")]
-      private int done;
-
-      /// <summary>
-      ///    уникальный идентификатор записи (напр. счетчик)
-      /// </summary>
-      [Description("уникальный идентификатор записи (напр. счетчик)")]
-      private int id;
-
-      /// <summary>
-      ///    количество протонов
-      /// </summary>
-      [Description("количество протонов")]
-      private float result_pcount;
-
-      /// <summary>
-      ///    угол по горизонтали
-      /// </summary>
-      [Description("угол по горизонтали")]
-      private float result_xangle;
-
-      /// <summary>
-      ///    угол по вертикали
-      /// </summary>
-      [Description("угол по вертикали")]
-      private float result_zangle;
-
-      #endregion
    }
 
    /// <summary>
@@ -254,26 +203,32 @@ namespace TMSrv
    ///    формат структуры обмена с программой MainContol как сервером (версия Протвино, Обнинск)
    /// 
    ///    client to server:
-   ///    0–запрос о состоянии ускорителя,
-   ///    1–начать лечение,
-   ///    2–прервать лечение,
-   ///    3–временно приостановить лечение,
-   ///    4–возобновить лечение
-   /// 
-   ///    server to client:
-   ///   -1 – ускоритель не готов;
-   ///    0 – ускоритель готов;
-   ///    1 – файл-задание на терапию успешно принят сервером
-   ///    2 – сеанс лечения начался в pt.t_procent передается процент выполнения задания в pt.file_name
-   ///    передается имя файла истории облучения
-   ///    3 – сеанс лечения закончился
-   ///    4 – сеанс лечения прерван
-   ///    5 – сеанс лечения временно приостановлен по внешнему запросу
-   ///    6 – сеанс лечения временно приостановлен по команде оператора ускорителя
-   ///    7 – сеанс лечения временно приостановлен. Требуется верификация перед сменой направления.
-   ///    8 – сеанс лечения временно приостановлен. Требуется верификация перед сменой высоты.
-   ///    15 – сеанс лечения временно приостановлен. Требуется верификация перед сменой высоты и ракурса.
-   ///    9 – сеанс лечения временно приостановлен. "Кресло" не встало в требуемую позицию.
+   /// <list type="number"> 
+   ///    <item>запрос о состоянии ускорителя</item>
+   ///    <item>начать лечение</item>
+   ///    <item>прервать лечение</item>
+   ///    <item>временно приостановить лечение</item>
+   ///    <item>возобновить лечение</item>
+   ///  </list>
+   ///    
+   /// <list type="table">
+   ///     <listheader>
+   ///       server to client:
+   ///     </listheader>
+   /// <term>-1</term><description>ускоритель не готов</description>
+   /// <term>-1</term><description>ускоритель не готов</description>
+   /// <term>1</term><description>файл-задание на терапию успешно принят сервером</description>
+   /// <term>2</term><description>сеанс лечения начался в pt.t_procent передается процент
+   /// выполнения задания в pt.file_name передается имя файла истории облучения</description>
+   /// <term>3</term><description>сеанс лечения закончился</description>
+   /// <term>4</term><description>сеанс лечения прерван</description>
+   /// <term>5</term><description>сеанс лечения временно приостановлен по внешнему запросу</description>
+   /// <term>6</term><description>сеанс лечения временно приостановлен по команде оператора ускорителяв</description>
+   /// <term>7</term><description>сеанс лечения временно приостановлен. Требуется верификация перед сменой направления</description>
+   /// <term>8</term><description>сеанс лечения временно приостановлен. Требуется верификация перед сменой высоты</description>
+   /// <term>15</term><description>сеанс лечения временно приостановлен. Требуется верификация перед сменой высоты и ракурса</description>
+   /// <term>9</term><description>сеанс лечения временно приостановлен. "Кресло" не встало в требуемую позицию</description>
+   /// </list>
    ///  </code>
    /// </summary>
    [StructLayout(LayoutKind.Sequential)]
@@ -419,7 +374,7 @@ namespace TMSrv
       #endregion
    }
 
-   public class MainCServer : TMDataServer
+   public class MainCServer : Server
    {
    }
 }

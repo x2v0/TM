@@ -153,13 +153,13 @@ namespace TM
       }
 
       /// <summary>
-      /// Nexts the server state.
+      /// Reads the server state data from buffer chunk.
       /// </summary>
-      /// <param name="buf">The buf.</param>
-      /// <returns>System.Nullable&lt;MCS_State_topass&gt;.</returns>
-      public static MCS_State_topass MCS_State(this BufferChunk buf)
+      /// <param name="buf">The buffer chunk.</param>
+      /// <returns>System.Nullable&lt;State2Pass&gt;.</returns>
+      public static StateData StateData(this BufferChunk buf)
       {
-         var state = new MCS_State_topass();
+         var state = new StateData();
 
          try {
             state.state = buf.NextInt32();
@@ -167,7 +167,7 @@ namespace TM
             state.spots_passed = buf.NextUInt32();
             state.spots_count = buf.NextUInt32();
          } catch {
-            state.state = (int) EServerState.UNKNOWN;
+            state.state = (int)EProcessState.UNKNOWN;
             return state;
          }
 

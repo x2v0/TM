@@ -6,7 +6,7 @@ using TM;
 
 namespace TMSrv
 {
-   public class XRayServer : TMDataServer
+   public class XRayServer : Server
    {
    }
 }

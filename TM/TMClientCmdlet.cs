@@ -281,11 +281,11 @@ namespace TMCmdLet
 
          while (client.ProcessingIsOn) {
             if (!ok ||
-                (client.ServerState == ECommandState.NOTREADY)) {
+                (client.PlanState == EPlanState.NOTREADY)) {
                WriteDebug(Resources.Server_not_ready);
             }
 
-            if ((client.ServerState == ECommandState.FINISHED) &&
+            if ((client.PlanState == EPlanState.FINISHED) &&
                 (client.PlanResults.Count > 1)) {
                client.ProcessingIsOn = false;
             }
@@ -339,11 +339,11 @@ namespace TMCmdLet
       /// Called when [server state changed].
       /// </summary>
       /// <param name="state">The server state.</param>
-      private void OnStateChanged(ECommandState state)
+      private void OnStateChanged(int state)
       {
          var client = PlanClient.This ?? new PlanClient();
 
-         if (state == ECommandState.INPROCESS) { // plan processing is ON
+         if ((EPlanState)state == EPlanState.INPROCESS && !TM.Client.Debug) { // plan processing is ON
             var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
             Console.Write("\r"+Resources.Plan_processed+" = " + passed + "%  ");
          }
@@ -664,13 +664,13 @@ namespace TMCmdLet
             WriteProgress(theProgress);
          }
 
-         if (!OK || (client.ServerState == ECommandState.NOTREADY)) {
+         if (!OK || (client.PlanState == EPlanState.NOTREADY)) {
             if (TM.Client.DebugPreference == (int) ActionPreference.Continue) {
                WriteDebug(Resources.Server_not_ready);
             }
          }
 
-         if ((client.ServerState == ECommandState.FINISHED) &&
+         if ((client.PlanState == EPlanState.FINISHED) &&
              (client.PlanResults.Count > 1)) {
             client.ProcessingIsOn = false;
             theTimer.Stop();
@@ -1187,7 +1187,7 @@ namespace TMCmdLet
    /// <seealso cref="TMCmdLet.PlanCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommon.Get, "ServerState")]
-   [OutputType(typeof(ECommandState))]
+   [OutputType(typeof(EPlanState))]
    public class GetServerStateCmdlet : PlanCmdlet
    {
       #region Public properties
@@ -1226,7 +1226,7 @@ namespace TMCmdLet
          var client = PlanClient.This ?? new PlanClient();
          OK = client.AskServerState();
          Thread.Sleep(WaitTime);
-         WriteObject(client.ServerState);
+         WriteObject(client.PlanState);
       }
 
       #endregion

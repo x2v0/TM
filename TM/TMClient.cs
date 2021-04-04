@@ -1,28 +1,11 @@
-﻿// $Id: $
-
-
-/*************************************************************************
- *                                                                       *
- * Copyright (C) 2021,   Valeriy Onuchin                                 *
- * All rights reserved.                                                  *
- *                                                                       *
- *************************************************************************/
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.IO;
-using System.Management.Automation;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using TM;
 using TM.Properties;
-using TMPlan;
 using TMSrv;
-
 
 #region  Delegates
 
@@ -38,14 +21,14 @@ public delegate void ClientDataHandler(BufferChunk data = null, int bytesRead = 
 /// </summary>
 public delegate void ClientHandler();
 
-
 /// <summary>
 ///    Delegate ServerStateChangedHandler
 /// </summary>
 /// <param name="state">The state.</param>
-public delegate void ServerStateChangedHandler(ECommandState state);
+public delegate void ServerStateChangedHandler(int state);
 
 #endregion
+
 namespace TM
 {
    /// <summary>
@@ -73,10 +56,7 @@ namespace TM
 
       public static string Language
       {
-         get
-         {
-            return fLanguage;
-         }
+         get => fLanguage;
 
          set
          {
@@ -117,7 +97,6 @@ namespace TM
       /// </summary>
       public Client()
       {
-        
          DebugPreference = 2; // ActionPreference.Continue == DEBUG is ON
          Globals.Language = "ru";
       }
@@ -170,7 +149,6 @@ namespace TM
       /// </summary>
       public event ClientHandler InfoReceived;
 
-
       /// <summary>
       ///    Occurs when [server connected].
       /// </summary>
@@ -196,15 +174,8 @@ namespace TM
       /// <value><c>true</c> if debug; otherwise, <c>false</c>.</value>
       public static bool Debug
       {
-         get
-         {
-            return DebugPreference == 2;
-         }
-
-         set
-         {
-            DebugPreference = value ? 2 : 0;
-         }
+         get => DebugPreference == 2;
+         set => DebugPreference = value ? 2 : 0;
       }
 
       /// <summary>
@@ -231,6 +202,8 @@ namespace TM
          private set;
       }
 
+      public string IP => IpAddress;
+
       /// <summary>
       ///    Gets the server IP address.
       /// </summary>
@@ -239,13 +212,6 @@ namespace TM
       {
          get;
          set;
-      }
-      public string IP
-      {
-         get
-         {
-            return IpAddress;
-         }
       }
 
       /// <summary>
@@ -257,9 +223,7 @@ namespace TM
          get
          {
             try {
-               if ((Sender != null) &&
-                   (Sender.Client != null) &&
-                   Sender.Client.Connected) {
+               if ((Sender != null) && (Sender.Client != null) && Sender.Client.Connected) {
                   /* pear to Sender documentation on Poll:
                    * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
                    * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
@@ -293,13 +257,7 @@ namespace TM
       ///    Gets the local end point.
       /// </summary>
       /// <value>The local end point.</value>
-      public IPEndPoint LocalEndPoint
-      {
-         get
-         {
-            return ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
-         }
-      }
+      public IPEndPoint LocalEndPoint => ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
 
       /// <summary>
       ///    Gets the local IP address.
@@ -312,16 +270,6 @@ namespace TM
       /// </summary>
       /// <value>The local port.</value>
       public int LocalPort => LocalEndPoint?.Port ?? 0;
-
-      /// <summary>
-      ///    Gets the MCS_State_Server structure.
-      /// </summary>
-      /// <value>The server.</value>
-      public MCS_State_topass MCS_State_Server
-      {
-         get;
-         private set;
-      }
 
       /// <summary>
       ///    Gets the remote server port.
@@ -344,16 +292,26 @@ namespace TM
       }
 
       /// <summary>
+      ///    Gets the processing state of the server.
+      /// </summary>
+      /// <value>The state of processing on the server.</value>
+      public EPlanState ProcessState
+      {
+         get;
+         private set;
+      }
+
+      /// <summary>
       ///    Gets the remote end point.
       /// </summary>
       /// <value>The remote end point.</value>
       public IPEndPoint RemoteEndPoint => ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
 
       /// <summary>
-      ///    Gets the state of the server.
+      ///    Gets the StateData structure.
       /// </summary>
-      /// <value>The state of the server.</value>
-      public ECommandState ServerState
+      /// <value>The server.</value>
+      public StateData StateData
       {
          get;
          private set;
@@ -376,7 +334,6 @@ namespace TM
 
       #region Public methods
 
- 
       /// <summary>
       ///    Connects the specified ip.
       /// </summary>
@@ -440,13 +397,11 @@ namespace TM
       /// </summary>
       public virtual void Reset()
       {
-     
          ProcessingIsOn = false;
 
          fListenThread = null;
 
-         if ((Sender != null) &&
-             Sender.Connected) {
+         if ((Sender != null) && Sender.Connected) {
             fNetworkStream.Close();
             fNetworkStream = null;
          }
@@ -544,6 +499,28 @@ namespace TM
       }
 
       /// <summary>
+      ///    Sends the Packet to server.
+      /// </summary>
+      /// <param name="p">The Packet.</param>
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      public bool Send(Packet p)
+      {
+         if (Sender == null) {
+            return false;
+         }
+
+         try {
+            fNetworkStream = Sender.GetStream();
+            fNetworkStream.Write(p.Data.Buffer, 0, p.Data.Length);
+            fNetworkStream.Flush();
+         } catch (Exception ex) {
+            return false;
+         }
+
+         return true;
+      }
+
+      /// <summary>
       ///    Sends the information to server.
       /// </summary>
       /// <param name="info">The information.</param>
@@ -577,8 +554,6 @@ namespace TM
 
          return ret;
       }
-
-   
 
       #endregion
 
@@ -642,87 +617,31 @@ namespace TM
                //ignore errors
             }
 
-            if (numberOfBytesRead == 0) {
-               Thread.Sleep(100);
+            if (numberOfBytesRead < PacketHeader.Length) {
+               Thread.Sleep(200);
                continue;
             }
 
-            if (numberOfBytesRead >= PacketHeader.Length) {
-               Header = ReadData.NextPacketHeader();
-            }
+            Header = ReadData.NextPacketHeader();
 
-            if (Header.type == (byte) EPacketType.Data) {
-               var cmd = (EDataCommand) Header.value;
+            switch ((EPacketType) Header.type) {
+               case EPacketType.Info:
+                  InfoReceived?.Invoke();
+                  break;
+               case EPacketType.Error:
+                  ErrorReceived?.Invoke();
+                  break;
+               case EPacketType.Data:
+                  var cmd = (EDataCommand) Header.value;
 
-               if (cmd == EDataCommand.STATE) {
-                  MCS_State_Server = ReadData.MCS_State();
-                  var prevState = ServerState;
-
-                  ServerState = (ECommandState) MCS_State_Server.state;
-
-                  if (ServerState == ECommandState.FINISHED) {
-                     if (PlanFinished != null) {
-                        PlanFinished();
-                     }
+                  if (cmd == EDataCommand.STATE) {
+                     StateData = ReadData.StateData();
+                     ServerStateChanged?.Invoke(StateData.state);
+                     break;
                   }
 
-                  var spotsPassed = MCS_State_Server.spots_passed;
-                  SpotsTotal = MCS_State_Server.spots_count;
-
-                  var changed = (ServerState == ECommandState.INPROCESS) && (spotsPassed != SpotsPassed);
-
-                  if (changed) {
-                     SpotsPassed = spotsPassed;
-                  }
-
-                  if (ServerStateChanged != null) {
-                     if (changed || (ServerState != ECommandState.INPROCESS)) {
-                        ServerStateChanged(ServerState);
-                     }
-                  }
-
-                  if (ServerState == ECommandState.NOTREADY) {
-                     Thread.Sleep(100);
-                     continue;
-                  }
-
-                  if (ServerState == ECommandState.INPROCESS) {
-                     Header = ReadData.NextPacketHeader();
-                     cmd = (EDataCommand) Header.value;
-                     ReadData.Skip(1);
-                     var len = numberOfBytesRead - 50;
-
-                     if (DataBlockReceived != null) {
-                        DataBlockReceived(ReadData, len);
-                     }
-
-                     ProcessPlanResults(ReadData, len);
-                  }
-
-                  continue;
-               }
-
-               if (cmd == EDataCommand.SHOTSRESULTS) {
-                  if (DataBlockReceived != null) {
-                     DataBlockReceived(ReadData, numberOfBytesRead);
-                  }
-
-                  continue;
-               }
-            }
-
-            if ((InfoReceived != null) &&
-                (Header.type == (byte) EPacketType.Info)) {
-               //Send off the data for other classes to handle
-               InfoReceived();
-               continue;
-            }
-
-            if ((ErrorReceived != null) &&
-                (Header.type == (byte) EPacketType.Error)) {
-               //Send off the data for other classes to handle
-               ErrorReceived();
-               continue;
+                  DataBlockReceived?.Invoke(ReadData, numberOfBytesRead);
+                  break;
             }
 
             Thread.Sleep(200);
@@ -731,31 +650,7 @@ namespace TM
          Disconnect();
       }
 
-   
-      /// <summary>
-      ///    Sends the Packet to server.
-      /// </summary>
-      /// <param name="p">The Packet.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      public bool Send(Packet p)
-      {
-         if (Sender == null) {
-            return false;
-         }
-
-         try {
-            fNetworkStream = Sender.GetStream();
-            fNetworkStream.Write(p.Data.Buffer, 0, p.Data.Length);
-            fNetworkStream.Flush();
-         } catch (Exception ex) {
-            return false;
-         }
-
-         return true;
-      }
-
       #endregion
-
    }
 
    #region Exception classes
@@ -814,25 +709,6 @@ namespace TM
       /// </summary>
       /// <param name="msg">The MSG.</param>
       public SendInfoException(string msg) : base(msg)
-      {
-      }
-
-      #endregion
-   }
-
-   /// <summary>
-   ///    Exception during sending plan to server
-   ///    <br />Implements the <see cref="System.Exception" />
-   /// </summary>
-   /// <seealso cref="System.Exception" />
-   public class SendPlanException : Exception
-   {
-      #region Constructors and destructors
-
-      /// <summary>
-      ///    Initializes a new instance of the <see cref="SendPlanException" /> class.
-      /// </summary>
-      public SendPlanException() : base(Resources.Failed_to_send + " " + Resources.plan_data)
       {
       }
 

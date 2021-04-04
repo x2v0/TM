@@ -15,7 +15,7 @@ using TM;
 
 namespace TMSrv
 {
-   public class TermoServer : TMDataServer
+   public class TermoServer : Server
    {
    }
 }
