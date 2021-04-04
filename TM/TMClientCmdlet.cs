@@ -5,6 +5,7 @@ using System.Threading;
 using TM;
 using TM.Properties;
 using TMPlan;
+using TMSrv;
 using Timer = System.Timers.Timer;
 
 namespace TMCmdLet
@@ -220,7 +221,6 @@ namespace TMCmdLet
          Console.WriteLine(Resources.Press + " Ctrl-C " + Resources.to_interrupt);
 
          client.Reset();
-         client.ProcessingIsOn = false;
 
          if (string.IsNullOrEmpty(IpAddress)) {
             IpAddress = client.IpAddress;
@@ -314,12 +314,13 @@ namespace TMCmdLet
       /// <summary>
       ///    Called when [server state changed].
       /// </summary>
-      /// <param name="state">The server state.</param>
-      private void OnStateChanged(int state)
+      /// <param name="data">The server state.</param>
+      private void OnStateChanged(StateData data)
       {
+         var state = (EPlanState) data.state;
          var client = PlanClient.This ?? new PlanClient();
 
-         if (((EPlanState) state == EPlanState.INPROCESS) && !Globals.Debug) { // plan processing is ON
+         if ((state == EPlanState.INPROCESS) && !Globals.Debug) { // plan processing is ON
             var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
             Console.Write("\r" + Resources.Plan_processed + " = " + passed + "%  ");
          }
@@ -626,6 +627,7 @@ namespace TMCmdLet
       private void DoWork(object myObject, EventArgs myEventArgs)
       {
          var client = PlanClient.This ?? new PlanClient();
+
          if (!client.ProcessingIsOn) {
             theTimer.Stop();
             WriteDebug(Resources.Plan_processing_finished_);

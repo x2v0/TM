@@ -11,6 +11,7 @@ using System.Threading;
 using TM;
 using TM.Properties;
 using TMCmdLet;
+using TMSrv;
 
 namespace TMPlan
 {
@@ -218,8 +219,7 @@ namespace TMPlan
       /// <returns>Dictionary&lt;System.Int32, SpotFull&gt;.</returns>
       public List<SpotFull> Execute(string file, string ip = null, int port = 0)
       {
-         Reset();
-         ServerStateChanged += OnServerStateChanged;
+         ClearPlan();
          ProcessingIsOn = false;
 
          var ok = Connect(ip, port);
@@ -246,7 +246,7 @@ namespace TMPlan
 
          ok = Start();
 
-         ProcessingIsOn = true;
+        
 
          while (ProcessingIsOn) {
             ok = AskServerState();
@@ -399,9 +399,10 @@ namespace TMPlan
       }
       public override void Reset()
       {
+         ProcessingIsOn = false;
          ClearPlan();
          base.Reset();
-         ServerStateChanged -= OnServerStateChanged;
+         //ServerStateChanged -= OnServerStateChanged;
       }
 
       /// <summary>
@@ -561,9 +562,14 @@ namespace TMPlan
       public bool Start()
       {
          var ret = SendCommand(EPlanCommand.STARTPLAN);
-         if (ret && PlanStarted != null) {
-            PlanStarted.Invoke();
+         if (ret) {
+            if (PlanStarted != null) {
+               PlanStarted.Invoke();
+            }
+            
          }
+
+         ProcessingIsOn = ret;
          return ret;
       }
 
@@ -588,9 +594,11 @@ namespace TMPlan
       ///    Event called when [server state changed].
       /// </summary>
       /// <param name="state">The server state.</param>
-      private void OnServerStateChanged(int state)
+      private void OnServerStateChanged(StateData data)
       {
-         PlanState = (EPlanState) state;
+         PlanState = (EPlanState)data.state;
+         SpotsPassed = data.spots_passed;
+         SpotsTotal = data.spots_count;
 
          if (PlanState == EPlanState.INPROCESS) { // plan processing is ON
             if (Globals.Debug) { // ActionPreference.Continue == DEBUG is ON
@@ -613,7 +621,7 @@ namespace TMPlan
       /// <returns>List&lt;SpotResult&gt;.</returns>
       private void ProcessPlanResults(BufferChunk data, int bytesRead)
       {
-         if (data == null) {
+         if (data == null || PlanState != EPlanState.INPROCESS) {
             return;
          }
          var len = bytesRead;
@@ -633,7 +641,9 @@ namespace TMPlan
             // ignored
          }
 
-         if (PlanResultsProcessed != null) PlanResultsProcessed.Invoke(PlanResults);
+         if (PlanResultsProcessed != null) {
+            PlanResultsProcessed.Invoke(PlanResults);
+         }
       }
 
       #endregion

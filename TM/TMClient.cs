@@ -25,7 +25,7 @@ public delegate void ClientHandler();
 ///    Delegate ServerStateChangedHandler
 /// </summary>
 /// <param name="state">The state.</param>
-public delegate void ServerStateChangedHandler(int state);
+public delegate void ServerStateChangedHandler(StateData state);
 
 #endregion
 
@@ -323,7 +323,7 @@ namespace TM
       /// <value><c>true</c> if [processing is on]; otherwise, <c>false</c>.</value>
       public bool ProcessingIsOn
       {
-         get;
+         get; 
          set;
       }
 
@@ -334,7 +334,7 @@ namespace TM
       public EPlanState ProcessState
       {
          get;
-         private set;
+         protected set;
       }
 
       /// <summary>
@@ -356,7 +356,7 @@ namespace TM
       public StateData StateData
       {
          get;
-         private set;
+         protected set;
       }
 
       #endregion
@@ -670,30 +670,51 @@ namespace TM
 
             switch ((EPacketType) Header.type) {
                case EPacketType.Info:
-                  if (InfoReceived != null) InfoReceived.Invoke();
+                  if (InfoReceived != null) {
+                     InfoReceived.Invoke();
+                  }
                   break;
                case EPacketType.Error:
-                  if (ErrorReceived != null) ErrorReceived.Invoke();
+                  if (ErrorReceived != null) {
+                     ErrorReceived.Invoke();
+                  }
                   break;
                case EPacketType.Data:
+               {
                   var cmd = (EDataCommand) Header.value;
 
                   if (cmd == EDataCommand.STATE) {
                      StateData = ReadData.StateData();
-                     if (ServerStateChanged != null) ServerStateChanged.Invoke(StateData.state);
-                     break;
+
+                     if (ServerStateChanged != null) {
+                        ServerStateChanged.Invoke(StateData);
+                     }
                   }
 
                   if (DataBlockReceived != null) {
                      DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
                   }
+
                   break;
+               }
             }
 
             Thread.Sleep(200);
          }
 
          Disconnect();
+      }
+
+      public ulong SpotsPassed
+      {
+         get;
+         private set;
+      }
+
+      public uint SpotsTotal
+      {
+         get;
+         private set;
       }
 
       #endregion
