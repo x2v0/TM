@@ -36,8 +36,6 @@ namespace TMPlan
          This = this;
          Plan = new List<Spot>();
          PlanResults = new List<SpotResult>();
-         ServerStateChanged += OnServerStateChanged;
-         DataBlockReceived += ProcessPlanResults;
       }
 
       #endregion
@@ -82,6 +80,17 @@ namespace TMPlan
       #endregion
 
       #region Public properties
+
+      /// <summary>
+      ///    Gets the processing state of the server.
+      /// </summary>
+      /// <value>The state of processing on the server.</value>
+      public EPlanState EPlanState 
+      {
+         get;
+         protected set;
+      }
+
 
       /// <summary>
       ///    Loaded plan data
@@ -251,7 +260,7 @@ namespace TMPlan
          while (ProcessingIsOn) {
             ok = AskServerState();
 
-            if (!ok || (ProcessState == EPlanState.NOTREADY)) {
+            if (!ok || (PlanState == EPlanState.NOTREADY)) {
                if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
                   Console.WriteLine(Resources.Server_not_ready);
                }
@@ -259,7 +268,7 @@ namespace TMPlan
                //return null;
             }
 
-            if ((ProcessState == EPlanState.FINISHED) && (PlanResults.Count > 1)) {
+            if ((PlanState == EPlanState.FINISHED) && (PlanResults.Count > 1)) {
                ProcessingIsOn = false;
                if (PlanFinished != null) PlanFinished.Invoke();
             }
@@ -397,12 +406,31 @@ namespace TMPlan
 
          return ret;
       }
+
+      public override void ProcessState(StateData data) 
+      {
+         PlanState = (EPlanState)data.state;
+         SpotsPassed = data.spots_passed;
+         SpotsTotal = data.spots_count;
+
+         if (PlanState == EPlanState.INPROCESS) { // plan processing is ON
+            if (Globals.Debug) { // ActionPreference.Continue == DEBUG is ON
+               Console.WriteLine("Spot processed/total = " + SpotsPassed + "/" + SpotsTotal);
+            }
+         }
+
+         if (PlanState == EPlanState.FINISHED && PlanFinished != null) {
+            PlanFinished.Invoke();
+         }
+
+         base.ProcessState(data);
+      }
+
       public override void Reset()
       {
          ProcessingIsOn = false;
          ClearPlan();
          base.Reset();
-         //ServerStateChanged -= OnServerStateChanged;
       }
 
       /// <summary>
@@ -591,39 +619,16 @@ namespace TMPlan
       #region Private methods
 
       /// <summary>
-      ///    Event called when [server state changed].
-      /// </summary>
-      /// <param name="state">The server state.</param>
-      private void OnServerStateChanged(StateData data)
-      {
-         PlanState = (EPlanState)data.state;
-         SpotsPassed = data.spots_passed;
-         SpotsTotal = data.spots_count;
-
-         if (PlanState == EPlanState.INPROCESS) { // plan processing is ON
-            if (Globals.Debug) { // ActionPreference.Continue == DEBUG is ON
-               Console.WriteLine("Spot processed/total = " + SpotsPassed + "/" + SpotsTotal);
-            }
-
-            return;
-         }
-
-         if (PlanState == EPlanState.FINISHED && PlanFinished != null) {
-            PlanFinished.Invoke();
-         }
-      }
-
-      /// <summary>
       ///    Converts BufferChunk to SpotResults
       /// </summary>
       /// <param name="data">The data.</param>
       /// <param name="bytesRead">The bytes read.</param>
-      /// <returns>List&lt;SpotResult&gt;.</returns>
-      private void ProcessPlanResults(BufferChunk data, int bytesRead)
+      public override void ProcessData(BufferChunk data, int bytesRead)
       {
          if (data == null || PlanState != EPlanState.INPROCESS) {
             return;
          }
+
          var len = bytesRead;
          var dt = (int) SpotResult.Length;
 
@@ -644,6 +649,8 @@ namespace TMPlan
          if (PlanResultsProcessed != null) {
             PlanResultsProcessed.Invoke(PlanResults);
          }
+
+         base.ProcessData(data, bytesRead);
       }
 
       #endregion

@@ -328,16 +328,6 @@ namespace TM
       }
 
       /// <summary>
-      ///    Gets the processing state of the server.
-      /// </summary>
-      /// <value>The state of processing on the server.</value>
-      public EPlanState ProcessState
-      {
-         get;
-         protected set;
-      }
-
-      /// <summary>
       ///    Gets the remote end point.
       /// </summary>
       /// <value>The remote end point.</value>
@@ -685,16 +675,10 @@ namespace TM
 
                   if (cmd == EDataCommand.STATE) {
                      StateData = ReadData.StateData();
-
-                     if (ServerStateChanged != null) {
-                        ServerStateChanged.Invoke(StateData);
-                     }
+                     ProcessState(StateData);
                   }
 
-                  if (DataBlockReceived != null) {
-                     DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
-                  }
-
+                  ProcessData(ReadData, numberOfBytesRead);
                   break;
                }
             }
@@ -703,6 +687,20 @@ namespace TM
          }
 
          Disconnect();
+      }
+
+      public virtual void ProcessState(StateData stateData)
+      {
+         if (ServerStateChanged != null) {
+            ServerStateChanged.Invoke(StateData);
+         }
+      }
+
+      public virtual void ProcessData(BufferChunk readData, int numberOfBytesRead)
+      {
+         if (DataBlockReceived != null) {
+            DataBlockReceived.Invoke(ReadData, numberOfBytesRead);
+         }
       }
 
       public ulong SpotsPassed
