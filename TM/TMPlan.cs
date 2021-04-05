@@ -189,7 +189,7 @@ namespace TMPlan
       ///    Clears the plan data.
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool Clear()
+      public virtual bool Clear()
       {
          var ret = SendCommand(EPlanCommand.CLEARPLAN);
 
@@ -205,7 +205,7 @@ namespace TMPlan
       /// <summary>
       ///    Dumps the plan results.
       /// </summary>
-      public void Dump()
+      public virtual void Dump()
       {
          Dump(PlanResults);
       }
@@ -224,7 +224,7 @@ namespace TMPlan
       /// <param name="ip">The server IP.</param>
       /// <param name="port">The port.</param>
       /// <returns>Dictionary&lt;System.Int32, SpotFull&gt;.</returns>
-      public List<SpotFull> Execute(string file, string ip = null, int port = 0)
+      public virtual List<SpotFull> Execute(string file, string ip = null, int port = 0)
       {
          ClearPlan();
          ProcessingIsOn = false;
@@ -307,7 +307,7 @@ namespace TMPlan
       /// <exception cref="ReadPlanException">
       /// </exception>
       /// <exception cref="FileNotFoundException"></exception>
-      public List<Spot> Load(string file)
+      public virtual List<Spot> Load(string file)
       {
          if (string.IsNullOrEmpty(file) ||
              !File.Exists(file)) {
@@ -390,7 +390,7 @@ namespace TMPlan
       ///    Pauses the plan processing on server.
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool Pause()
+      public virtual bool Pause()
       {
          var ret = SendCommand(EPlanCommand.PAUSEPLAN);
          if (ret && (PlanPaused != null)) {
@@ -439,18 +439,35 @@ namespace TMPlan
       public override void ProcessState(StateData data)
       {
          PlanState = (EPlanState) data.state;
+         var changed = SpotsPassed != data.spots_passed;
          SpotsPassed = data.spots_passed;
          SpotsTotal = data.spots_count;
 
-         if (PlanState == EPlanState.INPROCESS) { // plan processing is ON
-            if (Globals.Debug) { // ActionPreference.Continue == DEBUG is ON
-               Console.WriteLine("Spot processed/total = " + SpotsPassed + "/" + SpotsTotal);
-            }
-         }
+         switch (PlanState) {
+            case EPlanState.INPROCESS:
+               if (changed) {
+                  //PlanInProcess.Invoke(SpotsPassed, SpotsTotal);
+               }
 
-         if ((PlanState == EPlanState.FINISHED) &&
-             (PlanFinished != null)) {
-            PlanFinished.Invoke();
+               break;
+            case EPlanState.FINISHED:
+               if (PlanFinished != null) {
+                  PlanFinished.Invoke();
+               }
+
+               break;
+            case EPlanState.PAUSED:
+               if (PlanPaused != null) {
+                  PlanPaused.Invoke();
+               }
+
+               break;
+            case EPlanState.NOTREADY:
+               break;
+            case EPlanState.READY:
+               break;
+            case EPlanState.UNKNOWN:
+               break;
          }
 
          base.ProcessState(data);
@@ -471,9 +488,10 @@ namespace TMPlan
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       /// <exception cref="SendPlanException">
       /// </exception>
-      public bool Send(List<Spot> spots, uint nblocks = 10)
+      public virtual bool Send(List<Spot> spots, uint nblocks = 10)
       {
-         var ok = false;
+         // clear plan data on the server
+         var ok = SendCommand(EPlanCommand.CLEARPLAN);
 
          BufferChunk.SetNetworking();
          var plan = new BufferChunk();
@@ -484,7 +502,8 @@ namespace TMPlan
 
          var len = Spot.Length * nblocks;
          if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + (plan.Length / 1000.0) + " Kb");
+            Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + 
+                              (plan.Length / 1000.0) + " Kb");
          }
 
          try {
@@ -523,15 +542,15 @@ namespace TMPlan
       /// <summary>
       ///    Sends the loaded plan to server.
       /// </summary>
-      /// <param name="plan">The plan.</param>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool Send(List<Spot> plan = null)
+      public virtual bool Send()
       {
-         if (plan == null) {
-            plan = Plan;
+         if ((Plan == null) ||
+             (Plan.Count == 0)) {
+            return false;
          }
 
-         return Send(plan);
+         return Send(Plan);
       }
 
       /// <summary>
@@ -539,7 +558,7 @@ namespace TMPlan
       /// </summary>
       /// <param name="arr">The array of PSObjects.</param>
       /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
-      public bool Send(object[] arr)
+      public virtual bool Send(object[] arr)
       {
          var plan = new List<Spot>();
 
@@ -578,7 +597,7 @@ namespace TMPlan
       /// <param name="server_type">Type of the server.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <exception cref="TM.SendCommandException"></exception>
-      public bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)
+      public virtual bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)
       {
          bool ret;
 
@@ -616,7 +635,7 @@ namespace TMPlan
       ///    Starts the plan processing on remote server.
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool Start()
+      public virtual bool Start()
       {
          var ret = SendCommand(EPlanCommand.STARTPLAN);
          if (ret) {
@@ -633,7 +652,7 @@ namespace TMPlan
       ///    Stops the plan processing on remote server.
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
-      public bool Stop()
+      public virtual bool Stop()
       {
          var ret = SendCommand(EPlanCommand.STOPPLAN);
          if (ret && (PlanStopped != null)) {
