@@ -9,13 +9,13 @@ namespace TMSrv
 {
    
    /// <summary>
-   ///    состояние сервера MainCServer - структура ServerData в DataServer
+   ///    состояние сервера 
    /// </summary>
    [StructLayout(LayoutKind.Sequential)]
    public struct ServerState
    {
       /// <summary>
-      ///    The length of structure
+      ///    The length of ServerState structure
       /// </summary>
       public static uint Length = (uint) Marshal.SizeOf(typeof(ServerState));
 
@@ -147,12 +147,12 @@ namespace TMSrv
       #region  Fields
 
       /// <summary>
-      ///    The length of State2Pass structure
+      ///    The length of StateData structure
       /// </summary>
       public static uint Length = (uint) Marshal.SizeOf(typeof(StateData));
 
       /// <summary>
-      ///    текущее состояние сервера из списка состояний - EProccessState
+      ///    текущее состояние сервера из списка состояний - EProcessState
       /// </summary>
       [Description("текущее состояние сервера из списка состояний - EProccessState.READY")]
       public int state;

@@ -64,7 +64,7 @@
         ]
       }
     ],
-    "dest": "../docs",
+    "dest": "../../x2v0.github.io/TM/docs",
     "globalMetadata": {
       "_enableSearch": "true",
     },
