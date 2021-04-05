@@ -182,6 +182,7 @@ namespace TMPlan
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public bool AskServerState()
       {
+         ReadData = null;
          return SendCommand(EPlanCommand.GETSTATE);
       }
 

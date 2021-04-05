@@ -234,32 +234,32 @@ namespace TM
          get
          {
             try {
-               if ((Sender != null) &&
-                   (Sender.Client != null) &&
-                   Sender.Client.Connected) {
-                  /* pear to Sender documentation on Poll:
-                   * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
-                   * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
-                   * -or- true if data is available for reading; 
-                   * -or- true if the connection has been closed, reset, or terminated; 
-                   * otherwise, returns false
-                   */
+               if ((Sender == null) ||
+                   (Sender.Client == null) ||
+                   !Sender.Client.Connected) {
+                  return false;
+               }
 
-                  // Detect if client disconnected
-                  if (Sender.Client.Poll(0, SelectMode.SelectRead)) {
-                     var buff = new byte[1];
-                     if (Sender.Client.Receive(buff, SocketFlags.Peek) == 0) {
-                        // Client disconnected
-                        return false;
-                     }
+               /* pear to Sender documentation on Poll:
+                * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
+                * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
+                * -or- true if data is available for reading; 
+                * -or- true if the connection has been closed, reset, or terminated; 
+                * otherwise, returns false
+                */
 
-                     return true;
+               // Detect if client disconnected
+               if (Sender.Client.Poll(0, SelectMode.SelectRead)) {
+                  var buff = new byte[1];
+                  if (Sender.Client.Receive(buff, SocketFlags.Peek) == 0) {
+                     // Client disconnected
+                     return false;
                   }
 
                   return true;
                }
 
-               return false;
+               return true;
             } catch {
                return false;
             }
@@ -410,13 +410,23 @@ namespace TM
       /// <returns><c>true</c> if disconnect is OK, <c>false</c> otherwise.</returns>
       public virtual bool Disconnect()
       {
-         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
-         }
 
-         Reset();
+         if (Sender != null) {
+            Sender.Close();
+         }
+         Sender = null;
+
+         if (fNetworkStream != null) {
+            fNetworkStream.Close();
+         }
+         fNetworkStream = null;
+
          if (ServerDisconnected != null) {
             ServerDisconnected.Invoke();
+         }
+
+         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
          }
 
          return true;
@@ -447,21 +457,8 @@ namespace TM
       /// </summary>
       public virtual void Reset()
       {
-         ProcessingIsOn = false;
-
+         Disconnect();
          fListenThread = null;
-
-         if ((Sender != null) &&
-             Sender.Connected) {
-            fNetworkStream.Close();
-            fNetworkStream = null;
-         }
-
-         if (Sender != null) {
-            Sender.Close();
-         }
-
-         Sender = null;
       }
 
       /// <summary>
