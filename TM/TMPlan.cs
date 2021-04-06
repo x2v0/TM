@@ -238,7 +238,7 @@ namespace TMPlan
       {
          get 
          {
-            return PlanState == EPlanState.FINISHED;
+            return IsConnected && PlanState == EPlanState.FINISHED;
          }
       }
 
@@ -249,7 +249,7 @@ namespace TMPlan
       {
          get 
          {
-            return PlanState == EPlanState.INPROCESS;
+            return IsConnected && PlanState == EPlanState.INPROCESS;
          }
       }
 
@@ -500,7 +500,7 @@ namespace TMPlan
             case EPlanState.INPROCESS:
                Header = ReadData.NextPacketHeader();
                var cmd = (EDataCommand) Header.value;
-               ReadData.Skip(1);
+               ReadData.Skip(1); // ??? not clear why, but it works
                if (changed) {
                   //PlanInProcess.Invoke(SpotsPassed, SpotsTotal);
                }
@@ -529,6 +529,9 @@ namespace TMPlan
          base.ProcessState(data);
       }
 
+      /// <summary>
+      /// 
+      /// </summary>
       public override void Reset()
       {
          ClearPlan();
