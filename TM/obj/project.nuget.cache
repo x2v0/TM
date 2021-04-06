@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "P5IDE6yJLURwcxIRFHW+v4z68AY5H+1Qj87Da7qmXdSmnRPL7HedFKi/EV3A+5wgnDqXF+aUwWM+9gWZvdaNew==",
+  "success": true,
+  "projectFilePath": "D:\\xtovo\\wrk\\TM\\TM\\TM.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\xtovo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\xtovo\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

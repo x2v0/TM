@@ -1,0 +1,13 @@
+D:\xtovo\wrk\TM\Redist\net48\TM.dll
+D:\xtovo\wrk\TM\Redist\net48\ru\TM.resources.dll
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.csprojAssemblyReference.cache
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.Properties.Resources.resources
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.Properties.Resources.ru.resources
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.csproj.GenerateResource.cache
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.AssemblyInfoInputs.cache
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.AssemblyInfo.cs
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.csproj.CoreCompileInputs.cache
+D:\xtovo\wrk\TM\TM\obj\Release\net48\ru\TM.resources.cs
+D:\xtovo\wrk\TM\TM\obj\Release\net48\ru\TM.resources.dll
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.csproj.CopyComplete
+D:\xtovo\wrk\TM\TM\obj\Release\net48\TM.dll

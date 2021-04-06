@@ -1,0 +1,15 @@
+D:\xtovo\wrk\TM\Redist\netstandard2.0\TM.deps.json
+D:\xtovo\wrk\TM\Redist\netstandard2.0\TM.dll
+D:\xtovo\wrk\TM\Redist\netstandard2.0\TM.pdb
+D:\xtovo\wrk\TM\Redist\netstandard2.0\ru\TM.resources.dll
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.csprojAssemblyReference.cache
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.Properties.Resources.resources
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.Properties.Resources.ru.resources
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.csproj.GenerateResource.cache
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.AssemblyInfoInputs.cache
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.AssemblyInfo.cs
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.csproj.CoreCompileInputs.cache
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\ru\TM.resources.dll
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.csproj.CopyComplete
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.dll
+D:\xtovo\wrk\TM\TM\obj\Debug\netstandard2.0\TM.pdb
