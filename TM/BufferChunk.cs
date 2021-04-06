@@ -43,13 +43,7 @@ namespace TM
    /// </summary>
    /// <seealso cref="System.IDisposable" />
    /// <seealso cref="System.ICloneable" />
-   /// <summary>
-   ///    Class BufferChunk.
-   ///    Implements the <see cref="System.IDisposable" />
-   ///    Implements the <see cref="System.ICloneable" />
-   /// </summary>
-   /// <seealso cref="System.IDisposable" />
-   /// <seealso cref="System.ICloneable" />
+
    [ComVisible(false)]
    public class BufferChunk : IDisposable, ICloneable
    {
@@ -58,14 +52,8 @@ namespace TM
       /// <summary>
       ///    For doing conversions with strings
       /// </summary>
-      /// <summary>
-      ///    The UTF8
-      /// </summary>
       private static readonly UTF8Encoding utf8 = new UTF8Encoding();
 
-      /// <summary>
-      ///    The little endian
-      /// </summary>
       /// <summary>
       ///    The little endian
       /// </summary>
@@ -180,8 +168,8 @@ namespace TM
       /// <example>
       ///    public int SendTo(BufferChunk bufferChunk, EndPoint endPoint)
       ///    {
-      ///    return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
-      ///    SocketFlags.None, endPoint);
+      ///      return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
+      ///      SocketFlags.None, endPoint);
       ///    }
       /// </example>
       public byte[] Buffer
@@ -190,6 +178,7 @@ namespace TM
          {
             return buffer;
          }
+
          set
          {
             buffer = value;
@@ -204,8 +193,8 @@ namespace TM
       /// <example>
       ///    public int SendTo(BufferChunk bufferChunk, EndPoint endPoint)
       ///    {
-      ///    return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
-      ///    SocketFlags.None, endPoint);
+      ///      return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
+      ///      SocketFlags.None, endPoint);
       ///    }
       /// </example>
       public int Index
@@ -233,8 +222,8 @@ namespace TM
       /// <example>
       ///    public int SendTo(BufferChunk bufferChunk, EndPoint endPoint)
       ///    {
-      ///    return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
-      ///    SocketFlags.None, endPoint);
+      ///      return SendTo(bufferChunk.Buffer, bufferChunk.Index, bufferChunk.Length,
+      ///      SocketFlags.None, endPoint);
       ///    }
       /// </example>
       public int Length
@@ -275,8 +264,8 @@ namespace TM
       #region Public indexers
 
       /// <summary>
-      ///    Indexer used to allow us to treat a BufferChunk like a byte[].  Useful when making in place modifications or reads
-      ///    from a BufferChunk.
+      ///    Indexer used to allow us to treat a BufferChunk like a byte[].
+      ///    Useful when making in place modifications or reads from a BufferChunk.
       /// </summary>
       /// <param name="index">The index.</param>
       /// <returns>System.Byte.</returns>
@@ -399,7 +388,8 @@ namespace TM
 
          ValidateSufficientSpace(source.length, destination.AvailableBuffer);
 
-         Array.Copy(source.buffer, source.index, destination.buffer, destination.index + destination.length, source.length);
+         Array.Copy(source.buffer, source.index, destination.buffer, 
+                    destination.index + destination.length, source.length);
          destination.length += source.length;
 
          return destination;
@@ -438,7 +428,8 @@ namespace TM
             destination.ExpandBuffer(source.Length); //!!!
          }
 
-         Array.Copy(source, 0, destination.buffer, destination.index + destination.length, source.Length);
+         Array.Copy(source, 0, destination.buffer, 
+                    destination.index + destination.length, source.Length);
          destination.length += source.Length;
 
          return destination;
@@ -736,7 +727,8 @@ namespace TM
 
          ValidateSufficientSpace(length, destination.length - index);
 
-         Array.Copy(buffer, this.index, destination.buffer, destination.index + index, length);
+         Array.Copy(buffer, this.index, destination.buffer, 
+                    destination.index + index, length);
       }
 
       /// <summary>
