@@ -20,16 +20,25 @@ namespace TMPlan
    /// <param name="results">The results.</param>
    public delegate void PlanResultsHandler(List<SpotResult> results);
 
+   /// <summary>
+   /// 
+   /// </summary>
    public class PlanClient : Client
    {
       #region Static fields
 
+      /// <summary>
+      /// 
+      /// </summary>
       public static PlanClient This;
 
       #endregion
 
       #region Constructors and destructors
 
+      /// <summary>
+      /// 
+      /// </summary>
       public PlanClient()
       {
          This = this;
@@ -42,7 +51,7 @@ namespace TMPlan
       #region Public events
 
       /// <summary>
-      ///    Occurs when [plan cleraed].
+      ///    Occurs when [plan cleared].
       /// </summary>
       public event ClientHandler PlanCleared;
 
@@ -84,7 +93,7 @@ namespace TMPlan
       ///    Gets the processing state of the server.
       /// </summary>
       /// <value>The state of processing on the server.</value>
-      public EPlanState EPlanState
+      public EPlanState PlanState
       {
          get;
          protected set;
@@ -101,19 +110,13 @@ namespace TMPlan
       }
 
       /// <summary>
-      ///    Processed plan results
+      ///    Results of plan processing
       /// </summary>
       /// <value>The plan results.</value>
       public List<SpotResult> PlanResults
       {
          get;
          set;
-      }
-
-      public EPlanState PlanState
-      {
-         get;
-         private set;
       }
 
       /// <summary>
@@ -182,7 +185,6 @@ namespace TMPlan
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public bool AskServerState()
       {
-         ReadData = null;
          return SendCommand(EPlanCommand.GETSTATE);
       }
 
@@ -194,8 +196,6 @@ namespace TMPlan
       {
          var ret = SendCommand(EPlanCommand.CLEARPLAN);
 
-         ClearPlan();
-
          if (ret && (PlanCleared != null)) {
             PlanCleared.Invoke();
          }
@@ -204,11 +204,53 @@ namespace TMPlan
       }
 
       /// <summary>
+      /// Clear plan loaded locally
+      /// </summary>
+      public void ClearPlan() 
+      {
+         Plan.Clear();
+         PlanResults.Clear();
+      }
+
+      /// <summary>
       ///    Dumps the plan results.
       /// </summary>
       public virtual void Dump()
       {
          Dump(PlanResults);
+      }
+
+      /// <summary>
+      ///  True - server is ready
+      /// </summary>
+      public bool IsReady 
+      {
+         get
+         {
+            return IsConnected && PlanState == EPlanState.READY;
+         }
+      }
+
+      /// <summary>
+      ///  True - plan processing is finished
+      /// </summary>
+      public bool IsFinished 
+      {
+         get 
+         {
+            return PlanState == EPlanState.FINISHED;
+         }
+      }
+
+      /// <summary>
+      ///  True - plan processing is ON
+      /// </summary>
+      public bool IsProcessing 
+      {
+         get 
+         {
+            return PlanState == EPlanState.INPROCESS;
+         }
       }
 
       /// <summary>
@@ -228,7 +270,6 @@ namespace TMPlan
       public virtual List<SpotFull> Execute(string file, string ip = null, int port = 0)
       {
          ClearPlan();
-         ProcessingIsOn = false;
 
          var ok = Connect(ip, port);
 
@@ -245,7 +286,7 @@ namespace TMPlan
          ok = Send();
 
          if (!ok) {
-            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) {
                Console.WriteLine(Resources.Failed_to_send + " " + Resources.plan);
             }
 
@@ -254,13 +295,11 @@ namespace TMPlan
 
          ok = Start();
 
-
          while (ProcessingIsOn) {
             ok = AskServerState();
 
-            if (!ok ||
-                (PlanState == EPlanState.NOTREADY)) {
-               if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            if (!ok || (PlanState == EPlanState.NOTREADY)) {
+               if (Globals.Debug) {
                   Console.WriteLine(Resources.Server_not_ready);
                }
 
@@ -269,7 +308,6 @@ namespace TMPlan
 
             if ((PlanState == EPlanState.FINISHED) &&
                 (PlanResults.Count > 1)) {
-               ProcessingIsOn = false;
                if (PlanFinished != null) {
                   PlanFinished.Invoke();
                }
@@ -312,7 +350,7 @@ namespace TMPlan
       {
          if (string.IsNullOrEmpty(file) ||
              !File.Exists(file)) {
-            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) {
                Console.WriteLine(Resources.Loading_PlanData + " : " + Resources.file_not_found + " - " + file);
             }
 
@@ -325,7 +363,7 @@ namespace TMPlan
          try {
             var r = new Regex(@"\s+");
 
-            if (Globals.Debug) { // ActionPreference.Continue
+            if (Globals.Debug) { 
                Console.WriteLine(Resources.Loading_PlanData + ", " + Resources.file + " - " + file);
             }
 
@@ -359,7 +397,9 @@ namespace TMPlan
                         Plan.Add(spot);
                      } catch (Exception ex) {
                         if (Globals.Debug) { // ActionPreference.Continue
-                           Console.WriteLine(Resources.Failed_to_load + " PlanData (" + Resources.wrong_format_data + "), " + Resources.file + " - " + file + "\nentries = " + cnt + " " +
+                           Console.WriteLine(Resources.Failed_to_load + " PlanData (" +
+                                             Resources.wrong_format_data + "), " + Resources.file + " - " + 
+                                             file + "\nentries = " + cnt + " " +
                                              Resources.Error + ": " + ex.Message);
                         }
 
@@ -368,8 +408,9 @@ namespace TMPlan
                   }
                }
 
-               if (Globals.Debug) { // ActionPreference.Continue
-                  Console.WriteLine("PlanData" + " " + Resources.loaded + ": entries = " + cnt + ", size = " + (length / 1000.0) + " Kb");
+               if (Globals.Debug) {
+                  Console.WriteLine("PlanData" + " " + Resources.loaded + ": entries = " + 
+                                    cnt + ", size = " + (length / 1000.0) + " Kb");
                }
             }
 
@@ -379,11 +420,21 @@ namespace TMPlan
 
             return Plan;
          } catch (Exception ex) {
-            if (Globals.Debug) { // ActionPreference.Continue  = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + ", " + Resources.file + " - " + file + "\nentries = " + cnt + " " + Resources.Error + ": " + ex.Message);
+            if (Globals.Debug) { 
+               Console.WriteLine(Resources.Failed_to_load + " " + "PlanData" + ", " + 
+                                 Resources.file + " - " + file + "\nentries = " + cnt + " " + 
+                                 Resources.Error + ": " + ex.Message);
             }
 
             throw new ReadPlanException(file);
+         }
+      }
+
+      public bool IsPlanLoaded
+      {
+         get
+         {
+            return Plan != null && Plan.Count > 0;
          }
       }
 
@@ -394,6 +445,7 @@ namespace TMPlan
       public virtual bool Pause()
       {
          var ret = SendCommand(EPlanCommand.PAUSEPLAN);
+
          if (ret && (PlanPaused != null)) {
             PlanPaused.Invoke();
          }
@@ -446,6 +498,9 @@ namespace TMPlan
 
          switch (PlanState) {
             case EPlanState.INPROCESS:
+               Header = ReadData.NextPacketHeader();
+               var cmd = (EDataCommand) Header.value;
+               ReadData.Skip(1);
                if (changed) {
                   //PlanInProcess.Invoke(SpotsPassed, SpotsTotal);
                }
@@ -476,7 +531,6 @@ namespace TMPlan
 
       public override void Reset()
       {
-         ProcessingIsOn = false;
          ClearPlan();
          base.Reset();
       }
@@ -491,8 +545,13 @@ namespace TMPlan
       /// </exception>
       public virtual bool Send(List<Spot> spots, uint nblocks = 10)
       {
-         // clear plan data on the server
-         var ok = SendCommand(EPlanCommand.CLEARPLAN);
+         if (!IsConnected) {
+            if (Globals.Debug) {
+               Console.WriteLine(Resources.Server_is_not_connected);
+            }
+
+            return false;
+         }
 
          BufferChunk.SetNetworking();
          var plan = new BufferChunk();
@@ -502,7 +561,7 @@ namespace TMPlan
          }
 
          var len = Spot.Length * nblocks;
-         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+         if (Globals.Debug) {
             Console.WriteLine(Resources.Sending_plan_to_server + ": length = " + 
                               (plan.Length / 1000.0) + " Kb");
          }
@@ -532,8 +591,8 @@ namespace TMPlan
             }
          }
 
-         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Plan_sent_to_server + ".");
+         if (Globals.Debug) {
+            Console.WriteLine(Resources.Plan_sent_to_server);
          }
 
          SendCommand(EPlanCommand.GETSTATE);
@@ -546,11 +605,6 @@ namespace TMPlan
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public virtual bool Send()
       {
-         if ((Plan == null) ||
-             (Plan.Count == 0)) {
-            return false;
-         }
-
          return Send(Plan);
       }
 
@@ -600,11 +654,14 @@ namespace TMPlan
       /// <exception cref="TM.SendCommandException"></exception>
       public virtual bool SendCommand(EPlanCommand cmd, EServerType server_type = EServerType.MCS)
       {
-         bool ret;
-
-         if (Sender == null) {
+         if (!IsConnected) {
+            if (Globals.Debug) {
+               Console.WriteLine(Resources.Server_is_not_connected);
+            }
             return false;
          }
+
+         bool ret;
 
          if (cmd == EPlanCommand.CLEARPLAN) {
             ClearPlan();
@@ -612,23 +669,24 @@ namespace TMPlan
 
          try {
             var packet = new Packet(server_type, EPacketType.Command, (byte) cmd);
-            if (cmd != EPlanCommand.GETSTATE) {
-               if (Globals.Debug) { // ActionPreference.Continue
-                  Console.WriteLine(Resources.Sending_command_to_server + ": " + cmd.Description());
-               }
+            if (Globals.Debug) { 
+               Console.WriteLine(Resources.Sending_command_to_server + ": " + cmd.Description());
             }
 
             ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendCommand : " + cmd + " - " + ex.Message;
 
-            if (Globals.Debug) { // ActionPreference.Continue
+            if (Globals.Debug) {
                Console.WriteLine(msg);
             }
 
             throw new SendCommandException(msg);
          }
 
+         if (Globals.Debug && !ret) {
+            Console.WriteLine(Resources.Network_error);
+         }
          return ret;
       }
 
@@ -639,13 +697,13 @@ namespace TMPlan
       public virtual bool Start()
       {
          var ret = SendCommand(EPlanCommand.STARTPLAN);
+
          if (ret) {
             if (PlanStarted != null) {
                PlanStarted.Invoke();
             }
          }
 
-         ProcessingIsOn = ret;
          return ret;
       }
 
@@ -656,6 +714,7 @@ namespace TMPlan
       public virtual bool Stop()
       {
          var ret = SendCommand(EPlanCommand.STOPPLAN);
+
          if (ret && (PlanStopped != null)) {
             PlanStopped.Invoke();
          }
@@ -667,11 +726,7 @@ namespace TMPlan
 
       #region Private methods
 
-      private void ClearPlan()
-      {
-         Plan.Clear();
-         PlanResults.Clear();
-      }
+    
 
       #endregion
    }
@@ -969,8 +1024,10 @@ namespace TMPlan
       public override string ToString()
       {
          var sb = new StringBuilder();
-         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " + zangle + ", energy = " + energy + ", pcount = " + pcount);
-         sb.AppendLine(", done = " + done + ", result_xangle = " + result_xangle + ", result_zangle = " + result_zangle + ", result_pcount = " + result_pcount);
+         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " +
+                       zangle + ", energy = " + energy + ", pcount = " + pcount);
+         sb.AppendLine(", done = " + done + ", result_xangle = " + result_xangle +
+                       ", result_zangle = " + result_zangle + ", result_pcount = " + result_pcount);
 
          return sb.ToString();
       }
@@ -1039,7 +1096,8 @@ namespace TMPlan
       public override string ToString()
       {
          var sb = new StringBuilder();
-         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " + zangle + ", energy = " + energy + ", pcount = " + pcount);
+         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " + 
+                       zangle + ", energy = " + energy + ", pcount = " + pcount);
 
          return sb.ToString();
       }
@@ -1116,11 +1174,13 @@ namespace TMPlan
       public override string ToString()
       {
          var sb = new StringBuilder();
-         sb.AppendLine("id = " + id + ", result_xangle = " + result_xangle + ", result_zangle = " + result_zangle + ", result_pcount = " + result_pcount + ", done = " + done);
+         sb.AppendLine("id = " + id + ", result_xangle = " + result_xangle + 
+                       ", result_zangle = " + result_zangle + ", result_pcount = " + 
+                       result_pcount + ", done = " + done);
 
          return sb.ToString();
       }
-   } //20bytes
+   }
 
    /// <summary>
    ///    один "выстрел" для пересылки (направление+энергия+интенсивность)
@@ -1193,7 +1253,8 @@ namespace TMPlan
       public override string ToString()
       {
          var sb = new StringBuilder();
-         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " + zangle + ", energy = " + energy + ", pcount = " + pcount);
+         sb.AppendLine("id = " + id + ", xangle = " + xangle + ", zangle = " + 
+                       zangle + ", energy = " + energy + ", pcount = " + pcount);
          return sb.ToString();
       }
    }

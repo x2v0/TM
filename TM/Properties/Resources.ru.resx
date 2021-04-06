@@ -231,4 +231,8 @@
     <value>Для распечатки плана облучения нажмите любую клавишу</value>
     <comment>Для распечатки плана облучения нажмите любую клавишу</comment>
   </data>
+  <data name="Network_error" xml:space="preserve">
+     <value>Ошибка пересылки команды по сети</value>
+     <comment>Ошибка пересылки команды по сети</comment>
+  </data>
 </root>

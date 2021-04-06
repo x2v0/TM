@@ -199,7 +199,7 @@ namespace TM
       public PacketHeader Header
       {
          get;
-         private set;
+         protected set;
       }
 
       public string IP
@@ -241,8 +241,10 @@ namespace TM
                }
 
                /* pear to Sender documentation on Poll:
-                * When passing SelectMode.SelectRead as a parameter to the Poll method it will return 
-                * -either- true if Socket.Listen(Int32) has been called and a connection is pending;
+                * When passing SelectMode.SelectRead as a parameter to the
+                * Poll method it will return 
+                * -either- true if Socket.Listen(Int32) has been called
+                *          and a connection is pending;
                 * -or- true if data is available for reading; 
                 * -or- true if the connection has been closed, reset, or terminated; 
                 * otherwise, returns false
@@ -274,7 +276,8 @@ namespace TM
       {
          get
          {
-            return ((Sender != null) && Sender.Connected ? Sender.Client.LocalEndPoint : null) as IPEndPoint;
+            return ((Sender != null) && Sender.Connected ? 
+                       Sender.Client.LocalEndPoint : null) as IPEndPoint;
          }
       }
 
@@ -330,7 +333,8 @@ namespace TM
       {
          get
          {
-            return ((Sender != null) && Sender.Connected ? Sender.Client.RemoteEndPoint : null) as IPEndPoint;
+            return ((Sender != null) && Sender.Connected ? 
+                       Sender.Client.RemoteEndPoint : null) as IPEndPoint;
          }
       }
 
@@ -383,8 +387,9 @@ namespace TM
          var ok = CreateSender(IpAddress, Port);
 
          if (!ok) {
-            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-               Console.WriteLine(Resources.Failed_to_connect_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
+            if (Globals.Debug) {
+               Console.WriteLine(Resources.Failed_to_connect_to + " " + IpAddress + " , " + 
+                                 Resources.port_number + " = " + Port);
             }
 
             return false;
@@ -393,8 +398,9 @@ namespace TM
          fListenThread = new Thread(ListenForData);
          fListenThread.Start();
 
-         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
-            Console.WriteLine(Resources.Connected_to + " " + IpAddress + " , " + Resources.port_number + " = " + Port);
+         if (Globals.Debug) {
+            Console.WriteLine(Resources.Connected_to + " " + IpAddress + " , " + 
+                              Resources.port_number + " = " + Port);
          }
 
          if (ServerConnected != null) {
@@ -425,7 +431,7 @@ namespace TM
             ServerDisconnected.Invoke();
          }
 
-         if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+         if (Globals.Debug) {
             Console.WriteLine(Resources.Disconnected_from + " " + IpAddress + ":" + Port);
          }
 
@@ -480,7 +486,8 @@ namespace TM
 #if LOCAL_DEBUG
             Console.WriteLine("Sending data to server ... ");
 #endif
-            var packet = new Packet(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, 0, data);
+            var packet = new Packet(server_type, EPacketType.Data, 
+                                    (byte) EDataCommand.SHOTSBLOCK, 0, data);
             ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
@@ -529,12 +536,13 @@ namespace TM
 #if LOCAL_DEBUG
             Console.WriteLine("Sending data to server: length = " + len);
 #endif
-            var packet = new Packet(server_type, EPacketType.Data, (byte) EDataCommand.SHOTSBLOCK, len, data);
+            var packet = new Packet(server_type, EPacketType.Data, 
+                                    (byte) EDataCommand.SHOTSBLOCK, len, data);
             ret = Send(packet);
          } catch (Exception ex) {
             var msg = "SendData : " + ex.Message;
 
-            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) {
                Console.WriteLine(msg);
             }
 
@@ -595,7 +603,7 @@ namespace TM
          } catch (Exception ex) {
             var msg = "SendInfo : " + ex.Message;
 
-            if (Globals.Debug) { // ActionPreference.Continue = Debugging is ON
+            if (Globals.Debug) {
                Console.WriteLine(msg);
             }
 

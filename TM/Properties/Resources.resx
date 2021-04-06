@@ -171,9 +171,6 @@
   <data name="plan_data" xml:space="preserve">
      <value>plan data</value>
   </data>
-  <data name="Server_is_not_connected" xml:space="preserve">
-     <value>Server is not connected</value>
-  </data>
   <data name="Press" xml:space="preserve">
      <value>Press</value>
   </data>
@@ -203,5 +200,11 @@
   </data>
   <data name="Для_распечатки_плана_облучения_нажмите_любую_клавишу" xml:space="preserve">
      <value>Press any key to dump the plan data</value>
+  </data>
+  <data name="Network_error" xml:space="preserve">
+     <value>Network error</value>
+  </data>
+  <data name="Server_is_not_connected" xml:space="preserve">
+     <value>Server is not connected</value>
   </data>
 </root>

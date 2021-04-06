@@ -178,6 +178,15 @@ namespace TM.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network error.
+        /// </summary>
+        internal static string Network_error {
+            get {
+                return ResourceManager.GetString("Network_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to plan.
         /// </summary>
         internal static string plan {
