@@ -20,6 +20,26 @@ namespace TMPlan
    /// <param name="results">The results.</param>
    public delegate void PlanResultsHandler(List<SpotResult> results);
 
+   public static class global
+   {
+      /// <summary>
+      /// 
+      /// </summary>
+
+      public static PlanClient Client
+      {
+         get
+         {
+            return PlanClient.This?? new PlanClient();
+         }
+
+         set
+         {
+            PlanClient.This = value;
+         }
+      }
+   }
+
    /// <summary>
    /// 
    /// </summary>
@@ -85,10 +105,51 @@ namespace TMPlan
       /// </summary>
       public event ClientHandler PlanStopped;
 
+      /// <summary>
+      ///    Occurs when [plan is being processed].
+      /// </summary>
+      public event StateHandler PlanInProcess;
+
       #endregion
 
       #region Public properties
 
+      private bool fReady;
+
+      /// <summary>
+      ///  True - server is ready
+      /// </summary>
+      public bool IsReady
+      {
+         get
+         {
+            return IsConnected && PlanState == EPlanState.READY;
+         }
+      }
+
+      private bool fFinished;
+
+      /// <summary>
+      ///  True - plan processing is finished
+      /// </summary>
+      public bool IsFinished
+      {
+         get
+         {
+            return IsConnected && fFinished;
+         }
+      }
+
+      /// <summary>
+      ///  True - plan processing is ON
+      /// </summary>
+      public bool IsProcessing
+      {
+         get
+         {
+            return !IsFinished && PlanState == EPlanState.INPROCESS;
+         }
+      }
       /// <summary>
       ///    Gets the processing state of the server.
       /// </summary>
@@ -144,6 +205,15 @@ namespace TMPlan
       #region Public methods
 
       /// <summary>
+      ///  Override Disconnect from server
+      /// </summary>
+      /// <returns></returns>
+      public override bool Disconnect()
+      {
+         return base.Disconnect();
+      }
+
+      /// <summary>
       ///    Dumps the plan data.
       /// </summary>
       /// <param name="plan">The plan data.</param>
@@ -173,6 +243,11 @@ namespace TMPlan
          }
       }
 
+      /// <summary>
+      ///  Load plan from file
+      /// </summary>
+      /// <param name="file"></param>
+      /// <returns></returns>
       public static List<Spot> LoadPlan(string file)
       {
          var client = This ?? new PlanClient();
@@ -189,7 +264,7 @@ namespace TMPlan
       }
 
       /// <summary>
-      ///    Clears the plan data.
+      ///    Clears the plan data
       /// </summary>
       /// <returns><c>true</c> if OK, <c>false</c> otherwise.</returns>
       public virtual bool Clear()
@@ -218,39 +293,6 @@ namespace TMPlan
       public virtual void Dump()
       {
          Dump(PlanResults);
-      }
-
-      /// <summary>
-      ///  True - server is ready
-      /// </summary>
-      public bool IsReady 
-      {
-         get
-         {
-            return IsConnected && PlanState == EPlanState.READY;
-         }
-      }
-
-      /// <summary>
-      ///  True - plan processing is finished
-      /// </summary>
-      public bool IsFinished 
-      {
-         get 
-         {
-            return IsConnected && PlanState == EPlanState.FINISHED;
-         }
-      }
-
-      /// <summary>
-      ///  True - plan processing is ON
-      /// </summary>
-      public bool IsProcessing 
-      {
-         get 
-         {
-            return IsConnected && PlanState == EPlanState.INPROCESS;
-         }
       }
 
       /// <summary>
@@ -295,7 +337,7 @@ namespace TMPlan
 
          ok = Start();
 
-         while (ProcessingIsOn) {
+         while (true) {
             ok = AskServerState();
 
             if (!ok || (PlanState == EPlanState.NOTREADY)) {
@@ -306,11 +348,14 @@ namespace TMPlan
                //return null;
             }
 
-            if ((PlanState == EPlanState.FINISHED) &&
-                (PlanResults.Count > 1)) {
+            if (PlanState == EPlanState.FINISHED) {
+               fFinished = true;
+
                if (PlanFinished != null) {
                   PlanFinished.Invoke();
                }
+
+               break;
             }
 
             Thread.Sleep(300);
@@ -454,7 +499,7 @@ namespace TMPlan
       }
 
       /// <summary>
-      ///    Converts BufferChunk to SpotResults
+      ///   Override Client.ProcessData - to process incoming data from server
       /// </summary>
       /// <param name="data">The data.</param>
       /// <param name="bytesRead">The bytes read.</param>
@@ -489,6 +534,10 @@ namespace TMPlan
          base.ProcessData(data, bytesRead);
       }
 
+      /// <summary>
+      /// Override Client.ProcessState - to process server changed state
+      /// </summary>
+      /// <param name="data"></param>
       public override void ProcessState(StateData data)
       {
          PlanState = (EPlanState) data.state;
@@ -498,15 +547,17 @@ namespace TMPlan
 
          switch (PlanState) {
             case EPlanState.INPROCESS:
+               fFinished = false;
                Header = ReadData.NextPacketHeader();
                var cmd = (EDataCommand) Header.value;
                ReadData.Skip(1); // ??? not clear why, but it works
-               if (changed) {
-                  //PlanInProcess.Invoke(SpotsPassed, SpotsTotal);
+               if (changed && PlanInProcess != null) {
+                  PlanInProcess.Invoke(data);
                }
 
                break;
             case EPlanState.FINISHED:
+               fFinished = true;
                if (PlanFinished != null) {
                   PlanFinished.Invoke();
                }
@@ -519,10 +570,13 @@ namespace TMPlan
 
                break;
             case EPlanState.NOTREADY:
+               fReady = false;
                break;
             case EPlanState.READY:
+               fReady = true;
                break;
             case EPlanState.UNKNOWN:
+               fReady = false;
                break;
          }
 
@@ -702,6 +756,7 @@ namespace TMPlan
          var ret = SendCommand(EPlanCommand.STARTPLAN);
 
          if (ret) {
+            fFinished = false;
             if (PlanStarted != null) {
                PlanStarted.Invoke();
             }
@@ -724,12 +779,6 @@ namespace TMPlan
 
          return ret;
       }
-
-      #endregion
-
-      #region Private methods
-
-    
 
       #endregion
    }

@@ -5,16 +5,17 @@ using System.Net.Sockets;
 using System.Threading;
 using TM;
 using TM.Properties;
+using TMPlan;
 using TMSrv;
 
 #region  Delegates
 
 /// <summary>
-///    Delegate ClientDataHandler
+///    Delegate DataHandler
 /// </summary>
 /// <param name="data">The data.</param>
 /// <param name="bytesRead">The bytes read.</param>
-public delegate void ClientDataHandler(BufferChunk data = null, int bytesRead = 0);
+public delegate void DataHandler(BufferChunk data = null, int bytesRead = 0);
 
 /// <summary>
 ///    Delegate ClientHandler
@@ -22,17 +23,17 @@ public delegate void ClientDataHandler(BufferChunk data = null, int bytesRead = 
 public delegate void ClientHandler();
 
 /// <summary>
-///    Delegate ServerStateChangedHandler
+///    Delegate StateHandler
 /// </summary>
 /// <param name="state">The state.</param>
-public delegate void ServerStateChangedHandler(StateData state);
+public delegate void StateHandler(StateData state);
 
 #endregion
 
 namespace TM
 {
    /// <summary>
-   ///    Class Globals == Default values and global objects
+   ///    Class Global == Default values and global objects
    /// </summary>
    public static class Globals
    {
@@ -64,6 +65,7 @@ namespace TM
          {
             return DebugPreference == 2;
          }
+
          set
          {
             DebugPreference = value ? 2 : 0;
@@ -161,7 +163,7 @@ namespace TM
       /// <summary>
       ///    Occurs when [data block received].
       /// </summary>
-      public event ClientDataHandler DataBlockReceived;
+      public event DataHandler DataBlockReceived;
 
       /// <summary>
       ///    Occurs when [on error received].
@@ -186,7 +188,7 @@ namespace TM
       /// <summary>
       ///    Occurs when [server state changed].
       /// </summary>
-      public event ServerStateChangedHandler ServerStateChanged;
+      public event StateHandler ServerStateChanged;
 
       #endregion
 
@@ -316,16 +318,6 @@ namespace TM
       }
 
       /// <summary>
-      ///    Gets a value indicating whether [processing is on].
-      /// </summary>
-      /// <value><c>true</c> if [processing is on]; otherwise, <c>false</c>.</value>
-      public bool ProcessingIsOn
-      {
-         get;
-         set;
-      }
-
-      /// <summary>
       ///    Gets the remote end point.
       /// </summary>
       /// <value>The remote end point.</value>
@@ -376,7 +368,7 @@ namespace TM
          Port = port;
          IpAddress = ip;
 
-         if (ip == null) {
+         if (string.IsNullOrEmpty(ip)) {
             IpAddress = Globals.IP;
          }
 
@@ -411,7 +403,7 @@ namespace TM
       }
 
       /// <summary>
-      ///    Disconnects 
+      ///    Disconnects from server
       /// </summary>
       /// <returns><c>true</c> if disconnect is OK, <c>false</c> otherwise.</returns>
       public virtual bool Disconnect()

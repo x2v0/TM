@@ -8,6 +8,7 @@ using TMPlan;
 using TMSrv;
 using Timer = System.Timers.Timer;
 
+
 namespace TMCmdLet
 {
    /// <summary>
@@ -23,7 +24,7 @@ namespace TMCmdLet
       ///    Gets or sets the destination hostname or IP address.
       /// </summary>
       /// <value>The ip address.</value>
-      [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+      [Parameter(Position = 1, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
       [Alias("ComputerName", "IP", "Host")]
       public string IpAddress
       {
@@ -35,7 +36,7 @@ namespace TMCmdLet
       ///    Gets or sets whether to perform a TCP port
       /// </summary>
       /// <value>The port.</value>
-      [Parameter(Position = 2, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+      [Parameter(Position = 2, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
       [Alias("TcpPort")]
       public int Port
       {
@@ -66,8 +67,8 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
-         Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
+         var client = global.Client;
+         Globals.Debug = true;
 
          if (string.IsNullOrEmpty(IpAddress)) {
             IpAddress = client.IpAddress;
@@ -94,18 +95,34 @@ namespace TMCmdLet
    /// <summary>
    ///    Read plan data from file specified by -Path
    ///    Returns plan data as list of <see cref="TMPlan.Spot" /> objects.
-   ///    For example:
-   ///    $plan = Get-Plan -Path test_plan.txt
+   ///    <example>
+   ///       <code>
+   ///      $plan = Load-Plan test_plan.txt
+   ///         or
+   ///       // load plan and print out it to console 
+   ///       $plan = Load-Plan test_plan.txt -debug
+   ///       </code>
+   ///    </example>
    ///    <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
    ///    <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
    /// </summary>
    /// <seealso cref="System.Management.Automation.PSCmdlet" />
    /// <seealso cref="System.Management.Automation.Cmdlet" />
-   [Cmdlet(VerbsCommon.Get, "Plan")]
+   [Cmdlet("Load", "Plan")]
    [OutputType(typeof(Spot))]
-   public class GetPlanCmdlet : PSCmdlet
+   public class LoadPlanCmdlet : PSCmdlet
    {
       #region Public properties
+
+      /// <summary>
+      ///    dump plan data
+      /// </summary>
+      [Parameter(Position = 1)]
+      public string Dump
+      {
+         get;
+         set;
+      }
 
       /// <summary>
       ///    Gets or sets the plan file.
@@ -129,7 +146,8 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
+         // 
+         Globals.Debug |= !string.IsNullOrEmpty(Dump);
 
          var path = SessionState.Path.CurrentLocation.Path;
          path = System.IO.Path.Combine(path, Path);
@@ -155,27 +173,19 @@ namespace TMCmdLet
    ///    <para />
    ///    Use Control-C - to stop plan processing
    ///    <para />
-   ///    To resume processing - use Start-Plan -resume
+   ///    To resume plan processing - use Start-Plan -resume
+   ///    <example>
+   ///       <code>
+   ///        Execute-Plan "test_plan.txt" "localhost" 9996 | Format-Table
+   ///       </code>
+   ///    </example>
    /// </summary>
-   /// <seealso cref="System.Management.Automation.PSCmdlet" />
-   /// <seealso cref="System.Management.Automation.Cmdlet" />
-   [Cmdlet(VerbsLifecycle.Invoke, "Plan")]
-   [OutputType(typeof(SpotFull))]
-   public class InvokePlanCmdlet : PSCmdlet
+   /// <seealso cref="PlanCmdlet" />
+   [Cmdlet("Execute", "Plan")]
+   [OutputType(typeof(List<SpotFull>))]
+   public class ExecutePlanCmdlet : PlanCmdlet
    {
       #region Public properties
-
-      /// <summary>
-      ///    Gets or sets the destination hostname or IP address.
-      /// </summary>
-      /// <value>The IP address.</value>
-      [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-      [Alias("ComputerName", "IP", "Host")]
-      public string IpAddress
-      {
-         get;
-         set;
-      }
 
       /// <summary>
       ///    Gets or sets the plan file.
@@ -190,18 +200,6 @@ namespace TMCmdLet
          set;
       }
 
-      /// <summary>
-      ///    Gets or sets a TCP port
-      /// </summary>
-      /// <value>The port.</value>
-      [Parameter(Position = 2, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-      [Alias("TcpPort")]
-      public int Port
-      {
-         get;
-         set;
-      }
-
       #endregion
 
       #region Protected methods
@@ -211,7 +209,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
          Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
          var path = SessionState.Path.CurrentLocation.Path;
@@ -223,66 +221,18 @@ namespace TMCmdLet
          client.Reset();
 
          if (string.IsNullOrEmpty(IpAddress)) {
-            IpAddress = client.IpAddress;
+            IpAddress = Globals.IP;
          }
 
          if (Port <= 0) {
-            Port = client.Port;
+            Port = Globals.Port;
          }
-
-         var ok = client.Connect(IpAddress, Port);
-
-         if (!ok) {
-            return;
-         }
-
-         ok = client.Load(Path) != null;
-
-         if (!ok) {
-            return;
-         }
-
-         ok = client.Send();
-
-         if (!ok) {
-            WriteDebug(Resources.Failed_to_send_plan);
-            return;
-         }
-
-         ok = client.Start();
 
          client.ServerStateChanged += OnStateChanged;
-         client.ProcessingIsOn = true;
-
-         while (client.ProcessingIsOn) {
-            if (!ok || (client.PlanState == EPlanState.NOTREADY)) {
-               WriteDebug(Resources.Server_not_ready);
-            }
-
-            if ((client.PlanState == EPlanState.FINISHED) && (client.PlanResults.Count > 1)) {
-               client.ProcessingIsOn = false;
-            }
-
-            Thread.Sleep(1000);
-         }
+         var result = client.Execute(Path, IpAddress, Port);
 
          client.ServerStateChanged -= OnStateChanged;
-
-         foreach (var spot in client.PlanResults) {
-            var plan = client.Plan[spot.id];
-            var full = new SpotFull();
-            full.id = spot.id;
-            full.xangle = plan.xangle;
-            full.zangle = plan.zangle;
-            full.pcount = plan.pcount;
-            full.energy = plan.energy;
-            full.result_xangle = spot.result_xangle;
-            full.result_zangle = spot.result_zangle;
-            full.result_pcount = spot.result_pcount;
-            full.done = spot.done;
-            //full.changed = spot.Value.changed;
-            WriteObject(full);
-         }
+         WriteObject(result);
       }
 
       /// <summary>
@@ -295,13 +245,12 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          var sav = Globals.DebugPreference;
          Globals.DebugPreference = (int) ActionPreference.Continue;
 
          if (client != null) {
             client.Stop();
-            client.ProcessingIsOn = false;
          }
 
          Globals.DebugPreference = sav;
@@ -318,9 +267,9 @@ namespace TMCmdLet
       private void OnStateChanged(StateData data)
       {
          var state = (EPlanState) data.state;
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
-         if ((state == EPlanState.INPROCESS) && !Globals.Debug) { // plan processing is ON
+         if (state == EPlanState.INPROCESS) { // plan processing is ON
             var passed = (int) ((client.SpotsPassed * 100.0) / client.SpotsTotal);
             Console.Write("\r" + Resources.Plan_processed + " = " + passed + "%  ");
          }
@@ -331,27 +280,22 @@ namespace TMCmdLet
 
    /// <summary>
    ///    Sends plan data to remote server.
-   ///    Returns <see cref="Client" /> object (the same object as in Connect-Server)
+   ///    Returns <see cref="PlanClient" /> object (the same object as in Connect-Server)
    ///    <example>
    ///       <code>
    ///  
-   ///    $client = Get-Plan test_plan.txt | Send-Plan
+   ///    $client = Load-Plan test_plan.txt | Send-Plan
    ///       or
-   ///    $plan = Get-Plan test_plan.txt
+   ///    $plan = Load-Plan test_plan.txt
    ///    $client = Send-Plan $plan
    ///  
    /// </code>
    ///    </example>
-   ///    <br />Implements the <see cref="System.Management.Automation.Cmdlet" />
    ///    <br />Implements the <see cref="TMCmdLet.PlanCmdlet" />
-   ///    <br />Implements the <see cref="System.Management.Automation.PSCmdlet" />
    /// </summary>
-   /// <seealso cref="System.Management.Automation.PSCmdlet" />
-   /// <seealso cref="TMCmdLet.PlanCmdlet" />
-   /// <seealso cref="System.Management.Automation.Cmdlet" />
    [Cmdlet(VerbsCommunications.Send, "Plan")]
-   [OutputType(typeof(Client))]
-   public class SendPlanCmdlet : PSCmdlet
+   [OutputType(typeof(PlanClient))]
+   public class SendPlanCmdlet : PlanCmdlet
    {
       #region  Fields
 
@@ -365,36 +309,12 @@ namespace TMCmdLet
       #region Public properties
 
       /// <summary>
-      ///    Gets or sets the input object.
+      ///    Input List&lt;Spot&gt; Plan object
       /// </summary>
       /// <value>The input object.</value>
-      [Parameter(Position = 0, ValueFromPipeline = true)]
+      [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true)]
       [Alias("Plan")]
       public object Input
-      {
-         get;
-         set;
-      }
-
-      /// <summary>
-      ///    Gets or sets the destination hostname or IP address.
-      /// </summary>
-      /// <value>The IP address.</value>
-      [Parameter(Position = 1, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-      [Alias("ComputerName", "IP", "Host")]
-      public string IpAddress
-      {
-         get;
-         set;
-      }
-
-      /// <summary>
-      ///    Gets or sets the TCP port
-      /// </summary>
-      /// <value>The port.</value>
-      [Parameter(Position = 2, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-      [Alias("TcpPort")]
-      public int Port
       {
          get;
          set;
@@ -409,7 +329,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void EndProcessing()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          if (string.IsNullOrEmpty(IpAddress)) {
             IpAddress = client.IpAddress;
          }
@@ -440,11 +360,12 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
          Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
          if (Input == null) {
+            WriteDebug("");
             return;
          }
 
@@ -552,6 +473,12 @@ namespace TMCmdLet
 
       #region Public properties
 
+      public bool ProcessingIsOn
+      {
+         get;
+         set;
+      }
+
       /// <summary>
       ///    Resume plan processing <see cref="Client" />
       /// </summary>
@@ -572,7 +499,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          base.ProcessRecord();
 
          OK = client.Start();
@@ -589,7 +516,7 @@ namespace TMCmdLet
          theTimer.AutoReset = true;
          theTimer.Enabled = true;
 
-         client.ProcessingIsOn = true;
+         ProcessingIsOn = true;
          theTimer.Start();
          WriteObject(client);
       }
@@ -603,7 +530,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void StopProcessing()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          var sav = Globals.DebugPreference;
          Globals.DebugPreference = (int) ActionPreference.Continue;
 
@@ -626,9 +553,9 @@ namespace TMCmdLet
       /// <param name="myEventArgs">The <see cref="EventArgs" /> - not used.</param>
       private void DoWork(object myObject, EventArgs myEventArgs)
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
-         if (!client.ProcessingIsOn) {
+         if (!ProcessingIsOn) {
             theTimer.Stop();
             WriteDebug(Resources.Plan_processing_finished_);
             return;
@@ -647,8 +574,8 @@ namespace TMCmdLet
             }
          }
 
-         if ((client.PlanState == EPlanState.FINISHED) && (client.PlanResults.Count > 1)) {
-            client.ProcessingIsOn = false;
+         if (client.PlanState == EPlanState.FINISHED) {
+            ProcessingIsOn = false;
             theTimer.Stop();
 
             WriteDebug(Resources.Plan_processing_finished_);
@@ -678,7 +605,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.Stop();
          WriteObject(OK);
       }
@@ -706,7 +633,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.Pause();
          WriteObject(OK);
       }
@@ -732,7 +659,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
          Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
@@ -774,7 +701,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.Clear();
          WriteObject(OK);
       }
@@ -830,7 +757,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
          Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
@@ -857,7 +784,7 @@ namespace TMCmdLet
          var sav = Globals.DebugPreference;
          Globals.DebugPreference = (int) ActionPreference.Continue;
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          if (client != null) {
             client.Disconnect();
          }
@@ -917,7 +844,7 @@ namespace TMCmdLet
       /// </summary>
       protected override void ProcessRecord()
       {
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
 
          Globals.DebugPreference = (int) GetVariableValue("DebugPreference");
 
@@ -947,7 +874,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.Disconnect();
          WriteObject(OK);
       }
@@ -1031,7 +958,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.SendCommand(Command);
          WriteObject(OK);
       }
@@ -1077,7 +1004,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.SendInfo(Info);
          WriteObject(OK);
       }
@@ -1123,7 +1050,7 @@ namespace TMCmdLet
       {
          base.ProcessRecord();
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.Send(Data);
          WriteObject(OK);
       }
@@ -1173,7 +1100,7 @@ namespace TMCmdLet
             WaitTime = 100;
          }
 
-         var client = PlanClient.This ?? new PlanClient();
+         var client = global.Client;
          OK = client.AskServerState();
          Thread.Sleep(WaitTime);
          WriteObject(client.PlanState);

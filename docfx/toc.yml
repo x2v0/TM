@@ -1,12 +1,10 @@
 - name: Описание
-  href: articles/overview.md
-- name: Документация
   href: articles/index.md
 - name: Справочник
-  href: api/TM/TMPlan.PlanClient.html
-- name: GitHub
-  href: https://github.com/x2v0/TM
+  href: api/TM/TM.Client.html
 - name: Примеры
   href: https://github.com/x2v0/MainCClient.NET
 - name: Программы
   href: https://github.com/x2v0/MainCClient.NET
+  - name: GitHub
+  href: https://github.com/x2v0/TM
