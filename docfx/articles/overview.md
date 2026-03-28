@@ -5,7 +5,7 @@
 
     https://x2v0.github.io/TM/docs
 
-Директория [Test](https://github.com/x2v0/TM/tree/master/TM/Test) содержит примеры использования библиотеки TM.dll
+Директория [Test](https://github.com/x2v0/TM/tree/master/TM/Test) содержит примеры использования библиотеки TM.dll \
 Для симуляции процесса облучения, на сервере должна быть запущена программа
 MainCSimulator или MainSimulator.NET.
 
